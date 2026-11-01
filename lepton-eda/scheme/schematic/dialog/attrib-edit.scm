@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog attrib-edit)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
@@ -39,13 +40,58 @@
 (define INVISIBLE 0)
 (define VISIBLE 1)
 
+;; Definitions from "schematic_defines.h".
+(define FROM_MENU 0)
+(define FROM_HOTKEY 1)
 
 (define (add-new-attrib! *widget *window *newtext visibility show-mode)
-  (schematic_attrib_edit_dialog_add_attrib *widget
-                                           *window
-                                           *newtext
-                                           visibility
-                                           show-mode))
+  ;; This is an analog of GPOINTER_TO_INT.
+  (define (pointer->int *p)
+    (let ((bv (make-bytevector (sizeof '*) 0)))
+      (bytevector-uint-set! bv 0 (pointer-address *p) (native-endianness) (sizeof '*))
+      (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))
+
+  ;; There is one or no selected object.
+  (define *object (o_select_return_first_object *window))
+
+  ;; We should set reasonable defaults for the coordinate of the
+  ;; new attribute if it is floating, that is, no object to attach
+  ;; to is selected.  We can do it only if the mouse pointer is
+  ;; somewhere over the canvas.  For this, the three following
+  ;; conditions should be met: invocation-flag must be set to
+  ;; FROM_HOTKEY, and proposed x and y must not have the value of
+  ;; -1.  The former condition means the user did not use menus to
+  ;; invoke the dialog, and the latter two mean the mouse cursor
+  ;; was not out of the program window.  In any other case, let's
+  ;; rely on o_attrib_add_attrib() in choosing some reasonable
+  ;; strategy for this.
+  (define wx
+    (pointer->int (g_object_get_data *widget
+                                     (string->pointer "position_wx"))))
+  (define wy
+    (pointer->int (g_object_get_data *widget
+                                     (string->pointer "position_wy"))))
+  (define invocation-flag
+    (pointer->int (g_object_get_data *widget
+                                     (string->pointer "invocation_flag"))))
+  (define propose-coord (if (and (null-pointer? *object)
+                                 (= invocation-flag FROM_HOTKEY)
+                                 (not (= wx -1))
+                                 (not (= wy -1)))
+                            TRUE
+                            FALSE))
+
+  (o_attrib_add_attrib *window
+                       *newtext
+                       visibility
+                       show-mode
+                       *object
+                       propose-coord
+                       wx
+                       wy)
+
+  (schematic_window_active_page_changed *window)
+  (o_undo_savestate_old *window))
 
 
 ;;; Handle the OK response of the Attribute add/edit dialog.
