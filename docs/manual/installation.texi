@@ -384,8 +384,9 @@ find the tools in the subdirectories of the @samp{./tools} directory
 of the project named the same as original tools but with the suffix
 @samp{-noinst} appended.  For example, if your current working
 directory is the root directory of the Lepton repository, and assuming
-you've built the project @emph{out-of-source} in the @samp{./build}
-directory, you can launch @command{lepton-schematic} as follows:
+you've built the project @samp{out-of-source}, @ref{Out-of-source
+build}, in the @samp{./build} directory, you can launch
+@command{lepton-schematic} as follows:
 
 @example
 ./build/tools/schematic/lepton-schematic-noinst examples/gTAG/gTAG.sch
