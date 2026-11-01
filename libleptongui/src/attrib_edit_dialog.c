@@ -34,6 +34,62 @@
 /***************** Start of Attrib Edit dialog box ********************/
 /*! \section attrib-edit-dialog-box Atrib Edit Dialog Box */
 
+
+void
+schematic_attrib_edit_dialog_add_attrib (GtkWidget *aewindow,
+                                         SchematicWindow *w_current,
+                                         char *newtext,
+                                         int vis,
+                                         int show)
+{
+  LeptonObject *object;
+  int wx, wy;
+  int invocation_flag;
+
+  /* There is one or no selected object. */
+  object = o_select_return_first_object (w_current);
+
+  /* We should set reasonable defaults for the coordinate of
+   * the new attribute if it is floating, that is, no object
+   * to attach to is selected.  We can do it only if the mouse
+   * pointer is somewhere over the canvas.  For this, the
+   * three following conditions should be met: invocation_flag
+   * must be set to FROM_HOTKEY, and proposed x and y must not
+   * have the value of -1.  The former condition means the
+   * user did not use menus to invoke the dialog, and the
+   * latter two mean the mouse cursor was not out of the
+   * program window.  In any other case, let's rely on
+   * o_attrib_add_attrib() in choosing some reasonable
+   * strategy for this.*/
+  wx = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
+                                           "position_wx"));
+  wy = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
+                                           "position_wy"));
+  invocation_flag =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
+                                        "invocation_flag"));
+#if DEBUG
+  printf("invocation flag: %d\n", invocation_flag);
+#endif
+  gboolean propose_coord = (object == NULL
+                            && invocation_flag == FROM_HOTKEY
+                            && wx != -1
+                            && wy != -1);
+
+  o_attrib_add_attrib (w_current,
+                       newtext,
+                       vis,
+                       show,
+                       object,
+                       propose_coord,
+                       wx,
+                       wy);
+
+  schematic_window_active_page_changed (w_current);
+  o_undo_savestate_old (w_current);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Documentation
@@ -53,9 +109,7 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   GList *s_current = NULL;
   LeptonObject *a_current;
   GList *a_iter;
-  int invocation_flag;
   int addto=0, replace=0, addmask=0;
-  gint wx, wy;
 
     s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
     if (nsel > 1) {
@@ -136,49 +190,11 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
     }
     else
     {
-      /* There is one or no selected object. */
-      object = o_select_return_first_object(w_current);
-
-      /* We should set reasonable defaults for the coordinate of
-       * the new attribute if it is floating, that is, no object
-       * to attach to is selected.  We can do it only if the mouse
-       * pointer is somewhere over the canvas.  For this, the
-       * three following conditions should be met: invocation_flag
-       * must be set to FROM_HOTKEY, and proposed x and y must not
-       * have the value of -1.  The former condition means the
-       * user did not use menus to invoke the dialog, and the
-       * latter two mean the mouse cursor was not out of the
-       * program window.  In any other case, let's rely on
-       * o_attrib_add_attrib() in choosing some reasonable
-       * strategy for this.*/
-      wx =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
-                                            "position_wx"));
-      wy =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
-                                            "position_wy"));
-      invocation_flag =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (aewindow),
-                                            "invocation_flag"));
-#if DEBUG
-      printf("invocation flag: %d\n", invocation_flag);
-#endif
-      gboolean propose_coord = (object == NULL
-                                && invocation_flag == FROM_HOTKEY
-                                && wx != -1
-                                && wy != -1);
-
-      o_attrib_add_attrib (w_current,
-                           newtext,
-                           vis,
-                           show,
-                           object,
-                           propose_coord,
-                           wx,
-                           wy);
-
-      schematic_window_active_page_changed (w_current);
-      o_undo_savestate_old (w_current);
+      schematic_attrib_edit_dialog_add_attrib (aewindow,
+                                               w_current,
+                                               newtext,
+                                               vis,
+                                               show);
     }
 }
 
