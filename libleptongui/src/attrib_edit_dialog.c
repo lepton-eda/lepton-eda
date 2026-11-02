@@ -45,49 +45,17 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        char *newtext,
                        int vis,
-                       int show)
+                       int show,
+                       int replace,
+                       int addto)
 {
-  GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
-  GtkWidget *overwritebutton;
   LeptonObject *object;
   GList *s_current = NULL;
   LeptonObject *a_current;
   GList *a_iter;
-  int addto=0, replace=0, addmask=0;
+  int addmask=0;
 
     s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
-
-      addtoallbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                       "addtoallbutton"));
-
-      addtocompsbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                       "addtocompsbutton"));
-
-      addtonetsbutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                       "addtonetsbutton"));
-
-      overwritebutton =
-        GTK_WIDGET (g_object_get_data (G_OBJECT (aewindow),
-                                       "overwritebutton"));
-
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(overwritebutton))) {
-        replace = 1;
-      } else {
-        replace = 0;
-      }
-
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtoallbutton))) {
-        addto = 7;
-      }
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtocompsbutton))) {
-        addto = 2;
-      }
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtonetsbutton))) {
-        addto = 1;
-      }
 
       while (s_current != NULL) {
         gboolean replaced;

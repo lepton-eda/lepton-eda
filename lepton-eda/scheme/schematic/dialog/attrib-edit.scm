@@ -99,11 +99,35 @@
                                *newtext
                                visibility
                                show-mode)
+  (define *add-to-all-button
+    (g_object_get_data *widget (string->pointer "addtoallbutton")))
+
+  (define *add-to-components-button
+    (g_object_get_data *widget (string->pointer "addtocompsbutton")))
+
+  (define *add-to-nets-button
+    (g_object_get_data *widget (string->pointer "addtonetsbutton")))
+
+  (define *overwrite-button
+    (g_object_get_data *widget (string->pointer "overwritebutton")))
+
+  (define replace
+    (if (true? (gtk_toggle_button_get_active *overwrite-button)) 1 0))
+
+  (define add-to
+    (cond
+     ((true? (gtk_toggle_button_get_active *add-to-all-button)) 7)
+     ((true? (gtk_toggle_button_get_active *add-to-components-button)) 2)
+     ((true? (gtk_toggle_button_get_active *add-to-nets-button)) 1)
+     (else 0)))
+
   (attrib_edit_dialog_ok *widget
                          *window
                          *newtext
                          visibility
-                         show-mode))
+                         show-mode
+                         replace
+                         add-to))
 
 
 ;;; Handle the OK response of the Attribute add/edit dialog.
