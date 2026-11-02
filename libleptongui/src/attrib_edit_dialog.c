@@ -47,16 +47,13 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        char *newtext,
                        int vis,
                        int show,
-                       int replace,
-                       int addto,
-                       int addmask)
+                       int replace)
 {
   LeptonObject *a_current;
   GList *a_iter;
   gboolean replaced;
 
           replaced = FALSE;
-          if (addmask & addto) {
             a_iter = lepton_object_get_attribs (object);
             if (replace) {
               while (a_iter != NULL) {
@@ -75,7 +72,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
             if (!replaced) {
               o_attrib_add_attrib (w_current, newtext, vis, show, object, FALSE, 0, 0);
             }
-          }
 }
 
 
