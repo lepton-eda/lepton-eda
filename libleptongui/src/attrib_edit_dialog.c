@@ -69,9 +69,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                 a_iter = g_list_next (a_iter);
               }
             }
-            if (!replaced) {
-              o_attrib_add_attrib (w_current, newtext, vis, show, object, FALSE, 0, 0);
-            }
 
             return replaced;
 }

@@ -139,13 +139,23 @@
                                   4))))
 
             (when (logtest add-mask add-to)
-              (attrib_edit_dialog_ok *widget
-                                     *window
-                                     *object
-                                     *newtext
-                                     visibility
-                                     show-mode
-                                     replace)))))
+              (let ((replaced
+                     (attrib_edit_dialog_ok *widget
+                                            *window
+                                            *object
+                                            *newtext
+                                            visibility
+                                            show-mode
+                                            replace)))
+                (unless (true? replaced)
+                  (o_attrib_add_attrib *window
+                                       *newtext
+                                       visibility
+                                       show-mode
+                                       *object
+                                       FALSE
+                                       0
+                                       0)))))))
       (loop (cdr *object-ls))))
   (o_undo_savestate_old *window))
 
