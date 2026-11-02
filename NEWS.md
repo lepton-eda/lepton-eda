@@ -53,6 +53,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   the `scheme/` directories of the libraries have been merged
   using **msgcat** and then revised.
 
+- The `m4` variable `HAVE_LIBSTROKE` has been removed along with
+  the file *lepton-stroke.m4*.  C code is no longer dependent on
+  `libstroke` in any way.
+
 
 ### Changes in `liblepton`:
 
@@ -524,6 +528,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   exports procedures for dealing with objects in copy-paste
   buffers.
 
+- Stroke functionality has been rewritten in Scheme.  A new
+  module, `(schematic stroke)`, has been added.  The module
+  contains procedures for working with the `libstroke` library.
+  Most of the previous C functions related to dealing with strokes
+  have been removed.
+
 
 ### Changes in `lepton-schematic`:
 
@@ -746,6 +756,16 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - Support for pasting objects by clicking on menu item `Ctrl-V`
   has been revamped.
+
+- A new action mode, `stroke-mode`, has been added.  The mode is
+  activated when the user starts inputting a stroke by pressing
+  the middle mouse button if the setting
+  `schematic.gui::middle-button` is set to `stroke`.  The mode
+  name is displayed in the statusbar.
+
+- When `libstroke` is missing, the user is warned about it using a
+  dedicated dialog and a message in the log first time the stroke
+  functionality is used.
 
 
 ### Changes in `lepton-attrib`
