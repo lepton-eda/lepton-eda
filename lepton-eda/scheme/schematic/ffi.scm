@@ -198,7 +198,6 @@
             x_menu_attach_recent_files_submenu
 
             attrib_edit_dialog
-            attrib_edit_dialog_ok
             schematic_attrib_edit_dialog_new
 
             schematic_autonumber_new
@@ -1287,7 +1286,6 @@
 
 ;;; attrib_edit_dialog.c
 (define-lff attrib_edit_dialog void (list '* '* '* int int))
-(define-lff attrib_edit_dialog_ok int (list '* '* '* '* int int int))
 (define-lff schematic_attrib_edit_dialog_new '* '(*))
 
 ;;; autonumber_dialog.c

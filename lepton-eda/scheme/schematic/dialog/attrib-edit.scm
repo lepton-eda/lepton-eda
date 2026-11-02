@@ -156,13 +156,11 @@
                                                     (string= (car (string-split (pointer->string *str) #\=))
                                                              (car (string-split (pointer->string *newtext) #\=))))
 
-                                               (attrib_edit_dialog_ok *window
-                                                                      *attrib
-                                                                      *str
-                                                                      *newtext
-                                                                      visibility
-                                                                      show-mode
-                                                                      _replaced)
+                                               (begin
+                                                 (o_text_change *window *attrib *newtext visibility show-mode)
+                                                 (schematic_window_active_page_changed *window)
+                                                 ;; replaced
+                                                 TRUE)
                                                _replaced))))))
                          FALSE)))
                 (unless (true? replaced)
