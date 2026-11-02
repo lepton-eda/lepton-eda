@@ -148,12 +148,15 @@
                            (if (null? *attrib-ls)
                                _replaced
                                (loop (cdr *attrib-ls)
-                                     (attrib_edit_dialog_ok *window
-                                                            (car *attrib-ls)
-                                                            *newtext
-                                                            visibility
-                                                            show-mode
-                                                            _replaced))))
+                                     (let* ((*attrib (car *attrib-ls))
+                                            (*str (lepton_text_object_get_string *attrib)))
+                                       (attrib_edit_dialog_ok *window
+                                                              *attrib
+                                                              *str
+                                                              *newtext
+                                                              visibility
+                                                              show-mode
+                                                              _replaced)))))
                          FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window

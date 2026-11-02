@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 gboolean
 attrib_edit_dialog_ok (SchematicWindow *w_current,
                        LeptonObject *a_current,
+                       char *str,
                        char *newtext,
                        int vis,
                        int show,
