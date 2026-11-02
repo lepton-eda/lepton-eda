@@ -127,7 +127,8 @@
                          visibility
                          show-mode
                          replace
-                         add-to))
+                         add-to)
+  (o_undo_savestate_old *window))
 
 
 ;;; Handle the OK response of the Attribute add/edit dialog.

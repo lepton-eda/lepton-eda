@@ -97,7 +97,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
         }
         s_current = g_list_next (s_current);
       }
-      o_undo_savestate_old (w_current);
 }
 
 
