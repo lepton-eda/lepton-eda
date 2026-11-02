@@ -150,18 +150,17 @@
                                (loop (cdr *attrib-ls)
                                      (let* ((*attrib (car *attrib-ls))
                                             (*str (lepton_text_object_get_string *attrib)))
-                                       (if (null-pointer? *str)
-                                           _replaced
-                                           (if (and (string-index (pointer->string *newtext) #\=)
-                                                    (string= (car (string-split (pointer->string *str) #\=))
-                                                             (car (string-split (pointer->string *newtext) #\=))))
+                                       (if (and (not (null-pointer? *str))
+                                                (string-index (pointer->string *newtext) #\=)
+                                                (string= (car (string-split (pointer->string *str) #\=))
+                                                         (car (string-split (pointer->string *newtext) #\=))))
 
-                                               (begin
-                                                 (o_text_change *window *attrib *newtext visibility show-mode)
-                                                 (schematic_window_active_page_changed *window)
-                                                 ;; replaced
-                                                 TRUE)
-                                               _replaced))))))
+                                           (begin
+                                             (o_text_change *window *attrib *newtext visibility show-mode)
+                                             (schematic_window_active_page_changed *window)
+                                             ;; replaced
+                                             TRUE)
+                                           _replaced)))))
                          FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window
