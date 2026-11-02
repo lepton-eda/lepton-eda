@@ -138,15 +138,14 @@
                                   ;; Default for other objects.
                                   4))))
 
-            (attrib_edit_dialog_ok *widget
-                                   *window
-                                   *object
-                                   *newtext
-                                   visibility
-                                   show-mode
-                                   replace
-                                   add-to
-                                   add-mask))))
+            (when (logtest add-mask add-to)
+              (attrib_edit_dialog_ok *widget
+                                     *window
+                                     *object
+                                     *newtext
+                                     visibility
+                                     show-mode
+                                     replace)))))
       (loop (cdr *object-ls))))
   (o_undo_savestate_old *window))
 
