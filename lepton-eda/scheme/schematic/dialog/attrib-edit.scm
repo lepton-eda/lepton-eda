@@ -94,6 +94,18 @@
   (o_undo_savestate_old *window))
 
 
+(define (add-attrib-to-object! *widget
+                               *window
+                               *newtext
+                               visibility
+                               show-mode)
+  (attrib_edit_dialog_ok *widget
+                         *window
+                         *newtext
+                         visibility
+                         show-mode))
+
+
 ;;; Handle the OK response of the Attribute add/edit dialog.
 (define (ok-handler *widget *window)
   (define *value-entry
@@ -137,7 +149,7 @@
                             identity)))
               (if (null? ls)
                   (if (> number-of-unattached-objects 1)
-                      (attrib_edit_dialog_ok *widget
+                      (add-attrib-to-object! *widget
                                              *window
                                              *newtext
                                              visibility
