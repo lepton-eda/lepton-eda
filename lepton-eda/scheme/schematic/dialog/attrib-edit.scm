@@ -126,14 +126,19 @@
                            (schematic_window_get_selection_list *window))
                           identity)))
     (unless (null? *object-ls)
-      (attrib_edit_dialog_ok *widget
-                             *window
-                             (car *object-ls)
-                             *newtext
-                             visibility
-                             show-mode
-                             replace
-                             add-to)
+      (let ((*object (car *object-ls)))
+        (when (and (not (null-pointer? *object))
+                   (null-pointer? (lepton_object_get_attached_to *object))
+                   (false? (lepton_object_is_text *object)))
+
+          (attrib_edit_dialog_ok *widget
+                                 *window
+                                 *object
+                                 *newtext
+                                 visibility
+                                 show-mode
+                                 replace
+                                 add-to)))
       (loop (cdr *object-ls))))
   (o_undo_savestate_old *window))
 
