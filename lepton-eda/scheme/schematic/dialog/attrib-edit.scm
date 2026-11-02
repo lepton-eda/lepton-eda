@@ -121,13 +121,20 @@
      ((true? (gtk_toggle_button_get_active *add-to-nets-button)) 1)
      (else 0)))
 
-  (attrib_edit_dialog_ok *widget
-                         *window
-                         *newtext
-                         visibility
-                         show-mode
-                         replace
-                         add-to)
+  (let loop ((*object-ls (glist->list
+                          (lepton_list_get_glist
+                           (schematic_window_get_selection_list *window))
+                          identity)))
+    (unless (null? *object-ls)
+      (attrib_edit_dialog_ok *widget
+                             *window
+                             (car *object-ls)
+                             *newtext
+                             visibility
+                             show-mode
+                             replace
+                             add-to)
+      (loop (cdr *object-ls))))
   (o_undo_savestate_old *window))
 
 
