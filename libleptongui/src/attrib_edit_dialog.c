@@ -35,28 +35,6 @@
 /*! \section attrib-edit-dialog-box Atrib Edit Dialog Box */
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
- */
-gboolean
-attrib_edit_dialog_ok (SchematicWindow *w_current,
-                       LeptonObject *a_current,
-                       char *str,
-                       char *newtext,
-                       int vis,
-                       int show,
-                       gboolean replaced)
-{
-                    o_text_change(w_current, a_current, newtext, vis, show);
-                    replaced = TRUE;
-                    schematic_window_active_page_changed (w_current);
-
-            return replaced;
-}
-
-
 /*! \brief Create a new attribute add/edit dialog widget
  *  \par Function Description
  *  This function creates the widget for the single attribute edit
