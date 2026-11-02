@@ -140,13 +140,15 @@
 
             (when (logtest add-mask add-to)
               (let ((replaced
-                     (attrib_edit_dialog_ok *widget
-                                            *window
-                                            *object
-                                            *newtext
-                                            visibility
-                                            show-mode
-                                            replace)))
+                     (if (true? replace)
+                         (attrib_edit_dialog_ok *widget
+                                                *window
+                                                *object
+                                                *newtext
+                                                visibility
+                                                show-mode
+                                                replace)
+                         FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window
                                        *newtext
