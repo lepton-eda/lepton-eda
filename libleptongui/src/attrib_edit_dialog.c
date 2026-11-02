@@ -55,10 +55,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
   int addmask=0;
   gboolean replaced;
 
-        if (object &&
-            !lepton_object_get_attached_to (object) &&
-            !lepton_object_is_text (object))
-        {
           addmask = 4;
           if (lepton_object_is_component (object))
           {
@@ -88,7 +84,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
               o_attrib_add_attrib (w_current, newtext, vis, show, object, FALSE, 0, 0);
             }
           }
-        }
 }
 
 
