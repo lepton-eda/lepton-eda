@@ -150,13 +150,15 @@
                                (loop (cdr *attrib-ls)
                                      (let* ((*attrib (car *attrib-ls))
                                             (*str (lepton_text_object_get_string *attrib)))
-                                       (attrib_edit_dialog_ok *window
-                                                              *attrib
-                                                              *str
-                                                              *newtext
-                                                              visibility
-                                                              show-mode
-                                                              _replaced)))))
+                                       (if (null-pointer? *str)
+                                           _replaced
+                                           (attrib_edit_dialog_ok *window
+                                                                  *attrib
+                                                                  *str
+                                                                  *newtext
+                                                                  visibility
+                                                                  show-mode
+                                                                  _replaced))))))
                          FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window

@@ -49,13 +49,11 @@ attrib_edit_dialog_ok (SchematicWindow *w_current,
                        int show,
                        gboolean replaced)
 {
-                if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);
                     replaced = TRUE;
                     schematic_window_active_page_changed (w_current);
                   }
-                }
 
             return replaced;
 }
