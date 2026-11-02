@@ -27,7 +27,7 @@
 
 G_BEGIN_DECLS
 
-void
+gboolean
 attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        LeptonObject *object,
