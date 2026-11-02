@@ -43,12 +43,12 @@
 gboolean
 attrib_edit_dialog_ok (SchematicWindow *w_current,
                        LeptonObject *a_current,
+                       char *str,
                        char *newtext,
                        int vis,
                        int show,
                        gboolean replaced)
 {
-                const gchar *str = lepton_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);
