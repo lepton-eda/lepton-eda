@@ -43,24 +43,18 @@
 void
 attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
+                       LeptonObject *object,
                        char *newtext,
                        int vis,
                        int show,
                        int replace,
                        int addto)
 {
-  LeptonObject *object;
-  GList *s_current = NULL;
   LeptonObject *a_current;
   GList *a_iter;
   int addmask=0;
+  gboolean replaced;
 
-    s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
-
-      while (s_current != NULL) {
-        gboolean replaced;
-
-        object = (LeptonObject *) s_current->data;
         if (object &&
             !lepton_object_get_attached_to (object) &&
             !lepton_object_is_text (object))
@@ -95,8 +89,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
             }
           }
         }
-        s_current = g_list_next (s_current);
-      }
 }
 
 
