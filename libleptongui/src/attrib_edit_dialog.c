@@ -41,22 +41,13 @@
  *
  */
 gboolean
-attrib_edit_dialog_ok (GtkWidget *aewindow,
-                       SchematicWindow *w_current,
-                       LeptonObject *object,
+attrib_edit_dialog_ok (SchematicWindow *w_current,
+                       LeptonObject *a_current,
                        char *newtext,
                        int vis,
                        int show,
-                       int replace)
+                       gboolean replaced)
 {
-  LeptonObject *a_current;
-  GList *a_iter;
-  gboolean replaced;
-
-          replaced = FALSE;
-            a_iter = lepton_object_get_attribs (object);
-              while (a_iter != NULL) {
-                a_current = (LeptonObject*) a_iter->data;
                 const gchar *str = lepton_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
@@ -65,8 +56,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                     schematic_window_active_page_changed (w_current);
                   }
                 }
-                a_iter = g_list_next (a_iter);
-              }
 
             return replaced;
 }

@@ -28,13 +28,12 @@
 G_BEGIN_DECLS
 
 gboolean
-attrib_edit_dialog_ok (GtkWidget *aewindow,
-                       SchematicWindow *w_current,
-                       LeptonObject *object,
+attrib_edit_dialog_ok (SchematicWindow *w_current,
+                       LeptonObject *a_current,
                        char *newtext,
                        int vis,
                        int show,
-                       int replace);
+                       gboolean replaced);
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,
