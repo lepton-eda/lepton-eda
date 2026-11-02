@@ -48,21 +48,13 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                        int vis,
                        int show,
                        int replace,
-                       int addto)
+                       int addto,
+                       int addmask)
 {
   LeptonObject *a_current;
   GList *a_iter;
-  int addmask=0;
   gboolean replaced;
 
-          addmask = 4;
-          if (lepton_object_is_component (object))
-          {
-            addmask = 2;
-          }
-          if (lepton_object_is_net (object)) {
-            addmask = 1;
-          }
           replaced = FALSE;
           if (addmask & addto) {
             a_iter = lepton_object_get_attribs (object);

@@ -131,14 +131,22 @@
                    (null-pointer? (lepton_object_get_attached_to *object))
                    (false? (lepton_object_is_text *object)))
 
-          (attrib_edit_dialog_ok *widget
-                                 *window
-                                 *object
-                                 *newtext
-                                 visibility
-                                 show-mode
-                                 replace
-                                 add-to)))
+          (let ((add-mask (if (true? (lepton_object_is_component *object))
+                              2
+                              (if (true? (lepton_object_is_net *object))
+                                  1
+                                  ;; Default for other objects.
+                                  4))))
+
+            (attrib_edit_dialog_ok *widget
+                                   *window
+                                   *object
+                                   *newtext
+                                   visibility
+                                   show-mode
+                                   replace
+                                   add-to
+                                   add-mask))))
       (loop (cdr *object-ls))))
   (o_undo_savestate_old *window))
 
