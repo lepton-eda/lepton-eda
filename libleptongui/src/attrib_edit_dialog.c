@@ -40,7 +40,7 @@
  *  \par Function Documentation
  *
  */
-void
+gboolean
 attrib_edit_dialog_ok (GtkWidget *aewindow,
                        SchematicWindow *w_current,
                        LeptonObject *object,
@@ -72,6 +72,8 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
             if (!replaced) {
               o_attrib_add_attrib (w_current, newtext, vis, show, object, FALSE, 0, 0);
             }
+
+            return replaced;
 }
 
 
