@@ -141,13 +141,19 @@
             (when (logtest add-mask add-to)
               (let ((replaced
                      (if (true? replace)
-                         (attrib_edit_dialog_ok *widget
-                                                *window
-                                                *object
-                                                *newtext
-                                                visibility
-                                                show-mode
-                                                replace)
+                         (let loop ((*attrib-ls
+                                     (glist->list (lepton_object_get_attribs *object)
+                                                  identity))
+                                    (_replaced FALSE))
+                           (if (null? *attrib-ls)
+                               _replaced
+                               (loop (cdr *attrib-ls)
+                                     (attrib_edit_dialog_ok *window
+                                                            (car *attrib-ls)
+                                                            *newtext
+                                                            visibility
+                                                            show-mode
+                                                            _replaced))))
                          FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window
