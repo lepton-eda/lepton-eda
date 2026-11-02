@@ -152,13 +152,18 @@
                                             (*str (lepton_text_object_get_string *attrib)))
                                        (if (null-pointer? *str)
                                            _replaced
-                                           (attrib_edit_dialog_ok *window
-                                                                  *attrib
-                                                                  *str
-                                                                  *newtext
-                                                                  visibility
-                                                                  show-mode
-                                                                  _replaced))))))
+                                           (if (and (string-index (pointer->string *newtext) #\=)
+                                                    (string= (car (string-split (pointer->string *str) #\=))
+                                                             (car (string-split (pointer->string *newtext) #\=))))
+
+                                               (attrib_edit_dialog_ok *window
+                                                                      *attrib
+                                                                      *str
+                                                                      *newtext
+                                                                      visibility
+                                                                      show-mode
+                                                                      _replaced)
+                                               _replaced))))))
                          FALSE)))
                 (unless (true? replaced)
                   (o_attrib_add_attrib *window
