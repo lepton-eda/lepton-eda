@@ -55,7 +55,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
 
           replaced = FALSE;
             a_iter = lepton_object_get_attribs (object);
-            if (replace) {
               while (a_iter != NULL) {
                 a_current = (LeptonObject*) a_iter->data;
                 const gchar *str = lepton_text_object_get_string (a_current);
@@ -68,7 +67,6 @@ attrib_edit_dialog_ok (GtkWidget *aewindow,
                 }
                 a_iter = g_list_next (a_iter);
               }
-            }
 
             return replaced;
 }
