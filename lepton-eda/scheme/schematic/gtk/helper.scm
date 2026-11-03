@@ -31,6 +31,8 @@
             symbol->gtk-message-type
             gtk-position-type->symbol
             symbol->gtk-position-type
+            gtk-window-position->symbol
+            symbol->gtk-window-position
             gtk-response->symbol
             symbol->gtk-response)
 
@@ -86,6 +88,17 @@
 (define (symbol->gtk-position-type sym)
   "Transforms symbol SYM to corresponding GtkPositionType value."
   (schematic_gtk_position_type_from_string
+   (string->pointer (symbol->string sym))))
+
+
+(define (gtk-window-position->symbol pos)
+  "Transforms GtkWindowPosition value POS to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_window_position_to_string pos))))
+
+(define (symbol->gtk-window-position sym)
+  "Transforms symbol SYM to corresponding GtkWindowPosition value."
+  (schematic_gtk_window_position_from_string
    (string->pointer (symbol->string sym))))
 
 
