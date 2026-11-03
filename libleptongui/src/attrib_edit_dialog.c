@@ -53,13 +53,6 @@ schematic_attrib_edit_dialog_new (SchematicWindow *w_current)
                                        _("_Cancel"), GTK_RESPONSE_REJECT,
                                        _("_OK"), GTK_RESPONSE_APPLY,
                                        NULL);
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
-                                          GTK_RESPONSE_APPLY,
-                                          GTK_RESPONSE_REJECT,
-                                          -1);
-#endif
   return aewindow;
 }
 
