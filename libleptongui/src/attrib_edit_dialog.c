@@ -67,8 +67,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
-
   gtk_dialog_set_default_response(GTK_DIALOG(aewindow),
                                   GTK_RESPONSE_APPLY);
 
