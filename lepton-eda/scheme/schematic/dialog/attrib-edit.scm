@@ -315,6 +315,9 @@ FROM_KEY (1)."
                         *response
                         *window)
 
+      (gtk_window_set_position *attrib-edit-dialog
+                               (symbol->gtk-window-position 'mouse))
+
       (attrib_edit_dialog *window
                           *attrib-edit-dialog
                           *attrib
