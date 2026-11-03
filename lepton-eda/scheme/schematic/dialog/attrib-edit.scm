@@ -44,6 +44,11 @@
 (define FROM_MENU 0)
 (define FROM_HOTKEY 1)
 
+
+(define (make-attrib-edit-dialog *window)
+  (schematic_attrib_edit_dialog_new *window))
+
+
 (define (add-new-attrib! *widget *window *newtext visibility show-mode)
   ;; This is an analog of GPOINTER_TO_INT.
   (define (pointer->int *p)
@@ -286,7 +291,7 @@ FROM_KEY (1)."
   (when (null-pointer? *widget)
     (let ((*selection-list (lepton_list_get_glist
                             (schematic_window_get_selection_list *window)))
-          (*attrib-edit-dialog (schematic_attrib_edit_dialog_new *window)))
+          (*attrib-edit-dialog (make-attrib-edit-dialog *window)))
 
       (g_signal_connect *attrib-edit-dialog
                         (string->pointer "response")
