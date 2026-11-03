@@ -67,9 +67,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  gtk_dialog_set_default_response(GTK_DIALOG(aewindow),
-                                  GTK_RESPONSE_APPLY);
-
   vbox = gtk_dialog_get_content_area (GTK_DIALOG (aewindow));
   gtk_container_set_border_width(GTK_CONTAINER(aewindow),
                                  DIALOG_BORDER_SPACING);

@@ -318,6 +318,8 @@ FROM_KEY (1)."
       (gtk_window_set_position *attrib-edit-dialog
                                (symbol->gtk-window-position 'mouse))
 
+      (gtk_dialog_set_default_response *attrib-edit-dialog
+                                       GTK_RESPONSE_APPLY)
       (attrib_edit_dialog *window
                           *attrib-edit-dialog
                           *attrib
