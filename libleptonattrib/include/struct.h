@@ -51,13 +51,12 @@
 
 /* ----------------------------------------------------------------- *
  *  The sheet data hierarchy built by the prog should look like this:
- *  SHEET_DATA->(STRING_LIST *master_XXX_list)          // list of comps/nets/pins (row labels)
- *            ->(STRING_LIST *master_XXX_attrib_list)   // list of attached names  (column labels)
+ *  SHEET_DATA->(GList *master_XXX_list)          // list of comps/nets/pins (row labels)
+ *            ->(GList *master_XXX_attrib_list)   // list of attached names  (column labels)
  *            ->(TABLE *XXX_table)                      // table of attrib values (table entries)
  * ----------------------------------------------------------------- */
 typedef struct st_sheet_data SHEET_DATA;
 typedef struct st_table TABLE;
-typedef struct st_string_list STRING_LIST;
 typedef struct st_pin_list PIN_LIST;
 typedef struct st_main_window MAIN_WINDOW;
 
@@ -71,27 +70,9 @@ typedef struct st_main_window MAIN_WINDOW;
  */
 /* -------------------------------------------------------------------- */
 struct st_sheet_data {
-  STRING_LIST *master_comp_list_head;         /*!< Sorted list of all component refdeses used in design */
-  STRING_LIST *master_comp_attrib_list_head;  /*!< Sorted list of all component attribs used in design */
-  int comp_count;                             /*!< This cannnot change -- user must edit design using gschem */
-  int comp_attrib_count;                      /*!< This can change in this prog if the user adds attribs */
-
-  STRING_LIST *master_net_list_head;          /*!< Sorted list of all net names used in design */
-  STRING_LIST *master_net_attrib_list_head;   /*!< Sorted list of all net attribs used in design */
-  int net_count;                              /*!< This cannnot change -- user must edit design using gschem */
-  int net_attrib_count;                       /*!< This can change in this prog if the user adds attribs */
-
-  STRING_LIST *master_pin_list_head;          /*!< Sorted list of all refdes:pin items used in design.   */
-  STRING_LIST *master_pin_attrib_list_head;   /*!< Sorted list of all pin attribs used in design */
-  int pin_count;                              /*!< This cannnot change -- user must edit design using gschem */
-  int pin_attrib_count;                       /*!< This can change in this prog if the user adds attribs */
-
-
   TABLE **component_table;                    /*!< points to 2d array of component attribs */
   TABLE **net_table;                          /*!< points to 2d array of net attribs */
   TABLE **pin_table;                          /*!< points to 2d array of pin attribs */
-
-  int CHANGED;                                /*!< for "file not saved" warning upon exit */
 };
 
 
@@ -115,25 +96,6 @@ struct st_table {
   gint visibility;
   gint show_name_value;
 
-};
-
-
-/* -------------------------------------------------------------------- */
-/*! \brief A list of strings.
- *
- * STRING_LIST is a doubly-linked list of strings.  This struct is
- * used for several different jobs, including serving as base class
- * for master lists.
- *
- * \todo Consider replacing with a GList-based implementation
- */
-/* -------------------------------------------------------------------- */
-struct st_string_list {
-  gchar *data;     /*!< points to zero-terminated string */
-  int pos;         /*!< position on spreadsheet */
-  int length;      /*!< number of items in list */
-  STRING_LIST *prev; /*!< pointer to previous item in linked list */
-  STRING_LIST *next; /*!< pointer to next item in linked list */
 };
 
 /* -------------------------------------------------------------------- */

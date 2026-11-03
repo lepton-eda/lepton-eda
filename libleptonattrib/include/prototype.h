@@ -49,147 +49,25 @@ attrib_gtksheet_state_from_string (char *s);
 SHEET_DATA*
 attrib_sheet_data_new();
 
-STRING_LIST*
-attrib_sheet_data_get_component_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_list (SHEET_DATA *data,
-                                      STRING_LIST *list);
-STRING_LIST*
-attrib_sheet_data_get_component_attrib_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_attrib_list (SHEET_DATA *data,
-                                             STRING_LIST *list);
-STRING_LIST**
-attrib_sheet_data_get_component_attrib_list_address (SHEET_DATA *data);
-
-STRING_LIST*
-attrib_sheet_data_get_net_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_list (SHEET_DATA *data,
-                                STRING_LIST *list);
-STRING_LIST*
-attrib_sheet_data_get_net_attrib_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_attrib_list (SHEET_DATA *data,
-                                       STRING_LIST *list);
-STRING_LIST*
-attrib_sheet_data_get_pin_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_list (SHEET_DATA *data,
-                                STRING_LIST *list);
-STRING_LIST*
-attrib_sheet_data_get_pin_attrib_list (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_attrib_list (SHEET_DATA *data,
-                                       STRING_LIST *list);
 TABLE**
 attrib_sheet_data_get_component_table (SHEET_DATA *data);
 
 void
 attrib_sheet_data_set_component_table (SHEET_DATA *data,
                                        TABLE** table);
-int
-attrib_sheet_data_get_component_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_count (SHEET_DATA *data,
-                                       int count);
-int*
-attrib_sheet_data_get_component_counter_address (SHEET_DATA *data);
-
-int
-attrib_sheet_data_get_component_attrib_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_attrib_count (SHEET_DATA *data,
-                                              int count);
-int*
-attrib_sheet_data_get_component_attrib_counter_address (SHEET_DATA *data);
-
 TABLE**
 attrib_sheet_data_get_net_table (SHEET_DATA *data);
 
 void
 attrib_sheet_data_set_net_table (SHEET_DATA *data,
                                  TABLE** table);
-int
-attrib_sheet_data_get_net_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_count (SHEET_DATA *data,
-                                 int count);
-int
-attrib_sheet_data_get_net_attrib_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_attrib_count (SHEET_DATA *data,
-                                        int count);
 TABLE**
 attrib_sheet_data_get_pin_table (SHEET_DATA *data);
 
 void
 attrib_sheet_data_set_pin_table (SHEET_DATA *data,
                                  TABLE** table);
-int
-attrib_sheet_data_get_pin_count (SHEET_DATA *data);
 
-void
-attrib_sheet_data_set_pin_count (SHEET_DATA *data,
-                                 int count);
-int*
-attrib_sheet_data_get_pin_counter_address (SHEET_DATA *data);
-
-int
-attrib_sheet_data_get_pin_attrib_count (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_attrib_count (SHEET_DATA *data,
-                                        int count);
-int*
-attrib_sheet_data_get_pin_attrib_counter_address (SHEET_DATA *data);
-
-int
-attrib_sheet_data_get_changed (const SHEET_DATA* data);
-
-void
-attrib_sheet_data_set_changed (SHEET_DATA* data,
-                               int changed);
-
-
-/* ------------- s_string_list.c ------------- */
-STRING_LIST*
-attrib_string_list_new ();
-
-char*
-attrib_string_list_get_data (STRING_LIST *list);
-
-void
-attrib_string_list_set_data (STRING_LIST *list,
-                             char *data);
-int
-attrib_string_list_get_pos (STRING_LIST *list);
-
-void
-attrib_string_list_set_pos (STRING_LIST *list,
-                            int pos);
-STRING_LIST*
-attrib_string_list_get_prev (STRING_LIST *list);
-
-void
-attrib_string_list_set_prev (STRING_LIST *list,
-                             STRING_LIST *item);
-STRING_LIST*
-attrib_string_list_get_next (STRING_LIST *list);
-
-void
-attrib_string_list_set_next (STRING_LIST *list,
-                             STRING_LIST *item);
 
 /* ------------- s_table.c ------------- */
 int

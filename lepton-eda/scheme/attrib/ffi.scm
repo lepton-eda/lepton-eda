@@ -63,52 +63,12 @@
             x_dialog_unimplemented_feature
 
             attrib_sheet_data_new
-            attrib_sheet_data_get_changed
-            attrib_sheet_data_set_changed
-            attrib_sheet_data_get_component_attrib_count
-            attrib_sheet_data_set_component_attrib_count
-            attrib_sheet_data_get_component_attrib_counter_address
-            attrib_sheet_data_get_component_attrib_list
-            attrib_sheet_data_set_component_attrib_list
-            attrib_sheet_data_get_component_count
-            attrib_sheet_data_set_component_count
-            attrib_sheet_data_get_component_counter_address
-            attrib_sheet_data_get_component_list
-            attrib_sheet_data_set_component_list
             attrib_sheet_data_get_component_table
             attrib_sheet_data_set_component_table
-            attrib_sheet_data_get_net_attrib_count
-            attrib_sheet_data_set_net_attrib_count
-            attrib_sheet_data_get_net_attrib_list
-            attrib_sheet_data_set_net_attrib_list
-            attrib_sheet_data_get_net_count
-            attrib_sheet_data_set_net_count
-            attrib_sheet_data_get_net_list
-            attrib_sheet_data_set_net_list
             attrib_sheet_data_get_net_table
             attrib_sheet_data_set_net_table
-            attrib_sheet_data_get_pin_attrib_count
-            attrib_sheet_data_set_pin_attrib_count
-            attrib_sheet_data_get_pin_attrib_counter_address
-            attrib_sheet_data_get_pin_attrib_list
-            attrib_sheet_data_set_pin_attrib_list
-            attrib_sheet_data_get_pin_count
-            attrib_sheet_data_set_pin_count
-            attrib_sheet_data_get_pin_counter_address
-            attrib_sheet_data_get_pin_list
-            attrib_sheet_data_set_pin_list
             attrib_sheet_data_get_pin_table
             attrib_sheet_data_set_pin_table
-
-            attrib_string_list_new
-            attrib_string_list_get_data
-            attrib_string_list_set_data
-            attrib_string_list_get_next
-            attrib_string_list_set_next
-            attrib_string_list_get_pos
-            attrib_string_list_set_pos
-            attrib_string_list_get_prev
-            attrib_string_list_set_prev
 
             attrib_table_init_attrib_value
             attrib_table_get_attrib_value
@@ -199,53 +159,12 @@
 
 ;;; s_sheet_data.c
 (define-lff attrib_sheet_data_new '* '())
-(define-lff attrib_sheet_data_get_changed int '(*))
-(define-lff attrib_sheet_data_set_changed void (list '* int))
-(define-lff attrib_sheet_data_get_component_attrib_count int '(*))
-(define-lff attrib_sheet_data_set_component_attrib_count void (list '* int))
-(define-lff attrib_sheet_data_get_component_attrib_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_component_attrib_list '* '(*))
-(define-lff attrib_sheet_data_set_component_attrib_list void '(* *))
-(define-lff attrib_sheet_data_get_component_count int '(*))
-(define-lff attrib_sheet_data_set_component_count void (list '* int))
-(define-lff attrib_sheet_data_get_component_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_component_list '* '(*))
-(define-lff attrib_sheet_data_set_component_list void '(* *))
 (define-lff attrib_sheet_data_get_component_table '* '(*))
 (define-lff attrib_sheet_data_set_component_table void '(* *))
-(define-lff attrib_sheet_data_get_net_attrib_count int '(*))
-(define-lff attrib_sheet_data_set_net_attrib_count void (list '* int))
-(define-lff attrib_sheet_data_get_net_attrib_list '* '(*))
-(define-lff attrib_sheet_data_set_net_attrib_list void '(* *))
-(define-lff attrib_sheet_data_get_net_count int '(*))
-(define-lff attrib_sheet_data_set_net_count void (list '* int))
-(define-lff attrib_sheet_data_get_net_list '* '(*))
-(define-lff attrib_sheet_data_set_net_list void '(* *))
 (define-lff attrib_sheet_data_get_net_table '* '(*))
 (define-lff attrib_sheet_data_set_net_table void '(* *))
-(define-lff attrib_sheet_data_get_pin_attrib_count int '(*))
-(define-lff attrib_sheet_data_set_pin_attrib_count void (list '* int))
-(define-lff attrib_sheet_data_get_pin_attrib_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_pin_attrib_list '* '(*))
-(define-lff attrib_sheet_data_set_pin_attrib_list void '(* *))
-(define-lff attrib_sheet_data_get_pin_count int '(*))
-(define-lff attrib_sheet_data_set_pin_count void (list '* int))
-(define-lff attrib_sheet_data_get_pin_counter_address '* '(*))
-(define-lff attrib_sheet_data_get_pin_list '* '(*))
-(define-lff attrib_sheet_data_set_pin_list void '(* *))
 (define-lff attrib_sheet_data_get_pin_table '* '(*))
 (define-lff attrib_sheet_data_set_pin_table void '(* *))
-
-;;; s_string_list.c
-(define-lff attrib_string_list_new '* '())
-(define-lff attrib_string_list_get_data '* '(*))
-(define-lff attrib_string_list_set_data void '(* *))
-(define-lff attrib_string_list_get_next '* '(*))
-(define-lff attrib_string_list_set_next void '(* *))
-(define-lff attrib_string_list_get_pos int '(*))
-(define-lff attrib_string_list_set_pos void (list '* int))
-(define-lff attrib_string_list_get_prev '* '(*))
-(define-lff attrib_string_list_set_prev void '(* *))
 
 ;;; s_table.c
 (define-lff attrib_table_init_attrib_value void (list '* int int))
