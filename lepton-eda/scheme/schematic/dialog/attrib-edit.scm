@@ -45,8 +45,25 @@
 (define FROM_HOTKEY 1)
 
 
+;;; Create a new empty attribute add/edit dialog widget with two
+;;; buttons.
 (define (make-attrib-edit-dialog *window)
-  (schematic_attrib_edit_dialog_new *window))
+  (define *title %null-pointer)
+  (define *parent (schematic_window_get_main_window *window))
+  (define flags GTK_DIALOG_MODAL)
+  (define *settings-name (string->pointer "singleattrib"))
+  (define *dialog (schematic_dialog_new_empty *title
+                                              *parent
+                                              flags
+                                              *settings-name
+                                              *window))
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Cancel"))
+                         GTK_RESPONSE_REJECT)
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_OK"))
+                         GTK_RESPONSE_APPLY)
+  *dialog)
 
 
 (define (add-new-attrib! *widget *window *newtext visibility show-mode)
