@@ -729,3 +729,18 @@ schematic_pango_text_width (GtkWidget *widget,
 
   return width / PANGO_SCALE;
 }
+
+
+/*! \brief Create a list store for strings.
+ *
+ *  \par Function Description
+ *
+ *  Create and return a new list store for strings.
+ *
+ * \return The list store.
+ */
+GtkListStore*
+schematic_string_list_store_new ()
+{
+  return gtk_list_store_new (1, G_TYPE_STRING);
+}
