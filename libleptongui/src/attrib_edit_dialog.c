@@ -47,7 +47,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     int flag,
                     int nsel)
 {
-  GtkWidget *label;
+  GtkWidget *name_label, *value_label, *attach_options_label;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
@@ -86,14 +86,14 @@ attrib_edit_dialog (SchematicWindow *w_current,
 #endif
 
   /* Name selection */
-  label = gtk_label_new_with_mnemonic (_("N_ame:"));
+  name_label = gtk_label_new_with_mnemonic (_("N_ame:"));
 #ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (name_label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
+  gtk_grid_attach (GTK_GRID (grid), name_label, 0, 0, 1, 1);
 #else
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+  gtk_misc_set_alignment (GTK_MISC (name_label), 0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), name_label, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 #endif
@@ -101,7 +101,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
   attrib_combo_box_entry = gtk_combo_box_text_new_with_entry ();
   attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), attrib_combo_box_entry);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (name_label), attrib_combo_box_entry);
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);
@@ -118,14 +118,14 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gtk_entry_set_activates_default (GTK_ENTRY (attrib_combo_entry), TRUE);
 
   /* Value entry */
-  label = gtk_label_new_with_mnemonic (_("_Value:"));
+  value_label = gtk_label_new_with_mnemonic (_("_Value:"));
 #ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);
+  gtk_grid_attach (GTK_GRID (grid), value_label, 0, 1, 1, 1);
 #else
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+  gtk_misc_set_alignment (GTK_MISC (value_label), 0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), value_label, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 #endif
@@ -135,7 +135,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
   g_object_set_data_full (G_OBJECT (aewindow), "value_entry", value_entry,
                           (GDestroyNotify) g_object_unref);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), value_entry);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (value_label), value_entry);
 
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), value_entry, 1, 1, 1, 1);
@@ -187,15 +187,15 @@ attrib_edit_dialog (SchematicWindow *w_current,
 
   if (nsel > 1) { /* gschem specific */
 
-    label = gtk_label_new(_("<b>Attach Options</b>"));
-    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+    attach_options_label = gtk_label_new(_("<b>Attach Options</b>"));
+    gtk_label_set_use_markup (GTK_LABEL (attach_options_label), TRUE);
 #ifdef ENABLE_GTK3
-    gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-    gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+    gtk_label_set_xalign (GTK_LABEL (attach_options_label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (attach_options_label), 0.0);
 #else
-    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_misc_set_alignment(GTK_MISC(attach_options_label),0,0);
 #endif
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), attach_options_label, FALSE, FALSE, 0);
 
 #ifdef ENABLE_GTK3
     grid = gtk_grid_new ();
