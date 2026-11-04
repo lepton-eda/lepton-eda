@@ -331,13 +331,17 @@ FROM_KEY (1)."
       (gtk_dialog_set_default_response *attrib-edit-dialog
                                        GTK_RESPONSE_APPLY)
 
-      (let ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog))
-            ;; Name selection.
-            (*name-label (gtk_label_new_with_mnemonic
-                          (string->pointer (G_ "N_ame:"))))
-            ;; Value entry.
-            (*value-label (gtk_label_new_with_mnemonic
-                           (string->pointer (G_ "_Value:")))))
+      (let* ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog))
+             ;; Name selection.
+             (*name-label (gtk_label_new_with_mnemonic
+                           (string->pointer (G_ "N_ame:"))))
+             ;; Value entry.
+             (*value-label (gtk_label_new_with_mnemonic
+                            (string->pointer (G_ "_Value:"))))
+             (*attrib-combo-box-entry
+              (gtk_combo_box_text_new_with_entry))
+             (*attrib-combo-entry
+              (gtk_bin_get_child *attrib-combo-box-entry)))
 
         (gtk_container_set_border_width *attrib-edit-dialog
                                         %dialog-border-spacing)
@@ -349,11 +353,16 @@ FROM_KEY (1)."
                                    (G_ "Add Attribute")
                                    (G_ "Edit Attribute"))))
 
+        (gtk_label_set_mnemonic_widget *name-label
+                                       *attrib-combo-box-entry)
+
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
                             *name-label
                             *value-label
+                            *attrib-combo-box-entry
+                            *attrib-combo-entry
                             *attrib
                             invocation-flag
                             (get-number-of-not-attached-objects *selection-list))))))
