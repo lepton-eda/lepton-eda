@@ -215,6 +215,24 @@
 (define-syntax-rule (define-lfc arg ...)
   (define-lfc-lib arg ... libgtk))
 
+;;; Functions for GTK3 only.
+(define-syntax define-lff-gtk3
+  (syntax-rules ()
+    ((_ name type args)
+     (define name
+       (if %m4-use-gtk3
+           (let ((proc
+                  (delay
+                    (pointer->procedure
+                     type
+                     (dynamic-func (symbol->string (quote name)) libgtk)
+                     args))))
+             (force proc))
+           ;; Error on the compilation stage.
+           (error (string-append "Function "
+                                 (symbol->string (quote name))
+                                 "() is present only in GTK3")))))))
+
 (define GdkModifierType uint32)
 
 (define-lff gtk_about_dialog_new '* '())
