@@ -115,7 +115,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
 #endif
 
   show_options = gtk_combo_box_text_new ();
-  GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+  GtkListStore *store = schematic_string_list_store_new ();
   gtk_combo_box_set_model (GTK_COMBO_BOX (show_options), GTK_TREE_MODEL(store));
 
   g_object_ref (show_options);

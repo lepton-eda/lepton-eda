@@ -96,6 +96,9 @@ schematic_gdk_color_parse (char *color_spec);
 int
 schematic_pango_text_width (GtkWidget *widget,
                             char *text);
+GtkListStore*
+schematic_string_list_store_new ();
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */
