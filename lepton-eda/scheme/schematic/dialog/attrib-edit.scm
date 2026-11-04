@@ -26,6 +26,7 @@
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton gettext)
+  #:use-module (lepton m4)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -409,6 +410,39 @@ FROM_KEY (1)."
          *show-options
          (string->pointer (G_ "Show Name & Value")))
         (gtk_combo_box_set_active *show-options 0)
+
+        (if %m4-use-gtk3
+            (let ((*grid (gtk_grid_new)))
+              (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
+              (gtk_grid_set_column_spacing *grid %dialog-horizontal-spacing)
+              (gtk_box_pack_start *vbox *grid TRUE TRUE 0)
+              (gtk_label_set_xalign *name-label 0.0)
+              (gtk_label_set_yalign *name-label 0.5)
+              (gtk_grid_attach *grid *name-label 0 0 1 1)
+              (gtk_widget_set_hexpand *attrib-combo-box-entry TRUE)
+              (gtk_grid_attach *grid *attrib-combo-box-entry 1 0 1 1)
+              (gtk_label_set_xalign *value-label 0.0)
+              (gtk_label_set_yalign *value-label 0.5)
+              (gtk_grid_attach *grid *value-label 0 1 1 1)
+              (gtk_grid_attach *grid *value-entry 1 1 1 1)
+              (gtk_grid_attach *grid *visibility-button 0 2 1 1)
+              (gtk_grid_attach *grid *show-options 1 2 1 1))
+
+            (let ((*alignment (gtk_alignment_new 0 0 1 1))
+                  (*table (gtk_table_new 3 2 FALSE)))
+              (gtk_alignment_set_padding *alignment 0 0 %dialog-indentation 0)
+              (gtk_box_pack_start *vbox *alignment TRUE TRUE 0)
+              (gtk_table_set_row_spacings *table %dialog-vertical-spacing)
+              (gtk_table_set_col_spacings *table %dialog-horizontal-spacing)
+              (gtk_container_add *alignment *table)
+              (gtk_misc_set_alignment *name-label 0 0.5)
+              (gtk_table_attach *table *name-label 0 1 0 1 GTK_FILL GTK_FILL 0 0)
+              (gtk_table_attach *table *attrib-combo-box-entry 1 2 0 1 (logior GTK_EXPAND GTK_FILL) 0 0 0)
+              (gtk_misc_set_alignment *value-label 0 0.5)
+              (gtk_table_attach *table *value-label 0 1 1 2 GTK_FILL 0 0 0)
+              (gtk_table_attach *table *value-entry 1 2 1 2 (logior GTK_EXPAND GTK_FILL) 0 0 0)
+              (gtk_table_attach *table *visibility-button 0 1 2 3 GTK_FILL 0 0 0)
+              (gtk_table_attach *table *show-options 1 2 2 3 (logior GTK_FILL GTK_EXPAND) 0 0 0)))
 
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
