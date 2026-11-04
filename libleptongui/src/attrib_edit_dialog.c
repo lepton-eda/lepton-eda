@@ -42,11 +42,12 @@
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,
+                    GtkWidget *vbox,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
-  GtkWidget *vbox, *label;
+  GtkWidget *label;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
@@ -66,11 +67,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   char *val = NULL;
   LeptonObject *attrib = NULL;
   gint wx, wy;
-
-  vbox = gtk_dialog_get_content_area (GTK_DIALOG (aewindow));
-  gtk_container_set_border_width(GTK_CONTAINER(aewindow),
-                                 DIALOG_BORDER_SPACING);
-  gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
   if (attr_obj != NULL)
   {

@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,
+                    GtkWidget *vbox,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel);
