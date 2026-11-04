@@ -47,13 +47,13 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *value_label,
                     GtkWidget *attrib_combo_box_entry,
                     GtkWidget *attrib_combo_entry,
+                    GtkWidget *value_entry,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
   GtkWidget *attach_options_label;
   GtkWidget *show_options;
-  GtkWidget *value_entry;
   GtkWidget *visbutton;
   GSList *hbox2_group = NULL;
   GtkWidget *addtoallbutton;
@@ -106,13 +106,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (0), 0, 0);
 #endif
 
-  value_entry = gtk_entry_new ();
-  g_object_ref (value_entry);
-  g_object_set_data_full (G_OBJECT (aewindow), "value_entry", value_entry,
-                          (GDestroyNotify) g_object_unref);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (value_label), value_entry);
-
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), value_entry, 1, 1, 1, 1);
 #else
@@ -120,8 +113,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 #endif
-  gtk_entry_set_activates_default(GTK_ENTRY(value_entry), TRUE);
-
   /* Visibility */
   visbutton = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
   g_object_ref (visbutton);

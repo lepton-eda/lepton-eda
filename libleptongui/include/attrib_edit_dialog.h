@@ -35,6 +35,7 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *value_label,
                     GtkWidget *attrib_combo_box_entry,
                     GtkWidget *attrib_combo_entry,
+                    GtkWidget *value_entry,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel);
