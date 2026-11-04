@@ -115,6 +115,7 @@
             gtk_label_new_with_mnemonic
             gtk_label_set_markup
             gtk_label_set_mnemonic_widget
+            gtk_label_set_use_markup
 
             gtk_label_set_xalign
             gtk_label_set_yalign
@@ -354,6 +355,7 @@
 (define-lff gtk_label_new_with_mnemonic '* '(*))
 (define-lff gtk_label_set_markup void '(* *))
 (define-lff gtk_label_set_mnemonic_widget void '(* *))
+(define-lff gtk_label_set_use_markup void (list '* int))
 
 (define-lff-gtk3 gtk_label_set_xalign void (list '* float))
 (define-lff-gtk3 gtk_label_set_yalign void (list '* float))

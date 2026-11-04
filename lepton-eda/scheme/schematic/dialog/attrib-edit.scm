@@ -444,14 +444,27 @@ FROM_KEY (1)."
               (gtk_table_attach *table *visibility-button 0 1 2 3 GTK_FILL 0 0 0)
               (gtk_table_attach *table *show-options 1 2 2 3 (logior GTK_FILL GTK_EXPAND) 0 0 0)))
 
-        (attrib_edit_dialog *window
-                            *attrib-edit-dialog
-                            *vbox
-                            *attrib-combo-box-entry
-                            *attrib-combo-entry
-                            *value-entry
-                            *visibility-button
-                            *show-options
-                            *attrib
-                            invocation-flag
-                            (get-number-of-not-attached-objects *selection-list))))))
+        (let ((non-attached-objects-number
+               (get-number-of-not-attached-objects *selection-list)))
+          (when (> non-attached-objects-number 1)
+            (let ((*attach-options-label
+                   (gtk_label_new (string->pointer (G_ "<b>Attach Options</b>")))))
+              (gtk_label_set_use_markup *attach-options-label TRUE)
+              (if %m4-use-gtk3
+                  (begin
+                    (gtk_label_set_xalign *attach-options-label 0.0)
+                    (gtk_label_set_yalign *attach-options-label 0.0))
+                  (gtk_misc_set_alignment *attach-options-label 0 0))
+              (gtk_box_pack_start *vbox *attach-options-label FALSE FALSE 0)))
+
+          (attrib_edit_dialog *window
+                              *attrib-edit-dialog
+                              *vbox
+                              *attrib-combo-box-entry
+                              *attrib-combo-entry
+                              *value-entry
+                              *visibility-button
+                              *show-options
+                              *attrib
+                              invocation-flag
+                              non-attached-objects-number))))))
