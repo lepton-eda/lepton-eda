@@ -342,7 +342,10 @@ FROM_KEY (1)."
               (gtk_combo_box_text_new_with_entry))
              (*attrib-combo-entry
               (gtk_bin_get_child *attrib-combo-box-entry))
-             (*value-entry (gtk_entry_new)))
+             (*value-entry (gtk_entry_new))
+             (*visibility-button
+              (gtk_check_button_new_with_mnemonic
+               (string->pointer (G_ "Vi_sible")))))
 
         (gtk_container_set_border_width *attrib-edit-dialog
                                         %dialog-border-spacing)
@@ -375,6 +378,16 @@ FROM_KEY (1)."
         (gtk_label_set_mnemonic_widget *value-label *value-entry)
         (gtk_entry_set_activates_default *value-entry TRUE)
 
+        ;; Visibility.
+        (g_object_ref *visibility-button)
+        (g_object_set_data_full
+         *attrib-edit-dialog
+         (string->pointer "visbutton")
+         *visibility-button
+         ;; GDestroyNotify
+         (procedure->pointer void g_object_unref '(*)))
+        (gtk_toggle_button_set_active *visibility-button TRUE)
+
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
@@ -383,6 +396,7 @@ FROM_KEY (1)."
                             *attrib-combo-box-entry
                             *attrib-combo-entry
                             *value-entry
+                            *visibility-button
                             *attrib
                             invocation-flag
                             (get-number-of-not-attached-objects *selection-list))))))
