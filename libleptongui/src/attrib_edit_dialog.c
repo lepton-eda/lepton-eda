@@ -52,7 +52,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     int flag,
                     int nsel)
 {
-  GtkWidget *attach_options_label;
   GSList *hbox2_group = NULL;
   GtkWidget *addtoallbutton;
   GtkWidget *addtocompsbutton;
@@ -69,16 +68,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gint wx, wy;
 
   if (nsel > 1) { /* gschem specific */
-
-    attach_options_label = gtk_label_new(_("<b>Attach Options</b>"));
-    gtk_label_set_use_markup (GTK_LABEL (attach_options_label), TRUE);
-#ifdef ENABLE_GTK3
-    gtk_label_set_xalign (GTK_LABEL (attach_options_label), 0.0);
-    gtk_label_set_yalign (GTK_LABEL (attach_options_label), 0.0);
-#else
-    gtk_misc_set_alignment(GTK_MISC(attach_options_label),0,0);
-#endif
-    gtk_box_pack_start(GTK_BOX(vbox), attach_options_label, FALSE, FALSE, 0);
 
 #ifdef ENABLE_GTK3
     GtkWidget *grid = gtk_grid_new ();
