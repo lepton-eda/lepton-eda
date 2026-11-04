@@ -337,6 +337,12 @@ FROM_KEY (1)."
                                         %dialog-border-spacing)
         (gtk_box_set_spacing *vbox %dialog-vertical-spacing)
 
+        (gtk_window_set_title *attrib-edit-dialog
+                              (string->pointer
+                               (if (null-pointer? *attrib)
+                                   (G_ "Add Attribute")
+                                   (G_ "Edit Attribute"))))
+
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
