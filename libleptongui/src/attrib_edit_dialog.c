@@ -68,15 +68,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-  if (attr_obj != NULL)
-  {
-    gtk_window_set_title (GTK_WINDOW(aewindow), _("Edit Attribute"));
-  }
-  else
-  {
-    gtk_window_set_title (GTK_WINDOW(aewindow), _("Add Attribute"));
-  }
-
 #ifdef ENABLE_GTK3
   GtkWidget *grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
