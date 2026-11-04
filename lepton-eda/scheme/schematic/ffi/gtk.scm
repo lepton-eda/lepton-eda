@@ -67,6 +67,7 @@
             gtk_dialog_run
 
             gtk_entry_new
+            gtk_entry_set_activates_default
             gtk_entry_set_max_length
             gtk_entry_get_text
             gtk_entry_get_text_length
@@ -260,6 +261,7 @@
 (define-lff gtk_dialog_run int '(*))
 
 (define-lff gtk_entry_new '* '())
+(define-lff gtk_entry_set_activates_default void (list '* int))
 (define-lff gtk_entry_set_max_length void (list '* int))
 (define-lff gtk_entry_get_text '* '(*))
 (define-lff gtk_entry_get_text_length uint16 '(*))

@@ -355,6 +355,15 @@ FROM_KEY (1)."
 
         (gtk_label_set_mnemonic_widget *name-label
                                        *attrib-combo-box-entry)
+        (g_object_ref *attrib-combo-entry)
+        (g_object_set_data_full
+         *attrib-edit-dialog
+         (string->pointer "attrib_combo_entry")
+         *attrib-combo-entry
+         ;; GDestroyNotify
+         (procedure->pointer void g_object_unref '(*)))
+        (gtk_entry_set_activates_default *attrib-combo-entry TRUE)
+
 
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
