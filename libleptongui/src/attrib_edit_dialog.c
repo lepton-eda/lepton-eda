@@ -43,8 +43,6 @@ void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,
                     GtkWidget *vbox,
-                    GtkWidget *name_label,
-                    GtkWidget *value_label,
                     GtkWidget *attrib_combo_box_entry,
                     GtkWidget *attrib_combo_entry,
                     GtkWidget *value_entry,

@@ -447,8 +447,6 @@ FROM_KEY (1)."
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
-                            *name-label
-                            *value-label
                             *attrib-combo-box-entry
                             *attrib-combo-entry
                             *value-entry
