@@ -78,6 +78,8 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gtk_label_set_xalign (GTK_LABEL (name_label), 0.0);
   gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), name_label, 0, 0, 1, 1);
+  gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);
+  gtk_grid_attach (GTK_GRID (grid), attrib_combo_box_entry, 1, 0, 1, 1);
 #else
   GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
@@ -92,12 +94,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gtk_table_attach (GTK_TABLE (table), name_label, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-#endif
-
-#ifdef ENABLE_GTK3
-  gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), attrib_combo_box_entry, 1, 0, 1, 1);
-#else
   gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
