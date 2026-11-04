@@ -44,6 +44,16 @@
 (define FROM_MENU 0)
 (define FROM_HOTKEY 1)
 
+;;; Definition from x_dialog.h.
+;; #define DIALOG_BORDER_SPACING 5
+(define %dialog-border-spacing 5)
+;; #define DIALOG_V_SPACING 8
+(define %dialog-vertical-spacing 8)
+;; #define DIALOG_H_SPACING 10
+(define %dialog-horizontal-spacing 10)
+;; #define DIALOG_INDENTATION 10
+(define %dialog-indentation 10)
+
 
 ;;; Create a new empty attribute add/edit dialog widget with two
 ;;; buttons.
@@ -320,8 +330,16 @@ FROM_KEY (1)."
 
       (gtk_dialog_set_default_response *attrib-edit-dialog
                                        GTK_RESPONSE_APPLY)
-      (attrib_edit_dialog *window
-                          *attrib-edit-dialog
-                          *attrib
-                          invocation-flag
-                          (get-number-of-not-attached-objects *selection-list)))))
+
+      (let ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog)))
+
+        (gtk_container_set_border_width *attrib-edit-dialog
+                                        %dialog-border-spacing)
+        (gtk_box_set_spacing *vbox %dialog-vertical-spacing)
+
+        (attrib_edit_dialog *window
+                            *attrib-edit-dialog
+                            *vbox
+                            *attrib
+                            invocation-flag
+                            (get-number-of-not-attached-objects *selection-list))))))
