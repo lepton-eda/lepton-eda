@@ -98,12 +98,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 #endif
-  g_object_ref (attrib_combo_entry);
-  g_object_set_data_full (G_OBJECT (aewindow),
-                         "attrib_combo_entry", attrib_combo_entry,
-                            (GDestroyNotify) g_object_unref);
-  gtk_entry_set_activates_default (GTK_ENTRY (attrib_combo_entry), TRUE);
-
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
   gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);

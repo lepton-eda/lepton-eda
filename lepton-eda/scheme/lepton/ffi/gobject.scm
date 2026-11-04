@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2025 Lepton EDA Contributors
+;;; Copyright (C) 2020-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 
   #:export (g_object_get_data
             g_object_set_data
+            g_object_set_data_full
+            g_object_ref
             g_object_unref
             g_signal_connect))
 
@@ -36,6 +38,8 @@
 
 (define-lff g_object_get_data '* '(* *))
 (define-lff g_object_set_data void '(* * *))
+(define-lff g_object_set_data_full void '(* * * *))
+(define-lff g_object_ref '* '(*))
 (define-lff g_object_unref void '(*))
 
 ;;; Defined in gobject/gsignal.h
