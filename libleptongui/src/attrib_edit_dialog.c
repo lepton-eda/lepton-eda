@@ -45,14 +45,14 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *vbox,
                     GtkWidget *name_label,
                     GtkWidget *value_label,
+                    GtkWidget *attrib_combo_box_entry,
+                    GtkWidget *attrib_combo_entry,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
   GtkWidget *attach_options_label;
   GtkWidget *show_options;
-  GtkWidget *attrib_combo_box_entry;
-  GtkWidget *attrib_combo_entry;
   GtkWidget *value_entry;
   GtkWidget *visbutton;
   GSList *hbox2_group = NULL;
@@ -93,11 +93,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 #endif
-
-  attrib_combo_box_entry = gtk_combo_box_text_new_with_entry ();
-  attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (name_label), attrib_combo_box_entry);
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);

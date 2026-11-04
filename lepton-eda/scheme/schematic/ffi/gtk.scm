@@ -50,6 +50,7 @@
             gtk_combo_box_set_active
             gtk_combo_box_get_model
             gtk_combo_box_text_append_text
+            gtk_combo_box_text_new_with_entry
 
             gtk_container_add
             gtk_container_set_border_width
@@ -99,6 +100,7 @@
             gtk_label_new
             gtk_label_new_with_mnemonic
             gtk_label_set_markup
+            gtk_label_set_mnemonic_widget
 
             gtk_list_store_clear
 
@@ -238,6 +240,7 @@
 (define-lff gtk_combo_box_get_model '* '(*))
 
 (define-lff gtk_combo_box_text_append_text void '(* *))
+(define-lff gtk_combo_box_text_new_with_entry '* '())
 
 (define-lff gtk_container_add void '(* *))
 (define-lff gtk_container_set_border_width void (list '* unsigned-int))
@@ -290,6 +293,7 @@
 (define-lff gtk_label_new '* '(*))
 (define-lff gtk_label_new_with_mnemonic '* '(*))
 (define-lff gtk_label_set_markup void '(* *))
+(define-lff gtk_label_set_mnemonic_widget void '(* *))
 
 (define-lff gtk_list_store_clear void '(*))
 
