@@ -41,6 +41,9 @@
             gtk_adjustment_set_value
             gtk_adjustment_new
 
+            gtk_alignment_new
+            gtk_alignment_set_padding
+
             gtk_bin_get_child
 
             gtk_box_pack_start
@@ -96,6 +99,11 @@
 
             gtk_grab_remove
 
+            gtk_grid_attach
+            gtk_grid_new
+            gtk_grid_set_column_spacing
+            gtk_grid_set_row_spacing
+
             gtk_handle_box_new
 
             gtk_icon_theme_append_search_path
@@ -107,6 +115,9 @@
             gtk_label_new_with_mnemonic
             gtk_label_set_markup
             gtk_label_set_mnemonic_widget
+
+            gtk_label_set_xalign
+            gtk_label_set_yalign
 
             gtk_list_store_clear
 
@@ -123,6 +134,8 @@
 
             gtk_message_dialog_new
             gtk_message_dialog_set_markup
+
+            gtk_misc_set_alignment
 
             gtk_notebook_append_page
             gtk_notebook_get_n_pages
@@ -162,16 +175,26 @@
             gtk_statusbar_new
             gtk_statusbar_get_message_area
 
-            gtk_toggle_button_get_active
-            gtk_toggle_button_set_active
+            GTK_EXPAND
+            GTK_SHRINK
+            GTK_FILL
+
+            gtk_table_attach
+            gtk_table_new
+            gtk_table_set_col_spacings
+            gtk_table_set_row_spacings
 
             gtk_tearoff_menu_item_new
+
+            gtk_toggle_button_get_active
+            gtk_toggle_button_set_active
 
             gtk_widget_destroy
             gtk_widget_grab_focus
             gtk_widget_has_focus
             gtk_widget_hide
             gtk_widget_set_can_focus
+            gtk_widget_set_hexpand
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
             gtk_widget_get_visible
@@ -254,6 +277,9 @@
 (define-lff gtk_adjustment_set_value void (list '* double))
 (define-lff gtk_adjustment_new '* (list double double double double double double))
 
+(define-lff gtk_alignment_new '* (list float float float float))
+(define-lff gtk_alignment_set_padding void (list '* unsigned-int unsigned-int unsigned-int unsigned-int))
+
 (define-lff gtk_bin_get_child '* '(*))
 
 (define-lff gtk_box_pack_start void (list '* '* int int int))
@@ -312,6 +338,11 @@
 
 (define-lff gtk_grab_remove void '(*))
 
+(define-lff-gtk3 gtk_grid_attach void (list '* '* int int int int))
+(define-lff-gtk3 gtk_grid_new '* '())
+(define-lff-gtk3 gtk_grid_set_column_spacing void (list '* unsigned-int))
+(define-lff-gtk3 gtk_grid_set_row_spacing void (list '* unsigned-int))
+
 (define-lff gtk_handle_box_new '* '())
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
@@ -323,6 +354,9 @@
 (define-lff gtk_label_new_with_mnemonic '* '(*))
 (define-lff gtk_label_set_markup void '(* *))
 (define-lff gtk_label_set_mnemonic_widget void '(* *))
+
+(define-lff-gtk3 gtk_label_set_xalign void (list '* float))
+(define-lff-gtk3 gtk_label_set_yalign void (list '* float))
 
 (define-lff gtk_list_store_clear void '(*))
 
@@ -339,6 +373,8 @@
 
 (define-lff gtk_message_dialog_new '* (list '* int int int '*))
 (define-lff gtk_message_dialog_set_markup void '(* *))
+
+(define-lff gtk_misc_set_alignment void (list '* float float))
 
 (define-lff gtk_notebook_append_page int '(* * *))
 (define-lff gtk_notebook_get_n_pages int '(*))
@@ -379,6 +415,18 @@
 (define-lff gtk_statusbar_new '* '())
 (define-lff gtk_statusbar_get_message_area '* '(*))
 
+;;; Attach options (for tables) (GtkAttachOptions)
+;;; GTK2: gtkenums.h
+;;; GTK3: deprecated/gtktable.h
+(define GTK_EXPAND (ash 1 0))
+(define GTK_SHRINK (ash 1 1))
+(define GTK_FILL (ash 1 2))
+
+(define-lff gtk_table_attach void (list '* '* unsigned-int unsigned-int unsigned-int unsigned-int int int unsigned-int unsigned-int))
+(define-lff gtk_table_new '* (list unsigned-int unsigned-int int))
+(define-lff gtk_table_set_col_spacings void (list '* unsigned-int))
+(define-lff gtk_table_set_row_spacings void (list '* unsigned-int))
+
 (define-lff gtk_tearoff_menu_item_new '* '())
 
 (define-lff gtk_toggle_button_get_active int '(*))
@@ -389,6 +437,7 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_set_can_focus void (list '* int))
+(define-lff gtk_widget_set_hexpand void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
 (define-lff gtk_widget_get_visible int '(*))

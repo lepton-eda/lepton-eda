@@ -70,54 +70,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   LeptonObject *attrib = NULL;
   gint wx, wy;
 
-#ifdef ENABLE_GTK3
-  GtkWidget *grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
-  gtk_box_pack_start (GTK_BOX(vbox), grid, TRUE, TRUE, 0);
-  gtk_label_set_xalign (GTK_LABEL (name_label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
-  gtk_grid_attach (GTK_GRID (grid), name_label, 0, 0, 1, 1);
-  gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), attrib_combo_box_entry, 1, 0, 1, 1);
-  gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);
-  gtk_grid_attach (GTK_GRID (grid), value_label, 0, 1, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), value_entry, 1, 1, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), visbutton, 0, 2, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), show_options, 1, 2, 1, 1);
-#else
-  GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
-                            DIALOG_INDENTATION, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
-
-  GtkWidget *table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
-  gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
-  gtk_container_add (GTK_CONTAINER (alignment), table);
-  gtk_misc_set_alignment (GTK_MISC (name_label), 0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), name_label, 0, 1, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (value_label), 0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), value_label, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), value_entry, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), visbutton, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), show_options, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
-                    (GtkAttachOptions) (0), 0, 0);
-#endif
-
   if (nsel > 1) { /* gschem specific */
 
     attach_options_label = gtk_label_new(_("<b>Attach Options</b>"));
@@ -131,17 +83,17 @@ attrib_edit_dialog (SchematicWindow *w_current,
     gtk_box_pack_start(GTK_BOX(vbox), attach_options_label, FALSE, FALSE, 0);
 
 #ifdef ENABLE_GTK3
-    grid = gtk_grid_new ();
+    GtkWidget *grid = gtk_grid_new ();
     gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
     gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
     gtk_box_pack_start(GTK_BOX(vbox), grid, TRUE, TRUE, 0);
 #else
-    alignment = gtk_alignment_new(0,0,1,1);
+    GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                               DIALOG_INDENTATION, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
-    table = gtk_table_new (2, 3, FALSE);
+    GtkWidget *table = gtk_table_new (2, 3, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
     gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
     gtk_container_add (GTK_CONTAINER (alignment), table);
