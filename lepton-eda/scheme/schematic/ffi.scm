@@ -60,6 +60,7 @@
             schematic_gtk_vbox_new
             schematic_gdk_color_parse
             schematic_pango_text_width
+            schematic_string_list_store_new
 
             generic_confirm_dialog
             generic_error_dialog
@@ -741,6 +742,7 @@
 (define-lff schematic_gtk_vbox_new '* (list int int))
 (define-lff schematic_gdk_color_parse '* '(*))
 (define-lff schematic_pango_text_width int '(* *))
+(define-lff schematic_string_list_store_new '* '())
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
@@ -1289,7 +1291,7 @@
 (define-lff o_place_start void (list '* int int))
 
 ;;; attrib_edit_dialog.c
-(define-lff attrib_edit_dialog void (list '* '* '* '* '* '* '* '* '* '* int int))
+(define-lff attrib_edit_dialog void (list '* '* '* '* '* '* '* '* '* '* '* int int))
 
 ;;; autonumber_dialog.c
 (define-lff schematic_autonumber_new '* '())

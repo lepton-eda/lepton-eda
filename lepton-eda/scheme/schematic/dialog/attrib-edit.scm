@@ -345,7 +345,9 @@ FROM_KEY (1)."
              (*value-entry (gtk_entry_new))
              (*visibility-button
               (gtk_check_button_new_with_mnemonic
-               (string->pointer (G_ "Vi_sible")))))
+               (string->pointer (G_ "Vi_sible"))))
+             (*show-options (gtk_combo_box_text_new))
+             (*store (schematic_string_list_store_new)))
 
         (gtk_container_set_border_width *attrib-edit-dialog
                                         %dialog-border-spacing)
@@ -388,6 +390,26 @@ FROM_KEY (1)."
          (procedure->pointer void g_object_unref '(*)))
         (gtk_toggle_button_set_active *visibility-button TRUE)
 
+        (gtk_combo_box_set_model *show-options *store)
+        (g_object_ref *show-options)
+        (g_object_set_data_full
+         *attrib-edit-dialog
+         (string->pointer "show_options")
+         *show-options
+         ;; GDestroyNotify
+         (procedure->pointer void g_object_unref '(*)))
+
+        (gtk_combo_box_text_append_text
+         *show-options
+         (string->pointer (G_ "Show Value Only")))
+        (gtk_combo_box_text_append_text
+         *show-options
+         (string->pointer (G_ "Show Name Only")))
+        (gtk_combo_box_text_append_text
+         *show-options
+         (string->pointer (G_ "Show Name & Value")))
+        (gtk_combo_box_set_active *show-options 0)
+
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
@@ -397,6 +419,7 @@ FROM_KEY (1)."
                             *attrib-combo-entry
                             *value-entry
                             *visibility-button
+                            *show-options
                             *attrib
                             invocation-flag
                             (get-number-of-not-attached-objects *selection-list))))))

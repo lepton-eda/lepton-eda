@@ -51,7 +51,10 @@
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
+            gtk_combo_box_set_model
+
             gtk_combo_box_text_append_text
+            gtk_combo_box_text_new
             gtk_combo_box_text_new_with_entry
 
             gtk_container_add
@@ -243,8 +246,10 @@
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
 (define-lff gtk_combo_box_get_model '* '(*))
+(define-lff gtk_combo_box_set_model void '(* *))
 
 (define-lff gtk_combo_box_text_append_text void '(* *))
+(define-lff gtk_combo_box_text_new '* '())
 (define-lff gtk_combo_box_text_new_with_entry '* '())
 
 (define-lff gtk_container_add void '(* *))
