@@ -49,12 +49,12 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *attrib_combo_entry,
                     GtkWidget *value_entry,
                     GtkWidget *visbutton,
+                    GtkWidget *show_options,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
   GtkWidget *attach_options_label;
-  GtkWidget *show_options;
   GSList *hbox2_group = NULL;
   GtkWidget *addtoallbutton;
   GtkWidget *addtocompsbutton;
@@ -114,14 +114,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (0), 0, 0);
 #endif
 
-  show_options = gtk_combo_box_text_new ();
-  GtkListStore *store = schematic_string_list_store_new ();
-  gtk_combo_box_set_model (GTK_COMBO_BOX (show_options), GTK_TREE_MODEL(store));
-
-  g_object_ref (show_options);
-  g_object_set_data_full (G_OBJECT (aewindow), "show_options", show_options,
-                          (GDestroyNotify) g_object_unref);
-
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), show_options, 1, 2, 1, 1);
 #else
@@ -129,14 +121,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                     (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
 #endif
-
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
-                                  _("Show Value Only"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
-                                  _("Show Name Only"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
-                                  _("Show Name & Value"));
-  gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
 
   if (nsel > 1) { /* gschem specific */
 
