@@ -331,7 +331,13 @@ FROM_KEY (1)."
       (gtk_dialog_set_default_response *attrib-edit-dialog
                                        GTK_RESPONSE_APPLY)
 
-      (let ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog)))
+      (let ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog))
+            ;; Name selection.
+            (*name-label (gtk_label_new_with_mnemonic
+                          (string->pointer (G_ "N_ame:"))))
+            ;; Value entry.
+            (*value-label (gtk_label_new_with_mnemonic
+                           (string->pointer (G_ "_Value:")))))
 
         (gtk_container_set_border_width *attrib-edit-dialog
                                         %dialog-border-spacing)
@@ -346,6 +352,8 @@ FROM_KEY (1)."
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
                             *vbox
+                            *name-label
+                            *value-label
                             *attrib
                             invocation-flag
                             (get-number-of-not-attached-objects *selection-list))))))

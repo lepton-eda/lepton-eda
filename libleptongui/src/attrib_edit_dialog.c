@@ -43,11 +43,13 @@ void
 attrib_edit_dialog (SchematicWindow *w_current,
                     GtkWidget *aewindow,
                     GtkWidget *vbox,
+                    GtkWidget *name_label,
+                    GtkWidget *value_label,
                     LeptonObject *attr_obj,
                     int flag,
                     int nsel)
 {
-  GtkWidget *name_label, *value_label, *attach_options_label;
+  GtkWidget *attach_options_label;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
@@ -85,8 +87,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   gtk_container_add (GTK_CONTAINER (alignment), table);
 #endif
 
-  /* Name selection */
-  name_label = gtk_label_new_with_mnemonic (_("N_ame:"));
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (name_label), 0.0);
   gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
@@ -117,8 +117,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
                             (GDestroyNotify) g_object_unref);
   gtk_entry_set_activates_default (GTK_ENTRY (attrib_combo_entry), TRUE);
 
-  /* Value entry */
-  value_label = gtk_label_new_with_mnemonic (_("_Value:"));
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
   gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);
