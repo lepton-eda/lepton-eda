@@ -341,7 +341,8 @@ FROM_KEY (1)."
              (*attrib-combo-box-entry
               (gtk_combo_box_text_new_with_entry))
              (*attrib-combo-entry
-              (gtk_bin_get_child *attrib-combo-box-entry)))
+              (gtk_bin_get_child *attrib-combo-box-entry))
+             (*value-entry (gtk_entry_new)))
 
         (gtk_container_set_border_width *attrib-edit-dialog
                                         %dialog-border-spacing)
@@ -364,6 +365,15 @@ FROM_KEY (1)."
          (procedure->pointer void g_object_unref '(*)))
         (gtk_entry_set_activates_default *attrib-combo-entry TRUE)
 
+        (g_object_ref *value-entry)
+        (g_object_set_data_full
+         *attrib-edit-dialog
+         (string->pointer "value_entry")
+         *value-entry
+         ;; GDestroyNotify
+         (procedure->pointer void g_object_unref '(*)))
+        (gtk_label_set_mnemonic_widget *value-label *value-entry)
+        (gtk_entry_set_activates_default *value-entry TRUE)
 
         (attrib_edit_dialog *window
                             *attrib-edit-dialog
@@ -372,6 +382,7 @@ FROM_KEY (1)."
                             *value-label
                             *attrib-combo-box-entry
                             *attrib-combo-entry
+                            *value-entry
                             *attrib
                             invocation-flag
                             (get-number-of-not-attached-objects *selection-list))))))
