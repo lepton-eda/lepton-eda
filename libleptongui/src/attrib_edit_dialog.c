@@ -44,10 +44,10 @@ attrib_edit_dialog (GtkWidget *aewindow,
                     GtkWidget *addtoallbutton,
                     GtkWidget *addtocompsbutton,
                     GtkWidget *addtonetsbutton,
+                    GtkWidget *overwritebutton,
                     GSList *hbox2_group,
                     GtkWidget *vbox)
 {
-  GtkWidget *overwritebutton;
 
 #ifdef ENABLE_GTK3
     GtkWidget *grid = gtk_grid_new ();
@@ -99,11 +99,6 @@ attrib_edit_dialog (GtkWidget *aewindow,
                      0);
 #endif
 
-    overwritebutton = gtk_check_button_new_with_label (_("Replace existing attributes"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(overwritebutton), TRUE);
-    g_object_ref (overwritebutton);
-    g_object_set_data_full (G_OBJECT (aewindow), "overwritebutton", overwritebutton,
-                            (GDestroyNotify) g_object_unref);
 #ifdef ENABLE_GTK3
     gtk_grid_attach (GTK_GRID (grid), overwritebutton, 0, 1, 1, 1);
 #else
