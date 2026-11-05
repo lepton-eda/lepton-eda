@@ -49,6 +49,7 @@
             gtk_box_pack_start
             gtk_box_set_spacing
 
+            gtk_check_button_new_with_label
             gtk_check_button_new_with_mnemonic
 
             gtk_combo_box_get_active
@@ -289,6 +290,7 @@
 (define-lff gtk_box_pack_start void (list '* '* int int int))
 (define-lff gtk_box_set_spacing void (list '* int))
 
+(define-lff gtk_check_button_new_with_label '* '(*))
 (define-lff gtk_check_button_new_with_mnemonic '* '(*))
 
 (define-lff gtk_combo_box_get_active int '(*))

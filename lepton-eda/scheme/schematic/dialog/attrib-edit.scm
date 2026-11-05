@@ -475,7 +475,10 @@ FROM_KEY (1)."
                      *hbox2-group-1
                      (string->pointer (G_ "Nets"))))
                    (*hbox2-group
-                    (gtk_radio_button_get_group *add-to-nets-button)))
+                    (gtk_radio_button_get_group *add-to-nets-button))
+                   (*overwrite-button
+                    (gtk_check_button_new_with_label
+                     (string->pointer (G_ "Replace existing attributes")))))
 
               (g_object_ref *add-to-all-button)
               (g_object_set_data_full
@@ -501,10 +504,19 @@ FROM_KEY (1)."
                ;; GDestroyNotify
                (procedure->pointer void g_object_unref '(*)))
 
+              (gtk_toggle_button_set_active *overwrite-button TRUE)
+              (g_object_ref *overwrite-button)
+              (g_object_set_data_full
+               *attrib-edit-dialog
+               (string->pointer "overwritebutton")
+               *overwrite-button
+               ;; GDestroyNotify
+               (procedure->pointer void g_object_unref '(*)))
               (attrib_edit_dialog *attrib-edit-dialog
                                   *add-to-all-button
                                   *add-to-components-button
                                   *add-to-nets-button
+                                  *overwrite-button
                                   *hbox2-group
                                   *vbox)))
 

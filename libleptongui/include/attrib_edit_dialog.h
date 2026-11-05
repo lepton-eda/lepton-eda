@@ -32,6 +32,7 @@ attrib_edit_dialog (GtkWidget *aewindow,
                     GtkWidget *addtoallbutton,
                     GtkWidget *addtocompsbutton,
                     GtkWidget *addtonetsbutton,
+                    GtkWidget *overwritebutton,
                     GSList *hbox2_group,
                     GtkWidget *vbox);
 void
