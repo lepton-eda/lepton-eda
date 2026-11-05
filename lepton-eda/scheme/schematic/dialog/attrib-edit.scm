@@ -458,7 +458,25 @@ FROM_KEY (1)."
               (gtk_box_pack_start *vbox *attach-options-label FALSE FALSE 0)))
 
           (when (> non-attached-objects-number 1)
-            (attrib_edit_dialog *attrib-edit-dialog *vbox))
+            (let* ((*add-to-all-button
+                    (gtk_radio_button_new_with_label
+                     %null-pointer
+                     (string->pointer (G_ "All"))))
+                   (*hbox2-group
+                    (gtk_radio_button_get_group *add-to-all-button)))
+
+              (g_object_ref *add-to-all-button)
+              (g_object_set_data_full
+               *attrib-edit-dialog
+               (string->pointer "addtoallbutton")
+               *add-to-all-button
+               ;; GDestroyNotify
+               (procedure->pointer void g_object_unref '(*)))
+
+              (attrib_edit_dialog *attrib-edit-dialog
+                                  *add-to-all-button
+                                  *hbox2-group
+                                  *vbox)))
 
           (schematic_attrib_edit_dialog_set_data *window
                                                  *attrib-edit-dialog
