@@ -57,6 +57,7 @@ attrib_edit_dialog (GtkWidget *aewindow,
     gtk_grid_attach (GTK_GRID (grid), addtoallbutton, 0, 0, 1, 1);
     gtk_grid_attach (GTK_GRID (grid), addtocompsbutton, 1, 0, 1, 1);
     gtk_grid_attach (GTK_GRID (grid), addtonetsbutton, 2, 0, 1, 1);
+    gtk_grid_attach (GTK_GRID (grid), overwritebutton, 0, 1, 1, 1);
 #else
     GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
@@ -97,11 +98,6 @@ attrib_edit_dialog (GtkWidget *aewindow,
                      (GtkAttachOptions) 0,
                      0,
                      0);
-#endif
-
-#ifdef ENABLE_GTK3
-    gtk_grid_attach (GTK_GRID (grid), overwritebutton, 0, 1, 1, 1);
-#else
     gtk_table_attach(GTK_TABLE(table),
                      overwritebutton,
                      0,
