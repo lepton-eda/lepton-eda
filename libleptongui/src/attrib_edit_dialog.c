@@ -43,10 +43,10 @@ void
 attrib_edit_dialog (GtkWidget *aewindow,
                     GtkWidget *addtoallbutton,
                     GtkWidget *addtocompsbutton,
+                    GtkWidget *addtonetsbutton,
                     GSList *hbox2_group,
                     GtkWidget *vbox)
 {
-  GtkWidget *addtonetsbutton;
   GtkWidget *overwritebutton;
 
 #ifdef ENABLE_GTK3
@@ -87,12 +87,6 @@ attrib_edit_dialog (GtkWidget *aewindow,
                      0,
                      0);
 #endif
-
-    addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Nets"));
-    hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtonetsbutton));
-    g_object_ref (addtonetsbutton);
-    g_object_set_data_full (G_OBJECT (aewindow), "addtonetsbutton", addtonetsbutton,
-                            (GDestroyNotify) g_object_unref);
 #ifdef ENABLE_GTK3
     gtk_grid_attach (GTK_GRID (grid), addtonetsbutton, 2, 0, 1, 1);
 #else
