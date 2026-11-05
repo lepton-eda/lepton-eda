@@ -29,6 +29,8 @@ G_BEGIN_DECLS
 
 void
 attrib_edit_dialog (GtkWidget *aewindow,
+                    GtkWidget *addtoallbutton,
+                    GSList *hbox2_group,
                     GtkWidget *vbox);
 void
 schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
