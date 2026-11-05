@@ -54,6 +54,7 @@ attrib_edit_dialog (GtkWidget *aewindow,
     gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
     gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
     gtk_box_pack_start(GTK_BOX(vbox), grid, TRUE, TRUE, 0);
+    gtk_grid_attach (GTK_GRID (grid), addtoallbutton, 0, 0, 1, 1);
 #else
     GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
@@ -64,11 +65,6 @@ attrib_edit_dialog (GtkWidget *aewindow,
     gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
     gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
     gtk_container_add (GTK_CONTAINER (alignment), table);
-#endif
-
-#ifdef ENABLE_GTK3
-    gtk_grid_attach (GTK_GRID (grid), addtoallbutton, 0, 0, 1, 1);
-#else
     gtk_table_attach(GTK_TABLE(table),
                      addtoallbutton,
                      0,
