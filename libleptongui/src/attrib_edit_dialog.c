@@ -40,16 +40,8 @@
  *  This function creates the single attribute edit dialog.
  */
 void
-attrib_edit_dialog (SchematicWindow *w_current,
-                    GtkWidget *aewindow,
+attrib_edit_dialog (GtkWidget *aewindow,
                     GtkWidget *vbox,
-                    GtkWidget *attrib_combo_box_entry,
-                    GtkWidget *attrib_combo_entry,
-                    GtkWidget *value_entry,
-                    GtkWidget *visbutton,
-                    GtkWidget *show_options,
-                    LeptonObject *attr_obj,
-                    int flag,
                     int nsel)
 {
   GSList *hbox2_group = NULL;
@@ -57,15 +49,6 @@ attrib_edit_dialog (SchematicWindow *w_current,
   GtkWidget *addtocompsbutton;
   GtkWidget *addtonetsbutton;
   GtkWidget *overwritebutton;
-  GtkEntryCompletion *attrib_combo_entry_completion;
-
-  /* gschem specific */
-  char* string = NULL;
-  int i, len;
-  char *name = NULL;
-  char *val = NULL;
-  LeptonObject *attrib = NULL;
-  gint wx, wy;
 
   if (nsel > 1) { /* gschem specific */
 
@@ -166,6 +149,27 @@ attrib_edit_dialog (SchematicWindow *w_current,
                      0);
 #endif
   }
+}
+
+
+void
+schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
+                                       GtkWidget *aewindow,
+                                       GtkWidget *attrib_combo_box_entry,
+                                       GtkWidget *attrib_combo_entry,
+                                       GtkWidget *value_entry,
+                                       GtkWidget *visbutton,
+                                       GtkWidget *show_options,
+                                       LeptonObject *attr_obj,
+                                       int flag)
+{
+  GtkEntryCompletion *attrib_combo_entry_completion;
+  char *name = NULL;
+  char *val = NULL;
+  LeptonObject *attrib = NULL;
+  char* string = NULL;
+  int i, len;
+  int wx, wy;
 
   /* gschem specific */
   if (attr_obj) {
