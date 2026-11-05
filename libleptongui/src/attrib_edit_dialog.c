@@ -41,16 +41,13 @@
  */
 void
 attrib_edit_dialog (GtkWidget *aewindow,
-                    GtkWidget *vbox,
-                    int nsel)
+                    GtkWidget *vbox)
 {
   GSList *hbox2_group = NULL;
   GtkWidget *addtoallbutton;
   GtkWidget *addtocompsbutton;
   GtkWidget *addtonetsbutton;
   GtkWidget *overwritebutton;
-
-  if (nsel > 1) { /* gschem specific */
 
 #ifdef ENABLE_GTK3
     GtkWidget *grid = gtk_grid_new ();
@@ -148,7 +145,6 @@ attrib_edit_dialog (GtkWidget *aewindow,
                      0,
                      0);
 #endif
-  }
 }
 
 

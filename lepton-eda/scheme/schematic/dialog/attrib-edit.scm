@@ -457,9 +457,8 @@ FROM_KEY (1)."
                   (gtk_misc_set_alignment *attach-options-label 0 0))
               (gtk_box_pack_start *vbox *attach-options-label FALSE FALSE 0)))
 
-          (attrib_edit_dialog *attrib-edit-dialog
-                              *vbox
-                              non-attached-objects-number)
+          (when (> non-attached-objects-number 1)
+            (attrib_edit_dialog *attrib-edit-dialog *vbox))
 
           (schematic_attrib_edit_dialog_set_data *window
                                                  *attrib-edit-dialog
