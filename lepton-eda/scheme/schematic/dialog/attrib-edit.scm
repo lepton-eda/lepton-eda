@@ -512,13 +512,28 @@ FROM_KEY (1)."
                *overwrite-button
                ;; GDestroyNotify
                (procedure->pointer void g_object_unref '(*)))
-              (attrib_edit_dialog *attrib-edit-dialog
-                                  *add-to-all-button
-                                  *add-to-components-button
-                                  *add-to-nets-button
-                                  *overwrite-button
-                                  *hbox2-group
-                                  *vbox)))
+
+              (if %m4-use-gtk3
+                  (let ((*grid (gtk_grid_new)))
+                    (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
+                    (gtk_grid_set_column_spacing *grid %dialog-horizontal-spacing)
+                    (gtk_box_pack_start *vbox *grid TRUE TRUE 0)
+                    (gtk_grid_attach *grid *add-to-all-button 0 0 1 1)
+                    (gtk_grid_attach *grid *add-to-components-button 1 0 1 1)
+                    (gtk_grid_attach *grid *add-to-nets-button 2 0 1 1)
+                    (gtk_grid_attach *grid *overwrite-button 0 1 1 1))
+
+                  (let ((*alignment (gtk_alignment_new 0 0 1 1))
+                        (*table (gtk_table_new 2 3 FALSE)))
+                    (gtk_alignment_set_padding *alignment 0 0 %dialog-indentation 0)
+                    (gtk_box_pack_start *vbox *alignment TRUE TRUE 0)
+                    (gtk_table_set_row_spacings *table %dialog-vertical-spacing)
+                    (gtk_table_set_col_spacings *table %dialog-horizontal-spacing)
+                    (gtk_container_add *alignment *table)
+                    (gtk_table_attach *table *add-to-all-button 0 1 0 1 GTK_FILL 0 0 0)
+                    (gtk_table_attach *table *add-to-components-button 1 2 0 1 GTK_FILL 0 0 0)
+                    (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
+                    (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
           (schematic_attrib_edit_dialog_set_data *window
                                                  *attrib-edit-dialog
