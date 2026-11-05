@@ -462,8 +462,14 @@ FROM_KEY (1)."
                     (gtk_radio_button_new_with_label
                      %null-pointer
                      (string->pointer (G_ "All"))))
+                   (*hbox2-group-0
+                    (gtk_radio_button_get_group *add-to-all-button))
+                   (*add-to-components-button
+                    (gtk_radio_button_new_with_label
+                     *hbox2-group-0
+                     (string->pointer (G_ "Components"))))
                    (*hbox2-group
-                    (gtk_radio_button_get_group *add-to-all-button)))
+                    (gtk_radio_button_get_group *add-to-components-button)))
 
               (g_object_ref *add-to-all-button)
               (g_object_set_data_full
@@ -473,8 +479,17 @@ FROM_KEY (1)."
                ;; GDestroyNotify
                (procedure->pointer void g_object_unref '(*)))
 
+              (g_object_ref *add-to-components-button)
+              (g_object_set_data_full
+               *attrib-edit-dialog
+               (string->pointer "addtocompsbutton")
+               *add-to-components-button
+               ;; GDestroyNotify
+               (procedure->pointer void g_object_unref '(*)))
+
               (attrib_edit_dialog *attrib-edit-dialog
                                   *add-to-all-button
+                                  *add-to-components-button
                                   *hbox2-group
                                   *vbox)))
 

@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 void
 attrib_edit_dialog (GtkWidget *aewindow,
                     GtkWidget *addtoallbutton,
+                    GtkWidget *addtocompsbutton,
                     GSList *hbox2_group,
                     GtkWidget *vbox);
 void
