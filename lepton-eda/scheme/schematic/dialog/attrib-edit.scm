@@ -618,9 +618,28 @@ FROM_KEY (1)."
                                                     *string)
                     (loop (1+ i)))))
 
+
+  ;; Add completion to attribute combo box entry.
+              (let ((*attrib-combo-entry-completion
+                     (gtk_entry_completion_new)))
+                (gtk_entry_completion_set_model
+                 *attrib-combo-entry-completion
+                 (gtk_combo_box_get_model *attrib-combo-box-entry))
+                (gtk_entry_completion_set_text_column
+                 *attrib-combo-entry-completion
+                 0)
+                (gtk_entry_completion_set_inline_completion
+                 *attrib-combo-entry-completion
+                 TRUE)
+                (gtk_entry_completion_set_popup_single_match
+                 *attrib-combo-entry-completion
+                 FALSE)
+                (gtk_entry_set_completion
+                 *attrib-combo-entry
+                 *attrib-combo-entry-completion))
+
               (schematic_attrib_edit_dialog_set_data *window
                                                      *attrib-edit-dialog
-                                                     *attrib-combo-box-entry
                                                      *attrib-combo-entry
                                                      *value-entry
                                                      *attrib
