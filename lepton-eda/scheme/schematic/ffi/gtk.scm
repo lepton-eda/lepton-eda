@@ -75,6 +75,8 @@
             gtk_dialog_new
             gtk_dialog_run
 
+            gtk_editable_select_region
+
             gtk_entry_new
             gtk_entry_set_activates_default
             gtk_entry_set_max_length
@@ -318,6 +320,8 @@
 (define-lff gtk_dialog_set_default_response void (list '* int))
 (define-lff gtk_dialog_new '* '())
 (define-lff gtk_dialog_run int '(*))
+
+(define-lff gtk_editable_select_region void (list '* int int))
 
 (define-lff gtk_entry_new '* '())
 (define-lff gtk_entry_set_activates_default void (list '* int))

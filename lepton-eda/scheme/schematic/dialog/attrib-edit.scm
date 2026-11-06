@@ -568,6 +568,11 @@ FROM_KEY (1)."
             (unless (null-pointer? *name)
               (gtk_entry_set_text *attrib-combo-entry *name))
 
+            (unless (null-pointer? *value)
+              (gtk_entry_set_text *value-entry *value)
+              (let ((len (string-length (pointer->string *value))))
+                (gtk_editable_select_region *value-entry 0 len)))
+
             (schematic_attrib_edit_dialog_set_data *window
                                                    *attrib-edit-dialog
                                                    *attrib-combo-box-entry
@@ -575,5 +580,4 @@ FROM_KEY (1)."
                                                    *value-entry
                                                    *attrib
                                                    *name
-                                                   *value
                                                    invocation-flag)))))))
