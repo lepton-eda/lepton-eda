@@ -43,10 +43,10 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,
                                        char *name,
+                                       char *val,
                                        int flag)
 {
   GtkEntryCompletion *attrib_combo_entry_completion;
-  char *val = NULL;
   LeptonObject *attrib = NULL;
   char* string = NULL;
   int i, len;
@@ -54,7 +54,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
 
   /* gschem specific */
   if (attr_obj) {
-    val = g_strdup (lepton_text_object_get_value (attr_obj));
     attrib = attr_obj;
 
   } else {
@@ -108,8 +107,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
   } else {
     gtk_widget_grab_focus(attrib_combo_entry);
   }
-
-  g_free(val);
 
 }
 /***************** End of Attrib Edit dialog box **********************/
