@@ -30,30 +30,3 @@
 #endif
 
 #include "schematic.h"
-
-/***************** Start of Attrib Edit dialog box ********************/
-/*! \section attrib-edit-dialog-box Atrib Edit Dialog Box */
-
-
-void
-schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
-                                       GtkWidget *aewindow,
-                                       GtkWidget *attrib_combo_entry,
-                                       GtkWidget *value_entry,
-                                       LeptonObject *attr_obj,
-                                       char *name)
-{
-  /* gschem specific */
-  gtk_widget_show_all(aewindow);
-  schematic_window_set_attrib_edit_widget (w_current, aewindow);
-
-  gtk_grab_add (aewindow);
-
-  if (attr_obj || (name && strcmp(name, "netname") == 0)) {
-    gtk_widget_grab_focus(value_entry);
-  } else {
-    gtk_widget_grab_focus(attrib_combo_entry);
-  }
-
-}
-/***************** End of Attrib Edit dialog box **********************/
