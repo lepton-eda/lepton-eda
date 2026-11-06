@@ -43,20 +43,14 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,
                                        char *name,
-                                       char *val,
                                        int flag)
 {
   GtkEntryCompletion *attrib_combo_entry_completion;
   char* string = NULL;
-  int i, len;
+  int i;
   int wx, wy;
 
   /* gschem specific */
-  if (val) {
-    gtk_entry_set_text(GTK_ENTRY(value_entry), val);
-    len = strlen(val);
-    gtk_editable_select_region (GTK_EDITABLE (value_entry), 0, len);
-  }
   g_object_set_data (G_OBJECT (aewindow), "invocation_flag",
                      GINT_TO_POINTER(flag));
 
