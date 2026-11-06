@@ -565,6 +565,9 @@ FROM_KEY (1)."
             (g_object_set_data *attrib-edit-dialog
                                (string->pointer "attrib")
                                *attrib)
+            (unless (null-pointer? *name)
+              (gtk_entry_set_text *attrib-combo-entry *name))
+
             (schematic_attrib_edit_dialog_set_data *window
                                                    *attrib-edit-dialog
                                                    *attrib-combo-box-entry
