@@ -557,7 +557,10 @@ FROM_KEY (1)."
                                  (if (true? (lepton_object_is_net *object))
                                      (string->pointer "netname")
                                      %null-pointer)))
-                           (lepton_text_object_get_name *attrib))))
+                           (lepton_text_object_get_name *attrib)))
+                (*value (if (null-pointer? *attrib)
+                            %null-pointer
+                            (lepton_text_object_get_value *attrib))))
 
             (schematic_attrib_edit_dialog_set_data *window
                                                    *attrib-edit-dialog
@@ -566,4 +569,5 @@ FROM_KEY (1)."
                                                    *value-entry
                                                    *attrib
                                                    *name
+                                                   *value
                                                    invocation-flag)))))))
