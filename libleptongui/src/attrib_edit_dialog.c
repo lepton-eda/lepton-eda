@@ -47,19 +47,12 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        int flag)
 {
   GtkEntryCompletion *attrib_combo_entry_completion;
-  LeptonObject *attrib = NULL;
   char* string = NULL;
   int i, len;
   int wx, wy;
 
   /* gschem specific */
-  if (attr_obj) {
-    attrib = attr_obj;
-
-  } else {
-    attrib = NULL;
-  }
-  g_object_set_data (G_OBJECT (aewindow), "attrib", attrib);
+  g_object_set_data (G_OBJECT (aewindow), "attrib", attr_obj);
   if (name) {
     gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
   }
@@ -102,7 +95,7 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
 
   gtk_grab_add (aewindow);
 
-  if (attrib || (name && strcmp(name, "netname") == 0)) {
+  if (attr_obj || (name && strcmp(name, "netname") == 0)) {
     gtk_widget_grab_focus(value_entry);
   } else {
     gtk_widget_grab_focus(attrib_combo_entry);
