@@ -33,7 +33,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *attrib_combo_box_entry,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
-                                       GtkWidget *visbutton,
                                        GtkWidget *show_options,
                                        LeptonObject *attr_obj,
                                        int flag);

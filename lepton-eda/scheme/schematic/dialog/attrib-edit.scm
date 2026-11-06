@@ -535,12 +535,17 @@ FROM_KEY (1)."
                     (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
                     (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
+          (if (null-pointer? *attrib)
+              (gtk_toggle_button_set_active *visibility-button TRUE)
+              (if (true? (lepton_text_object_is_visible *attrib))
+                  (gtk_toggle_button_set_active *visibility-button TRUE)
+                  (gtk_toggle_button_set_active *visibility-button FALSE)))
+
           (schematic_attrib_edit_dialog_set_data *window
                                                  *attrib-edit-dialog
                                                  *attrib-combo-box-entry
                                                  *attrib-combo-entry
                                                  *value-entry
-                                                 *visibility-button
                                                  *show-options
                                                  *attrib
                                                  invocation-flag))))))
