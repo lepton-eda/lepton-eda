@@ -56,6 +56,20 @@
 (define %dialog-indentation 10)
 
 
+;; This is an analog of GPOINTER_TO_INT.
+(define (pointer->int *p)
+  (let ((bv (make-bytevector (sizeof '*) 0)))
+    (bytevector-uint-set! bv 0 (pointer-address *p) (native-endianness) (sizeof '*))
+    (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))
+
+
+;; This is an analog of INT_TO_GPOINTER.
+(define (int->pointer val)
+  (define bv (make-bytevector (sizeof int) 0))
+  (bytevector-sint-set! bv 0 val (native-endianness) (sizeof int))
+  (make-pointer (bytevector-uint-ref bv 0 (native-endianness) (sizeof int))))
+
+
 ;;; Create a new empty attribute add/edit dialog widget with two
 ;;; buttons.
 (define (make-attrib-edit-dialog *window)
@@ -78,12 +92,6 @@
 
 
 (define (add-new-attrib! *widget *window *newtext visibility show-mode)
-  ;; This is an analog of GPOINTER_TO_INT.
-  (define (pointer->int *p)
-    (let ((bv (make-bytevector (sizeof '*) 0)))
-      (bytevector-uint-set! bv 0 (pointer-address *p) (native-endianness) (sizeof '*))
-      (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))))
-
   ;; There is one or no selected object.
   (define *object (o_select_return_first_object *window))
 
@@ -294,12 +302,6 @@
 
 (define *response
   (procedure->pointer void response (list '* int '*)))
-
-
-(define (int->pointer val)
-  (define bv (make-bytevector (sizeof int) 0))
-  (bytevector-sint-set! bv 0 val (native-endianness) (sizeof int))
-  (make-pointer (bytevector-uint-ref bv 0 (native-endianness) (sizeof int))))
 
 
 (define (attrib-edit-dialog *window *attrib invocation-flag)
