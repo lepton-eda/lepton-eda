@@ -80,7 +80,6 @@ libleptongui_la_SOURCES = \
 	slot_edit_dialog.c \
 	snap_mode.c \
 	window.c \
-	attrib_edit_dialog.c \
 	x_basic.c \
 	x_clipboard.c \
 	x_color.c \
