@@ -84,6 +84,13 @@
             gtk_entry_get_text_length
             gtk_entry_set_text
 
+            gtk_entry_completion_new
+            gtk_entry_completion_set_inline_completion
+            gtk_entry_completion_set_model
+            gtk_entry_completion_set_popup_single_match
+            gtk_entry_completion_set_text_column
+            gtk_entry_set_completion
+
             gtk_events_pending
 
             gtk_file_chooser_add_filter
@@ -329,6 +336,13 @@
 (define-lff gtk_entry_get_text '* '(*))
 (define-lff gtk_entry_get_text_length uint16 '(*))
 (define-lff gtk_entry_set_text void '(* *))
+
+(define-lff gtk_entry_completion_new '* '())
+(define-lff gtk_entry_completion_set_inline_completion void (list '* int))
+(define-lff gtk_entry_completion_set_model void '(* *))
+(define-lff gtk_entry_completion_set_popup_single_match void (list '* int))
+(define-lff gtk_entry_completion_set_text_column void (list '* int))
+(define-lff gtk_entry_set_completion void '(* *))
 
 (define-lff gtk_events_pending int '())
 

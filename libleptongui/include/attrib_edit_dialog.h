@@ -30,7 +30,6 @@ G_BEGIN_DECLS
 void
 schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *aewindow,
-                                       GtkWidget *attrib_combo_box_entry,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,

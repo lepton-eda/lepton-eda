@@ -1293,7 +1293,7 @@
 (define-lff o_place_start void (list '* int int))
 
 ;;; attrib_edit_dialog.c
-(define-lff schematic_attrib_edit_dialog_set_data void '(* * * * * * *))
+(define-lff schematic_attrib_edit_dialog_set_data void '(* * * * * *))
 
 ;;; autonumber_dialog.c
 (define-lff schematic_autonumber_new '* '())

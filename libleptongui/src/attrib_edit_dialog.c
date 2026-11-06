@@ -38,23 +38,11 @@
 void
 schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *aewindow,
-                                       GtkWidget *attrib_combo_box_entry,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,
                                        char *name)
 {
-  GtkEntryCompletion *attrib_combo_entry_completion;
-
-  /* Add completion to attribute combo box entry */
-  attrib_combo_entry_completion = gtk_entry_completion_new();
-  gtk_entry_completion_set_model(attrib_combo_entry_completion,
-          gtk_combo_box_get_model(GTK_COMBO_BOX(attrib_combo_box_entry)));
-  gtk_entry_completion_set_text_column(attrib_combo_entry_completion, 0);
-  gtk_entry_completion_set_inline_completion(attrib_combo_entry_completion, TRUE);
-  gtk_entry_completion_set_popup_single_match(attrib_combo_entry_completion, FALSE);
-  gtk_entry_set_completion(GTK_ENTRY(attrib_combo_entry), attrib_combo_entry_completion);
-
   /* gschem specific */
   gtk_widget_show_all(aewindow);
   schematic_window_set_attrib_edit_widget (w_current, aewindow);
