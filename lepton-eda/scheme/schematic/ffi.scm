@@ -201,8 +201,6 @@
             schematic_menu_recent_chooser_get_filename
             x_menu_attach_recent_files_submenu
 
-            schematic_attrib_edit_dialog_set_data
-
             schematic_autonumber_new
             schematic_autonumber_get_autotext
             schematic_autonumber_set_autotext
@@ -1291,9 +1289,6 @@
 (define-lff o_place_motion void (list '* int int))
 (define-lff o_place_rotate void '(*))
 (define-lff o_place_start void (list '* int int))
-
-;;; attrib_edit_dialog.c
-(define-lff schematic_attrib_edit_dialog_set_data void '(* * * * * *))
 
 ;;; autonumber_dialog.c
 (define-lff schematic_autonumber_new '* '())

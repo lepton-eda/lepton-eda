@@ -638,9 +638,13 @@ FROM_KEY (1)."
                  *attrib-combo-entry
                  *attrib-combo-entry-completion))
 
-              (schematic_attrib_edit_dialog_set_data *window
-                                                     *attrib-edit-dialog
-                                                     *attrib-combo-entry
-                                                     *value-entry
-                                                     *attrib
-                                                     *name))))))))
+              (gtk_widget_show_all *attrib-edit-dialog)
+              (schematic_window_set_attrib_edit_widget *window *attrib-edit-dialog)
+
+              (gtk_grab_add *attrib-edit-dialog)
+
+              (if (or (not (null-pointer? *attrib))
+                      (and (not (null-pointer? *name))
+                           (string= (pointer->string *name) "netname")))
+                  (gtk_widget_grab_focus *value-entry)
+                  (gtk_widget_grab_focus *attrib-combo-entry))*)))))))

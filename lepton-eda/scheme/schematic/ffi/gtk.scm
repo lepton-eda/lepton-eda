@@ -107,6 +107,7 @@
             gtk_file_filter_new
             gtk_file_filter_set_name
 
+            gtk_grab_add
             gtk_grab_remove
 
             gtk_grid_attach
@@ -360,6 +361,7 @@
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
 
+(define-lff gtk_grab_add void '(*))
 (define-lff gtk_grab_remove void '(*))
 
 (define-lff-gtk3 gtk_grid_attach void (list '* '* int int int int))
