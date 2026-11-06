@@ -692,6 +692,8 @@
             schematic_world_size_get_default_top
 
             x_basic_warp_cursor
+
+            s_attrib_get
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -1458,3 +1460,6 @@
 
 ;;; x_stroke.c
 (define-lff schematic_stroke_draw_point void (list '* int int))
+
+;;; s_attrib.c
+(define-lff s_attrib_get '* (list int))

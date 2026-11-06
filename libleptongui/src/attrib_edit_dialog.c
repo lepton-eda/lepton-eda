@@ -45,18 +45,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        char *name)
 {
   GtkEntryCompletion *attrib_combo_entry_completion;
-  char* string = NULL;
-  int i;
-
-  /* gschem specific */
-  i = 0;
-  string = (char *) s_attrib_get(i);
-  while (string != NULL) {
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (attrib_combo_box_entry),
-                                    string);
-    i++;
-    string = (char *) s_attrib_get(i);
-  }
 
   /* Add completion to attribute combo box entry */
   attrib_combo_entry_completion = gtk_entry_completion_new();

@@ -611,6 +611,13 @@ FROM_KEY (1)."
                                  (string->pointer "position_wy")
                                  (int->pointer wy))
 
+              (let loop ((i 0))
+                (let ((*string (s_attrib_get i)))
+                  (unless (null-pointer? *string)
+                    (gtk_combo_box_text_append_text *attrib-combo-box-entry
+                                                    *string)
+                    (loop (1+ i)))))
+
               (schematic_attrib_edit_dialog_set_data *window
                                                      *attrib-edit-dialog
                                                      *attrib-combo-box-entry
