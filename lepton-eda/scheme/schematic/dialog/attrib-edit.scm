@@ -541,11 +541,19 @@ FROM_KEY (1)."
                   (gtk_toggle_button_set_active *visibility-button TRUE)
                   (gtk_toggle_button_set_active *visibility-button FALSE)))
 
+          (if (null-pointer? *attrib)
+              ;; Show value only.
+              (gtk_combo_box_set_active *show-options 0)
+              (if (= (lepton_text_object_get_show *attrib) SHOW_VALUE)
+                  (gtk_combo_box_set_active *show-options 0)
+                  (if (= (lepton_text_object_get_show *attrib) SHOW_NAME)
+                      (gtk_combo_box_set_active *show-options 1)
+                      (gtk_combo_box_set_active *show-options 2))))
+
           (schematic_attrib_edit_dialog_set_data *window
                                                  *attrib-edit-dialog
                                                  *attrib-combo-box-entry
                                                  *attrib-combo-entry
                                                  *value-entry
-                                                 *show-options
                                                  *attrib
                                                  invocation-flag))))))

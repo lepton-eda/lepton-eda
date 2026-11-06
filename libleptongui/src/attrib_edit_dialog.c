@@ -41,7 +41,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *attrib_combo_box_entry,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
-                                       GtkWidget *show_options,
                                        LeptonObject *attr_obj,
                                        int flag)
 {
@@ -59,18 +58,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
     val = g_strdup (lepton_text_object_get_value (attr_obj));
     attrib = attr_obj;
 
-    if (lepton_text_object_get_show (attrib) == SHOW_VALUE)
-    {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
-    }
-    else if (lepton_text_object_get_show (attrib) == SHOW_NAME)
-    {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 1);
-    }
-    else
-    {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 2);
-    }
   } else {
     LeptonObject *object;
 
@@ -81,8 +68,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
         name = g_strdup("netname");
     }
 
-    /* show value only */
-    gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
   }
   g_object_set_data (G_OBJECT (aewindow), "attrib", attrib);
   if (name) {
