@@ -573,11 +573,13 @@ FROM_KEY (1)."
               (let ((len (string-length (pointer->string *value))))
                 (gtk_editable_select_region *value-entry 0 len)))
 
+            (g_object_set_data *attrib-edit-dialog
+                               (string->pointer "invocation_flag")
+                               (make-pointer invocation-flag))
             (schematic_attrib_edit_dialog_set_data *window
                                                    *attrib-edit-dialog
                                                    *attrib-combo-box-entry
                                                    *attrib-combo-entry
                                                    *value-entry
                                                    *attrib
-                                                   *name
-                                                   invocation-flag)))))))
+                                                   *name)))))))

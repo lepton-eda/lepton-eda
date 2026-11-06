@@ -42,8 +42,7 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,
-                                       char *name,
-                                       int flag)
+                                       char *name)
 {
   GtkEntryCompletion *attrib_combo_entry_completion;
   char* string = NULL;
@@ -51,9 +50,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
   int wx, wy;
 
   /* gschem specific */
-  g_object_set_data (G_OBJECT (aewindow), "invocation_flag",
-                     GINT_TO_POINTER(flag));
-
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy)) {
     wx = wy = -1;
   }
