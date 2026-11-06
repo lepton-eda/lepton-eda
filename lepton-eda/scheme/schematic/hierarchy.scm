@@ -22,6 +22,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton attrib)
   #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
@@ -135,11 +136,32 @@
                       (G_ "Schematic ~S not found in source library.")))))
 
 
+(define (copy-object* object page)
+  (and (not (and (attribute? object) (attrib-attachment object)))
+       (let ((O (copy-object object))
+             (A (map copy-object (object-attribs object))))
+         (apply page-append! page O A)
+         (apply attach-attribs! O A))))
+
+
+(define (component->page component page-name)
+  (let ((page (make-page page-name)))
+    (map (lambda (object) (copy-object* object page))
+         (component-contents component))
+    (set-page-dirty! page #f)
+    page))
+
+
 (define (open-symbol component)
   (define filename
     (begin
       (check-object component 1)
-      (canonicalize-path (component-filename component))))
+      (false-if-exception
+       (canonicalize-path (component-filename component)))))
+  ;; If a component has no filename but has a basename, it's
+  ;; probably a symbol generated using one of the functions
+  ;; component-library-command() or component-library-funcs().
+  (define generated-filename (component-basename component))
   (define symbol-page
     (if filename
         (let ((page (find (lambda (x)
@@ -149,9 +171,14 @@
           (or page
               ;; ... or create a new one.
               (increment-page-control-counter (open-schematic filename))))
-        ;; Component has not been found.
-        (report-error (component-basename component)
-                      (G_ "Symbol is not a real file. It cannot be loaded."))))
+        ;; Maybe the symbol is a generated one?
+        (if generated-filename
+            ;; For generated components, create a new page and
+            ;; copy the component contents to it.
+            (component->page component generated-filename)
+            ;; Component has not been found.
+            (report-error (component-basename component)
+                          (G_ "Symbol cannot be loaded.")))))
 
   (and symbol-page
        (begin

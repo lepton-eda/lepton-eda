@@ -534,6 +534,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   Most of the previous C functions related to dealing with strokes
   have been removed.
 
+- Support for editing generated symbols has been added.  See the
+  Lepton EDA manual and the example *edit-generated-symbols* for
+  more information.
+
 
 ### Changes in `lepton-schematic`:
 
