@@ -52,9 +52,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
   int wx, wy;
 
   /* gschem specific */
-  if (name) {
-    gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
-  }
   if (val) {
     gtk_entry_set_text(GTK_ENTRY(value_entry), val);
     len = strlen(val);
