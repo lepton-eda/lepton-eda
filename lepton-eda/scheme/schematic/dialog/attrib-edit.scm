@@ -550,10 +550,20 @@ FROM_KEY (1)."
                       (gtk_combo_box_set_active *show-options 1)
                       (gtk_combo_box_set_active *show-options 2))))
 
-          (schematic_attrib_edit_dialog_set_data *window
-                                                 *attrib-edit-dialog
-                                                 *attrib-combo-box-entry
-                                                 *attrib-combo-entry
-                                                 *value-entry
-                                                 *attrib
-                                                 invocation-flag))))))
+          (let ((*name (if (null-pointer? *attrib)
+                           (let ((*object (o_select_return_first_object *window)))
+                             (if (null-pointer? *object)
+                                 %null-pointer
+                                 (if (true? (lepton_object_is_net *object))
+                                     (string->pointer "netname")
+                                     %null-pointer)))
+                           (lepton_text_object_get_name *attrib))))
+
+            (schematic_attrib_edit_dialog_set_data *window
+                                                   *attrib-edit-dialog
+                                                   *attrib-combo-box-entry
+                                                   *attrib-combo-entry
+                                                   *value-entry
+                                                   *attrib
+                                                   *name
+                                                   invocation-flag)))))))

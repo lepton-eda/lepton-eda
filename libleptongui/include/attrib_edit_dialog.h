@@ -34,6 +34,7 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
                                        GtkWidget *attrib_combo_entry,
                                        GtkWidget *value_entry,
                                        LeptonObject *attr_obj,
+                                       char *name,
                                        int flag);
 G_END_DECLS
 
