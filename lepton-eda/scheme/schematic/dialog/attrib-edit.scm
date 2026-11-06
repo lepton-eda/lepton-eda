@@ -562,6 +562,9 @@ FROM_KEY (1)."
                             %null-pointer
                             (lepton_text_object_get_value *attrib))))
 
+            (g_object_set_data *attrib-edit-dialog
+                               (string->pointer "attrib")
+                               *attrib)
             (schematic_attrib_edit_dialog_set_data *window
                                                    *attrib-edit-dialog
                                                    *attrib-combo-box-entry

@@ -52,7 +52,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
   int wx, wy;
 
   /* gschem specific */
-  g_object_set_data (G_OBJECT (aewindow), "attrib", attr_obj);
   if (name) {
     gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
   }
