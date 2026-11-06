@@ -296,6 +296,12 @@
   (procedure->pointer void response (list '* int '*)))
 
 
+(define (int->pointer val)
+  (define bv (make-bytevector (sizeof int) 0))
+  (bytevector-sint-set! bv 0 val (native-endianness) (sizeof int))
+  (make-pointer (bytevector-uint-ref bv 0 (native-endianness) (sizeof int))))
+
+
 (define (attrib-edit-dialog *window *attrib invocation-flag)
   "Launch the single attrib edit dialog in *WINDOW for *ATTRIB.  The
 INVOCATION-FLAG must be an integer set to a value defined in
@@ -576,10 +582,39 @@ FROM_KEY (1)."
             (g_object_set_data *attrib-edit-dialog
                                (string->pointer "invocation_flag")
                                (make-pointer invocation-flag))
-            (schematic_attrib_edit_dialog_set_data *window
-                                                   *attrib-edit-dialog
-                                                   *attrib-combo-box-entry
-                                                   *attrib-combo-entry
-                                                   *value-entry
-                                                   *attrib
-                                                   *name)))))))
+
+            (let* ((wx-bv (make-bytevector (sizeof int) 0))
+                   (wy-bv (make-bytevector (sizeof int) 0))
+                   (found-event-position
+                    (true? (x_event_get_pointer_position
+                            *window
+                            TRUE
+                            (bytevector->pointer wx-bv 0)
+                            (bytevector->pointer wy-bv 0))))
+                   (wx (if found-event-position
+                           (bytevector-sint-ref wx-bv
+                                                0
+                                                (native-endianness)
+                                                (sizeof int))
+                           -1))
+                   (wy (if found-event-position
+                           (bytevector-sint-ref wy-bv
+                                                0
+                                                (native-endianness)
+                                                (sizeof int))
+                           -1)))
+
+              (g_object_set_data *attrib-edit-dialog
+                                 (string->pointer "position_wx")
+                                 (int->pointer wx))
+              (g_object_set_data *attrib-edit-dialog
+                                 (string->pointer "position_wy")
+                                 (int->pointer wy))
+
+              (schematic_attrib_edit_dialog_set_data *window
+                                                     *attrib-edit-dialog
+                                                     *attrib-combo-box-entry
+                                                     *attrib-combo-entry
+                                                     *value-entry
+                                                     *attrib
+                                                     *name))))))))

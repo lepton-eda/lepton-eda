@@ -47,14 +47,6 @@ schematic_attrib_edit_dialog_set_data (SchematicWindow *w_current,
   GtkEntryCompletion *attrib_combo_entry_completion;
   char* string = NULL;
   int i;
-  int wx, wy;
-
-  /* gschem specific */
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy)) {
-    wx = wy = -1;
-  }
-  g_object_set_data (G_OBJECT (aewindow), "position_wx", GINT_TO_POINTER(wx));
-  g_object_set_data (G_OBJECT (aewindow), "position_wy", GINT_TO_POINTER(wy));
 
   /* gschem specific */
   i = 0;
