@@ -306,6 +306,15 @@
   (procedure->pointer void response (list '* int '*)))
 
 
+(define (gobject-set-data-full *gobject *child child-name)
+  (g_object_ref *child)
+  (g_object_set_data_full *gobject
+                          (string->pointer child-name)
+                          *child
+                          ;; GDestroyNotify
+                          (procedure->pointer void g_object_unref '(*))))
+
+
 (define* (attrib-edit-dialog window #:optional (attrib #f))
   "Launch the single attrib edit dialog in WINDOW for ATTRIB."
   (define *window (check-window window 1))
@@ -353,43 +362,21 @@
 
         (gtk_label_set_mnemonic_widget *name-label
                                        *attrib-combo-box-entry)
-        (g_object_ref *attrib-combo-entry)
-        (g_object_set_data_full
-         *dialog
-         (string->pointer "attrib_combo_entry")
-         *attrib-combo-entry
-         ;; GDestroyNotify
-         (procedure->pointer void g_object_unref '(*)))
+        (gobject-set-data-full *dialog
+                               *attrib-combo-entry
+                               "attrib_combo_entry")
         (gtk_entry_set_activates_default *attrib-combo-entry TRUE)
 
-        (g_object_ref *value-entry)
-        (g_object_set_data_full
-         *dialog
-         (string->pointer "value_entry")
-         *value-entry
-         ;; GDestroyNotify
-         (procedure->pointer void g_object_unref '(*)))
+        (gobject-set-data-full *dialog *value-entry "value_entry")
         (gtk_label_set_mnemonic_widget *value-label *value-entry)
         (gtk_entry_set_activates_default *value-entry TRUE)
 
         ;; Visibility.
-        (g_object_ref *visibility-button)
-        (g_object_set_data_full
-         *dialog
-         (string->pointer "visbutton")
-         *visibility-button
-         ;; GDestroyNotify
-         (procedure->pointer void g_object_unref '(*)))
+        (gobject-set-data-full *dialog *visibility-button "visbutton")
         (gtk_toggle_button_set_active *visibility-button TRUE)
 
         (gtk_combo_box_set_model *show-options *store)
-        (g_object_ref *show-options)
-        (g_object_set_data_full
-         *dialog
-         (string->pointer "show_options")
-         *show-options
-         ;; GDestroyNotify
-         (procedure->pointer void g_object_unref '(*)))
+        (gobject-set-data-full *dialog *show-options "show_options")
 
         (gtk_combo_box_text_append_text
          *show-options
@@ -469,39 +456,22 @@
                   (gtk_check_button_new_with_label
                    (string->pointer (G_ "Replace existing attributes")))))
 
-            (g_object_ref *add-to-all-button)
-            (g_object_set_data_full
-             *dialog
-             (string->pointer "addtoallbutton")
-             *add-to-all-button
-             ;; GDestroyNotify
-             (procedure->pointer void g_object_unref '(*)))
+            (gobject-set-data-full *dialog
+                                   *add-to-all-button
+                                   "addtoallbutton")
 
-            (g_object_ref *add-to-components-button)
-            (g_object_set_data_full
-             *dialog
-             (string->pointer "addtocompsbutton")
-             *add-to-components-button
-             ;; GDestroyNotify
-             (procedure->pointer void g_object_unref '(*)))
+            (gobject-set-data-full *dialog
+                                   *add-to-components-button
+                                   "addtocompsbutton")
 
-            (g_object_ref *add-to-nets-button)
-            (g_object_set_data_full
-             *dialog
-             (string->pointer "addtonetsbutton")
-             *add-to-nets-button
-             ;; GDestroyNotify
-             (procedure->pointer void g_object_unref '(*)))
+            (gobject-set-data-full *dialog
+                                   *add-to-nets-button
+                                   "addtonetsbutton")
 
             (gtk_toggle_button_set_active *overwrite-button TRUE)
-            (g_object_ref *overwrite-button)
-            (g_object_set_data_full
-             *dialog
-             (string->pointer "overwritebutton")
-             *overwrite-button
-             ;; GDestroyNotify
-             (procedure->pointer void g_object_unref '(*)))
-
+            (gobject-set-data-full *dialog
+                                   *overwrite-button
+                                   "overwritebutton")
             (if %m4-use-gtk3
                 (let ((*grid (gtk_grid_new)))
                   (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
