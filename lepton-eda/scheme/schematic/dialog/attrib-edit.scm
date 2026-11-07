@@ -172,14 +172,15 @@
 
   (let loop ((object-ls (page-selection (active-page))))
     (unless (null? object-ls)
-      (let ((*object (object->pointer (car object-ls))))
+      (let* ((object (car object-ls))
+             (*object (object->pointer object)))
         (when (and (not (null-pointer? *object))
                    (null-pointer? (lepton_object_get_attached_to *object))
-                   (false? (lepton_object_is_text *object)))
+                   (not (text? object)))
 
-          (let ((add-mask (if (true? (lepton_object_is_component *object))
+          (let ((add-mask (if (component? object)
                               2
-                              (if (true? (lepton_object_is_net *object))
+                              (if (net? object)
                                   1
                                   ;; Default for other objects.
                                   4))))
