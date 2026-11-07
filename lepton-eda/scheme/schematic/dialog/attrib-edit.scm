@@ -507,14 +507,14 @@
                   (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
-        (let ((*name (if (null-pointer? *attrib)
+        (let ((*name (if attrib
+                         (string->pointer (attrib-name attrib))
                          (let ((*object (o_select_return_first_object *window)))
                            (if (null-pointer? *object)
                                %null-pointer
                                (if (true? (lepton_object_is_net *object))
                                    (string->pointer "netname")
-                                   %null-pointer)))
-                         (lepton_text_object_get_name *attrib)))
+                                   %null-pointer)))))
               (*value (if (null-pointer? *attrib)
                           %null-pointer
                           (lepton_text_object_get_value *attrib))))
