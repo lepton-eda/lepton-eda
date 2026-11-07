@@ -185,14 +185,13 @@
             (when (logtest add-mask add-to)
               (let ((replaced
                      (and replace?
-                          (let loop ((*attrib-ls
-                                      (glist->list (lepton_object_get_attribs *object)
-                                                   identity))
+                          (let loop ((attrib-ls (object-attribs object))
                                      (replaced? #f))
-                            (if (null? *attrib-ls)
+                            (if (null? attrib-ls)
                                 replaced?
-                                (loop (cdr *attrib-ls)
-                                      (let* ((*attrib (car *attrib-ls))
+                                (loop (cdr attrib-ls)
+                                      (let* ((attrib (car attrib-ls))
+                                             (*attrib (object->pointer attrib))
                                              (*str (lepton_text_object_get_string *attrib)))
                                         (if (and (not (null-pointer? *str))
                                                  (string-index (pointer->string *newtext) #\=)
