@@ -160,8 +160,8 @@
   (define *overwrite-button
     (g_object_get_data *widget (string->pointer "overwrite-button")))
 
-  (define replace
-    (if (true? (gtk_toggle_button_get_active *overwrite-button)) 1 0))
+  (define replace?
+    (true? (gtk_toggle_button_get_active *overwrite-button)))
 
   (define add-to
     (cond
@@ -189,7 +189,7 @@
 
             (when (logtest add-mask add-to)
               (let ((replaced
-                     (if (true? replace)
+                     (if replace?
                          (let loop ((*attrib-ls
                                      (glist->list (lepton_object_get_attribs *object)
                                                   identity))
