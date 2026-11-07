@@ -193,9 +193,9 @@
                          (let loop ((*attrib-ls
                                      (glist->list (lepton_object_get_attribs *object)
                                                   identity))
-                                    (_replaced FALSE))
+                                    (replaced? #f))
                            (if (null? *attrib-ls)
-                               _replaced
+                               replaced?
                                (loop (cdr *attrib-ls)
                                      (let* ((*attrib (car *attrib-ls))
                                             (*str (lepton_text_object_get_string *attrib)))
@@ -207,11 +207,11 @@
                                            (begin
                                              (o_text_change *window *attrib *newtext visibility show-mode)
                                              (schematic_window_active_page_changed *window)
-                                             ;; replaced
-                                             TRUE)
-                                           _replaced)))))
-                         FALSE)))
-                (unless (true? replaced)
+                                             ;; The attribute has been replaced.
+                                             #t)
+                                           replaced?)))))
+                         #f)))
+                (unless replaced
                   (o_attrib_add_attrib *window
                                        *newtext
                                        visibility
