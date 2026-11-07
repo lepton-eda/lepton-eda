@@ -515,9 +515,9 @@
                          (if (and first-object (net? first-object))
                              (string->pointer "netname")
                              %null-pointer)))
-              (*value (if (null-pointer? *attrib)
-                          %null-pointer
-                          (lepton_text_object_get_value *attrib))))
+              (*value (if attrib
+                          (string->pointer (attrib-value attrib))
+                          %null-pointer)))
 
           (g_object_set_data *dialog
                              (string->pointer "attrib")
