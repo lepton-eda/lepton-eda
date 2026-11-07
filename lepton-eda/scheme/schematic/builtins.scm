@@ -966,7 +966,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  (attrib-edit-dialog (current-window) #f)
+  (attrib-edit-dialog (current-window))
   (set-action-mode! 'select-mode))
 
 
