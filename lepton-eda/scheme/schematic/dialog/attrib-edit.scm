@@ -19,9 +19,11 @@
 
 (define-module (schematic dialog attrib-edit)
   #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton attrib)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
@@ -31,6 +33,8 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
+  #:use-module (schematic selection)
+  #:use-module (schematic window)
 
   #:export (attrib-edit-dialog))
 
@@ -309,25 +313,19 @@
 INVOCATION-FLAG must be an integer set to a value defined in
 libleptongui/include/schematic_defines.h, namely FROM_MENU (0) or
 FROM_KEY (1)."
+  (define (attached-attribute? object)
+    (and (attribute? object)
+         (attrib-attachment object)))
+
+  (define non-attached-objects-number
+    (length (filter-map (negate attached-attribute?)
+                        (page-selection (active-page)))))
   (define *widget
     (schematic_window_get_attrib_edit_widget *window))
 
-  (define (get-number-of-not-attached-objects *selection-list)
-    (let loop ((*list *selection-list)
-               (count 0))
-      (if (null-pointer? *list)
-          count
-          (let ((*next (glist-next *list)))
-            (loop *next
-                  (if (null-pointer? (lepton_object_get_attached_to (glist-data *list)))
-                      (1+ count)
-                      count))))))
-
   ;; Return if the widget has already been created.
   (when (null-pointer? *widget)
-    (let ((*selection-list (lepton_list_get_glist
-                            (schematic_window_get_selection_list *window)))
-          (*attrib-edit-dialog (make-attrib-edit-dialog *window)))
+    (let ((*attrib-edit-dialog (make-attrib-edit-dialog *window)))
 
       (g_signal_connect *attrib-edit-dialog
                         (string->pointer "response")
@@ -452,201 +450,199 @@ FROM_KEY (1)."
               (gtk_table_attach *table *visibility-button 0 1 2 3 GTK_FILL 0 0 0)
               (gtk_table_attach *table *show-options 1 2 2 3 (logior GTK_FILL GTK_EXPAND) 0 0 0)))
 
-        (let ((non-attached-objects-number
-               (get-number-of-not-attached-objects *selection-list)))
-          (when (> non-attached-objects-number 1)
-            (let ((*attach-options-label
-                   (gtk_label_new (string->pointer (G_ "<b>Attach Options</b>")))))
-              (gtk_label_set_use_markup *attach-options-label TRUE)
-              (if %m4-use-gtk3
-                  (begin
-                    (gtk_label_set_xalign *attach-options-label 0.0)
-                    (gtk_label_set_yalign *attach-options-label 0.0))
-                  (gtk_misc_set_alignment *attach-options-label 0 0))
-              (gtk_box_pack_start *vbox *attach-options-label FALSE FALSE 0)))
+        (when (> non-attached-objects-number 1)
+          (let ((*attach-options-label
+                 (gtk_label_new (string->pointer (G_ "<b>Attach Options</b>")))))
+            (gtk_label_set_use_markup *attach-options-label TRUE)
+            (if %m4-use-gtk3
+                (begin
+                  (gtk_label_set_xalign *attach-options-label 0.0)
+                  (gtk_label_set_yalign *attach-options-label 0.0))
+                (gtk_misc_set_alignment *attach-options-label 0 0))
+            (gtk_box_pack_start *vbox *attach-options-label FALSE FALSE 0)))
 
-          (when (> non-attached-objects-number 1)
-            (let* ((*add-to-all-button
-                    (gtk_radio_button_new_with_label
-                     %null-pointer
-                     (string->pointer (G_ "All"))))
-                   (*hbox2-group-0
-                    (gtk_radio_button_get_group *add-to-all-button))
-                   (*add-to-components-button
-                    (gtk_radio_button_new_with_label
-                     *hbox2-group-0
-                     (string->pointer (G_ "Components"))))
-                   (*hbox2-group-1
-                    (gtk_radio_button_get_group *add-to-components-button))
-                   (*add-to-nets-button
-                    (gtk_radio_button_new_with_label
-                     *hbox2-group-1
-                     (string->pointer (G_ "Nets"))))
-                   (*hbox2-group
-                    (gtk_radio_button_get_group *add-to-nets-button))
-                   (*overwrite-button
-                    (gtk_check_button_new_with_label
-                     (string->pointer (G_ "Replace existing attributes")))))
+        (when (> non-attached-objects-number 1)
+          (let* ((*add-to-all-button
+                  (gtk_radio_button_new_with_label
+                   %null-pointer
+                   (string->pointer (G_ "All"))))
+                 (*hbox2-group-0
+                  (gtk_radio_button_get_group *add-to-all-button))
+                 (*add-to-components-button
+                  (gtk_radio_button_new_with_label
+                   *hbox2-group-0
+                   (string->pointer (G_ "Components"))))
+                 (*hbox2-group-1
+                  (gtk_radio_button_get_group *add-to-components-button))
+                 (*add-to-nets-button
+                  (gtk_radio_button_new_with_label
+                   *hbox2-group-1
+                   (string->pointer (G_ "Nets"))))
+                 (*hbox2-group
+                  (gtk_radio_button_get_group *add-to-nets-button))
+                 (*overwrite-button
+                  (gtk_check_button_new_with_label
+                   (string->pointer (G_ "Replace existing attributes")))))
 
-              (g_object_ref *add-to-all-button)
-              (g_object_set_data_full
-               *attrib-edit-dialog
-               (string->pointer "addtoallbutton")
-               *add-to-all-button
-               ;; GDestroyNotify
-               (procedure->pointer void g_object_unref '(*)))
+            (g_object_ref *add-to-all-button)
+            (g_object_set_data_full
+             *attrib-edit-dialog
+             (string->pointer "addtoallbutton")
+             *add-to-all-button
+             ;; GDestroyNotify
+             (procedure->pointer void g_object_unref '(*)))
 
-              (g_object_ref *add-to-components-button)
-              (g_object_set_data_full
-               *attrib-edit-dialog
-               (string->pointer "addtocompsbutton")
-               *add-to-components-button
-               ;; GDestroyNotify
-               (procedure->pointer void g_object_unref '(*)))
+            (g_object_ref *add-to-components-button)
+            (g_object_set_data_full
+             *attrib-edit-dialog
+             (string->pointer "addtocompsbutton")
+             *add-to-components-button
+             ;; GDestroyNotify
+             (procedure->pointer void g_object_unref '(*)))
 
-              (g_object_ref *add-to-nets-button)
-              (g_object_set_data_full
-               *attrib-edit-dialog
-               (string->pointer "addtonetsbutton")
-               *add-to-nets-button
-               ;; GDestroyNotify
-               (procedure->pointer void g_object_unref '(*)))
+            (g_object_ref *add-to-nets-button)
+            (g_object_set_data_full
+             *attrib-edit-dialog
+             (string->pointer "addtonetsbutton")
+             *add-to-nets-button
+             ;; GDestroyNotify
+             (procedure->pointer void g_object_unref '(*)))
 
-              (gtk_toggle_button_set_active *overwrite-button TRUE)
-              (g_object_ref *overwrite-button)
-              (g_object_set_data_full
-               *attrib-edit-dialog
-               (string->pointer "overwritebutton")
-               *overwrite-button
-               ;; GDestroyNotify
-               (procedure->pointer void g_object_unref '(*)))
+            (gtk_toggle_button_set_active *overwrite-button TRUE)
+            (g_object_ref *overwrite-button)
+            (g_object_set_data_full
+             *attrib-edit-dialog
+             (string->pointer "overwritebutton")
+             *overwrite-button
+             ;; GDestroyNotify
+             (procedure->pointer void g_object_unref '(*)))
 
-              (if %m4-use-gtk3
-                  (let ((*grid (gtk_grid_new)))
-                    (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
-                    (gtk_grid_set_column_spacing *grid %dialog-horizontal-spacing)
-                    (gtk_box_pack_start *vbox *grid TRUE TRUE 0)
-                    (gtk_grid_attach *grid *add-to-all-button 0 0 1 1)
-                    (gtk_grid_attach *grid *add-to-components-button 1 0 1 1)
-                    (gtk_grid_attach *grid *add-to-nets-button 2 0 1 1)
-                    (gtk_grid_attach *grid *overwrite-button 0 1 1 1))
+            (if %m4-use-gtk3
+                (let ((*grid (gtk_grid_new)))
+                  (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
+                  (gtk_grid_set_column_spacing *grid %dialog-horizontal-spacing)
+                  (gtk_box_pack_start *vbox *grid TRUE TRUE 0)
+                  (gtk_grid_attach *grid *add-to-all-button 0 0 1 1)
+                  (gtk_grid_attach *grid *add-to-components-button 1 0 1 1)
+                  (gtk_grid_attach *grid *add-to-nets-button 2 0 1 1)
+                  (gtk_grid_attach *grid *overwrite-button 0 1 1 1))
 
-                  (let ((*alignment (gtk_alignment_new 0 0 1 1))
-                        (*table (gtk_table_new 2 3 FALSE)))
-                    (gtk_alignment_set_padding *alignment 0 0 %dialog-indentation 0)
-                    (gtk_box_pack_start *vbox *alignment TRUE TRUE 0)
-                    (gtk_table_set_row_spacings *table %dialog-vertical-spacing)
-                    (gtk_table_set_col_spacings *table %dialog-horizontal-spacing)
-                    (gtk_container_add *alignment *table)
-                    (gtk_table_attach *table *add-to-all-button 0 1 0 1 GTK_FILL 0 0 0)
-                    (gtk_table_attach *table *add-to-components-button 1 2 0 1 GTK_FILL 0 0 0)
-                    (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
-                    (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
+                (let ((*alignment (gtk_alignment_new 0 0 1 1))
+                      (*table (gtk_table_new 2 3 FALSE)))
+                  (gtk_alignment_set_padding *alignment 0 0 %dialog-indentation 0)
+                  (gtk_box_pack_start *vbox *alignment TRUE TRUE 0)
+                  (gtk_table_set_row_spacings *table %dialog-vertical-spacing)
+                  (gtk_table_set_col_spacings *table %dialog-horizontal-spacing)
+                  (gtk_container_add *alignment *table)
+                  (gtk_table_attach *table *add-to-all-button 0 1 0 1 GTK_FILL 0 0 0)
+                  (gtk_table_attach *table *add-to-components-button 1 2 0 1 GTK_FILL 0 0 0)
+                  (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
+                  (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
-          (if (null-pointer? *attrib)
-              (gtk_toggle_button_set_active *visibility-button TRUE)
-              (if (true? (lepton_text_object_is_visible *attrib))
-                  (gtk_toggle_button_set_active *visibility-button TRUE)
-                  (gtk_toggle_button_set_active *visibility-button FALSE)))
+        (if (null-pointer? *attrib)
+            (gtk_toggle_button_set_active *visibility-button TRUE)
+            (if (true? (lepton_text_object_is_visible *attrib))
+                (gtk_toggle_button_set_active *visibility-button TRUE)
+                (gtk_toggle_button_set_active *visibility-button FALSE)))
 
-          (if (null-pointer? *attrib)
-              ;; Show value only.
-              (gtk_combo_box_set_active *show-options 0)
-              (if (= (lepton_text_object_get_show *attrib) SHOW_VALUE)
-                  (gtk_combo_box_set_active *show-options 0)
-                  (if (= (lepton_text_object_get_show *attrib) SHOW_NAME)
-                      (gtk_combo_box_set_active *show-options 1)
-                      (gtk_combo_box_set_active *show-options 2))))
+        (if (null-pointer? *attrib)
+            ;; Show value only.
+            (gtk_combo_box_set_active *show-options 0)
+            (if (= (lepton_text_object_get_show *attrib) SHOW_VALUE)
+                (gtk_combo_box_set_active *show-options 0)
+                (if (= (lepton_text_object_get_show *attrib) SHOW_NAME)
+                    (gtk_combo_box_set_active *show-options 1)
+                    (gtk_combo_box_set_active *show-options 2))))
 
-          (let ((*name (if (null-pointer? *attrib)
-                           (let ((*object (o_select_return_first_object *window)))
-                             (if (null-pointer? *object)
-                                 %null-pointer
-                                 (if (true? (lepton_object_is_net *object))
-                                     (string->pointer "netname")
-                                     %null-pointer)))
-                           (lepton_text_object_get_name *attrib)))
-                (*value (if (null-pointer? *attrib)
-                            %null-pointer
-                            (lepton_text_object_get_value *attrib))))
+        (let ((*name (if (null-pointer? *attrib)
+                         (let ((*object (o_select_return_first_object *window)))
+                           (if (null-pointer? *object)
+                               %null-pointer
+                               (if (true? (lepton_object_is_net *object))
+                                   (string->pointer "netname")
+                                   %null-pointer)))
+                         (lepton_text_object_get_name *attrib)))
+              (*value (if (null-pointer? *attrib)
+                          %null-pointer
+                          (lepton_text_object_get_value *attrib))))
+
+          (g_object_set_data *attrib-edit-dialog
+                             (string->pointer "attrib")
+                             *attrib)
+          (unless (null-pointer? *name)
+            (gtk_entry_set_text *attrib-combo-entry *name))
+
+          (unless (null-pointer? *value)
+            (gtk_entry_set_text *value-entry *value)
+            (let ((len (string-length (pointer->string *value))))
+              (gtk_editable_select_region *value-entry 0 len)))
+
+          (g_object_set_data *attrib-edit-dialog
+                             (string->pointer "invocation_flag")
+                             (make-pointer invocation-flag))
+
+          (let* ((wx-bv (make-bytevector (sizeof int) 0))
+                 (wy-bv (make-bytevector (sizeof int) 0))
+                 (found-event-position
+                  (true? (x_event_get_pointer_position
+                          *window
+                          TRUE
+                          (bytevector->pointer wx-bv 0)
+                          (bytevector->pointer wy-bv 0))))
+                 (wx (if found-event-position
+                         (bytevector-sint-ref wx-bv
+                                              0
+                                              (native-endianness)
+                                              (sizeof int))
+                         -1))
+                 (wy (if found-event-position
+                         (bytevector-sint-ref wy-bv
+                                              0
+                                              (native-endianness)
+                                              (sizeof int))
+                         -1)))
 
             (g_object_set_data *attrib-edit-dialog
-                               (string->pointer "attrib")
-                               *attrib)
-            (unless (null-pointer? *name)
-              (gtk_entry_set_text *attrib-combo-entry *name))
-
-            (unless (null-pointer? *value)
-              (gtk_entry_set_text *value-entry *value)
-              (let ((len (string-length (pointer->string *value))))
-                (gtk_editable_select_region *value-entry 0 len)))
-
+                               (string->pointer "position_wx")
+                               (int->pointer wx))
             (g_object_set_data *attrib-edit-dialog
-                               (string->pointer "invocation_flag")
-                               (make-pointer invocation-flag))
+                               (string->pointer "position_wy")
+                               (int->pointer wy))
 
-            (let* ((wx-bv (make-bytevector (sizeof int) 0))
-                   (wy-bv (make-bytevector (sizeof int) 0))
-                   (found-event-position
-                    (true? (x_event_get_pointer_position
-                            *window
-                            TRUE
-                            (bytevector->pointer wx-bv 0)
-                            (bytevector->pointer wy-bv 0))))
-                   (wx (if found-event-position
-                           (bytevector-sint-ref wx-bv
-                                                0
-                                                (native-endianness)
-                                                (sizeof int))
-                           -1))
-                   (wy (if found-event-position
-                           (bytevector-sint-ref wy-bv
-                                                0
-                                                (native-endianness)
-                                                (sizeof int))
-                           -1)))
-
-              (g_object_set_data *attrib-edit-dialog
-                                 (string->pointer "position_wx")
-                                 (int->pointer wx))
-              (g_object_set_data *attrib-edit-dialog
-                                 (string->pointer "position_wy")
-                                 (int->pointer wy))
-
-              (let loop ((i 0))
-                (let ((*string (s_attrib_get i)))
-                  (unless (null-pointer? *string)
-                    (gtk_combo_box_text_append_text *attrib-combo-box-entry
-                                                    *string)
-                    (loop (1+ i)))))
+            (let loop ((i 0))
+              (let ((*string (s_attrib_get i)))
+                (unless (null-pointer? *string)
+                  (gtk_combo_box_text_append_text *attrib-combo-box-entry
+                                                  *string)
+                  (loop (1+ i)))))
 
 
-  ;; Add completion to attribute combo box entry.
-              (let ((*attrib-combo-entry-completion
-                     (gtk_entry_completion_new)))
-                (gtk_entry_completion_set_model
-                 *attrib-combo-entry-completion
-                 (gtk_combo_box_get_model *attrib-combo-box-entry))
-                (gtk_entry_completion_set_text_column
-                 *attrib-combo-entry-completion
-                 0)
-                (gtk_entry_completion_set_inline_completion
-                 *attrib-combo-entry-completion
-                 TRUE)
-                (gtk_entry_completion_set_popup_single_match
-                 *attrib-combo-entry-completion
-                 FALSE)
-                (gtk_entry_set_completion
-                 *attrib-combo-entry
-                 *attrib-combo-entry-completion))
+            ;; Add completion to attribute combo box entry.
+            (let ((*attrib-combo-entry-completion
+                   (gtk_entry_completion_new)))
+              (gtk_entry_completion_set_model
+               *attrib-combo-entry-completion
+               (gtk_combo_box_get_model *attrib-combo-box-entry))
+              (gtk_entry_completion_set_text_column
+               *attrib-combo-entry-completion
+               0)
+              (gtk_entry_completion_set_inline_completion
+               *attrib-combo-entry-completion
+               TRUE)
+              (gtk_entry_completion_set_popup_single_match
+               *attrib-combo-entry-completion
+               FALSE)
+              (gtk_entry_set_completion
+               *attrib-combo-entry
+               *attrib-combo-entry-completion))
 
-              (gtk_widget_show_all *attrib-edit-dialog)
-              (schematic_window_set_attrib_edit_widget *window *attrib-edit-dialog)
+            (gtk_widget_show_all *attrib-edit-dialog)
+            (schematic_window_set_attrib_edit_widget *window *attrib-edit-dialog)
 
-              (gtk_grab_add *attrib-edit-dialog)
+            (gtk_grab_add *attrib-edit-dialog)
 
-              (if (or (not (null-pointer? *attrib))
-                      (and (not (null-pointer? *name))
-                           (string= (pointer->string *name) "netname")))
-                  (gtk_widget_grab_focus *value-entry)
-                  (gtk_widget_grab_focus *attrib-combo-entry))*)))))))
+            (if (or (not (null-pointer? *attrib))
+                    (and (not (null-pointer? *name))
+                         (string= (pointer->string *name) "netname")))
+                (gtk_widget_grab_focus *value-entry)
+                (gtk_widget_grab_focus *attrib-combo-entry))))))))
