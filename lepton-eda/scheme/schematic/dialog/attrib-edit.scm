@@ -577,7 +577,6 @@
 
             (gtk_grab_add *dialog)
 
-            (if (or (not (null-pointer? *attrib))
-                    (and name (string= name "netname")))
+            (if name
                 (gtk_widget_grab_focus *value-entry)
                 (gtk_widget_grab_focus *attrib-combo-entry))))))))
