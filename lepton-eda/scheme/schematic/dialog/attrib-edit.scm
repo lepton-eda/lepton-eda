@@ -451,7 +451,14 @@
                  (visible (if (or (not attrib)
                                   (text-visible? attrib))
                               TRUE
-                              FALSE)))
+                              FALSE))
+                 (show-mode-combobox-number
+                  (case (and attrib (text-attribute-mode attrib))
+                    ((value) 0)
+                    ((name) 1)
+                    ((both) 2)
+                    ;; Show value.
+                    (else 0))))
 
             (gtk_label_set_use_markup *attach-options-label TRUE)
             (if %m4-use-gtk3
@@ -499,16 +506,9 @@
                   (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))
 
-            (gtk_toggle_button_set_active *visibility-button visible)))
-
-        (if (null-pointer? *attrib)
-            ;; Show value only.
-            (gtk_combo_box_set_active *show-options 0)
-            (if (= (lepton_text_object_get_show *attrib) SHOW_VALUE)
-                (gtk_combo_box_set_active *show-options 0)
-                (if (= (lepton_text_object_get_show *attrib) SHOW_NAME)
-                    (gtk_combo_box_set_active *show-options 1)
-                    (gtk_combo_box_set_active *show-options 2))))
+            (gtk_toggle_button_set_active *visibility-button visible)
+            (gtk_combo_box_set_active *show-options
+                                      show-mode-combobox-number)))
 
         (let ((*name (if (null-pointer? *attrib)
                          (let ((*object (o_select_return_first_object *window)))
