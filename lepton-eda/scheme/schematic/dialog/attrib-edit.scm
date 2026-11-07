@@ -75,12 +75,14 @@
 
 ;;; Create a new empty attribute add/edit dialog widget with two
 ;;; buttons.
-(define (make-attrib-edit-dialog *window)
-  (define *title %null-pointer)
+(define (make-attrib-edit-dialog *window existing-attrib?)
+  (define title (if existing-attrib?
+                    (G_ "Edit Attribute")
+                    (G_ "Add Attribute")))
   (define *parent (schematic_window_get_main_window *window))
   (define flags GTK_DIALOG_MODAL)
   (define *settings-name (string->pointer "singleattrib"))
-  (define *dialog (schematic_dialog_new_empty *title
+  (define *dialog (schematic_dialog_new_empty (string->pointer title)
                                               *parent
                                               flags
                                               *settings-name
@@ -320,7 +322,7 @@
 
   ;; Return if the widget has already been created.
   (when (null-pointer? (schematic_window_get_attrib_edit_widget *window))
-    (let ((*dialog (make-attrib-edit-dialog *window)))
+    (let ((*dialog (make-attrib-edit-dialog *window attrib)))
 
       (g_signal_connect *dialog
                         (string->pointer "response")
@@ -348,12 +350,6 @@
         (gtk_container_set_border_width *dialog
                                         %dialog-border-spacing)
         (gtk_box_set_spacing *vbox %dialog-vertical-spacing)
-
-        (gtk_window_set_title *dialog
-                              (string->pointer
-                               (if (null-pointer? *attrib)
-                                   (G_ "Add Attribute")
-                                   (G_ "Edit Attribute"))))
 
         (gtk_label_set_mnemonic_widget *name-label
                                        *attrib-combo-box-entry)
