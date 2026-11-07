@@ -146,6 +146,7 @@
 (define (add-attrib-to-object! *widget
                                *window
                                *newtext
+                               name
                                visibility
                                show-mode)
   (define *add-to-all-button
@@ -191,13 +192,8 @@
                                 replaced?
                                 (loop (cdr attrib-ls)
                                       (let* ((attrib (car attrib-ls))
-                                             (*attrib (object->pointer attrib))
-                                             (*str (lepton_text_object_get_string *attrib)))
-                                        (if (and (not (null-pointer? *str))
-                                                 (string-index (pointer->string *newtext) #\=)
-                                                 (string= (car (string-split (pointer->string *str) #\=))
-                                                          (car (string-split (pointer->string *newtext) #\=))))
-
+                                             (*attrib (object->pointer attrib)))
+                                        (if (string= (attrib-name attrib) name)
                                             (begin
                                               (o_text_change *window *attrib *newtext visibility show-mode)
                                               (schematic_window_active_page_changed *window)
@@ -260,6 +256,7 @@
                 (add-attrib-to-object! *widget
                                        *window
                                        *newtext
+                                       name
                                        visibility
                                        show-mode)
                 (add-new-attrib! *widget
