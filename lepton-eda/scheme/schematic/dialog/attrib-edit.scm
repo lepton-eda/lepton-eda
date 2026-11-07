@@ -577,6 +577,6 @@
 
             (gtk_grab_add *dialog)
 
-            (if name
-                (gtk_widget_grab_focus *value-entry)
-                (gtk_widget_grab_focus *attrib-combo-entry))))))))
+            (gtk_widget_grab_focus (if name
+                                       *value-entry
+                                       *attrib-combo-entry))))))))
