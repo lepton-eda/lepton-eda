@@ -248,7 +248,7 @@
              ((2) SHOW_NAME_VALUE)
              (else
               (format (current-error-port)
-                      "Got invalid show option defaulting to show both\n")
+                      "Got invalid attribute mode option")
               SHOW_NAME_VALUE))))
 
 
