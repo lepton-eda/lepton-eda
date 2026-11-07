@@ -85,12 +85,18 @@
                                               flags
                                               *settings-name
                                               *window))
+
   (gtk_dialog_add_button *dialog
                          (string->pointer (G_ "_Cancel"))
                          GTK_RESPONSE_REJECT)
   (gtk_dialog_add_button *dialog
                          (string->pointer (G_ "_OK"))
                          GTK_RESPONSE_APPLY)
+  (gtk_window_set_position *dialog
+                           (symbol->gtk-window-position 'mouse))
+
+  (gtk_dialog_set_default_response *dialog GTK_RESPONSE_APPLY)
+
   *dialog)
 
 
@@ -320,11 +326,6 @@
                         (string->pointer "response")
                         *response
                         *window)
-
-      (gtk_window_set_position *dialog
-                               (symbol->gtk-window-position 'mouse))
-
-      (gtk_dialog_set_default_response *dialog GTK_RESPONSE_APPLY)
 
       (let* ((*vbox (gtk_dialog_get_content_area *dialog))
              ;; Name selection.
