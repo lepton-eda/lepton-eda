@@ -104,24 +104,21 @@
   ;; new attribute if it is floating, that is, no object to attach
   ;; to is selected.  We can do it only if the mouse pointer is
   ;; somewhere over the canvas.  For this, the three following
-  ;; conditions should be met: invocation-flag must be set to
-  ;; FROM_HOTKEY, and proposed x and y must not have the value of
-  ;; -1.  The former condition means the user did not use menus to
-  ;; invoke the dialog, and the latter two mean the mouse cursor
-  ;; was not out of the program window.  In any other case, let's
-  ;; rely on o_attrib_add_attrib() in choosing some reasonable
-  ;; strategy for this.
+  ;; conditions should be met: position must be set to TRUE, and
+  ;; proposed x and y must not have the value of -1. In any other
+  ;; case, let's rely on o_attrib_add_attrib() in choosing some
+  ;; reasonable strategy for this.
   (define wx
     (pointer->int (g_object_get_data *widget
                                      (string->pointer "position_wx"))))
   (define wy
     (pointer->int (g_object_get_data *widget
                                      (string->pointer "position_wy"))))
-  (define invocation-flag
+  (define position
     (pointer->int (g_object_get_data *widget
-                                     (string->pointer "invocation_flag"))))
+                                     (string->pointer "position"))))
   (define propose-coord (if (and (null-pointer? *object)
-                                 (= invocation-flag FROM_HOTKEY)
+                                 (true? position)
                                  (not (= wx -1))
                                  (not (= wy -1)))
                             TRUE
@@ -578,14 +575,13 @@ FROM_KEY (1)."
             (let ((len (string-length (pointer->string *value))))
               (gtk_editable_select_region *value-entry 0 len)))
 
-          (g_object_set_data *attrib-edit-dialog
-                             (string->pointer "invocation_flag")
-                             (make-pointer invocation-flag))
-
           (let* ((position (and=> (action-position) snap-point))
                  (wx (if position (car position) -1))
                  (wy (if position (cdr position) -1)))
 
+            (g_object_set_data *attrib-edit-dialog
+                               (string->pointer "position")
+                               (make-pointer (if position TRUE FALSE)))
             (g_object_set_data *attrib-edit-dialog
                                (string->pointer "position_wx")
                                (int->pointer wx))
