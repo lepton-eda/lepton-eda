@@ -298,7 +298,7 @@
   (procedure->pointer void response (list '* int '*)))
 
 
-(define (attrib-edit-dialog window attrib)
+(define* (attrib-edit-dialog window #:optional (attrib #f))
   "Launch the single attrib edit dialog in WINDOW for ATTRIB."
   (define *window (check-window window 1))
   (define *attrib (if attrib
