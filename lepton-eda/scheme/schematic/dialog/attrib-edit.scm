@@ -116,10 +116,10 @@
   ;; for this.
   (define wx
     (pointer->int (g_object_get_data *widget
-                                     (string->pointer "position_wx"))))
+                                     (string->pointer "position-wx"))))
   (define wy
     (pointer->int (g_object_get_data *widget
-                                     (string->pointer "position_wy"))))
+                                     (string->pointer "position-wy"))))
   (define position
     (pointer->int (g_object_get_data *widget
                                      (string->pointer "position"))))
@@ -144,16 +144,16 @@
                                visibility
                                show-mode)
   (define *add-to-all-button
-    (g_object_get_data *widget (string->pointer "addtoallbutton")))
+    (g_object_get_data *widget (string->pointer "add-to-all-button")))
 
   (define *add-to-components-button
-    (g_object_get_data *widget (string->pointer "addtocompsbutton")))
+    (g_object_get_data *widget (string->pointer "add-to-components-button")))
 
   (define *add-to-nets-button
-    (g_object_get_data *widget (string->pointer "addtonetsbutton")))
+    (g_object_get_data *widget (string->pointer "add-to-nets-button")))
 
   (define *overwrite-button
-    (g_object_get_data *widget (string->pointer "overwritebutton")))
+    (g_object_get_data *widget (string->pointer "overwrite-button")))
 
   (define replace
     (if (true? (gtk_toggle_button_get_active *overwrite-button)) 1 0))
@@ -222,13 +222,13 @@
 ;;; Handle the OK response of the Attribute add/edit dialog.
 (define (ok-handler *widget *window)
   (define *value-entry
-    (g_object_get_data *widget (string->pointer "value_entry")))
+    (g_object_get_data *widget (string->pointer "value-entry")))
   (define *name-entry
-    (g_object_get_data *widget (string->pointer "attrib_combo_entry")))
+    (g_object_get_data *widget (string->pointer "attrib-combo-entry")))
   (define *visibility-button
-    (g_object_get_data *widget (string->pointer "visbutton")))
+    (g_object_get_data *widget (string->pointer "visibility-button")))
   (define *show-options
-    (g_object_get_data *widget (string->pointer "show_options")))
+    (g_object_get_data *widget (string->pointer "show-options")))
   (define *value (gtk_entry_get_text *value-entry))
   (define *label (gtk_entry_get_text *name-entry))
   (define value (if (null-pointer? *value) "" (pointer->string *value)))
@@ -379,19 +379,21 @@
                                        *attrib-combo-box-entry)
         (gobject-set-data-full *dialog
                                *attrib-combo-entry
-                               "attrib_combo_entry")
+                               "attrib-combo-entry")
         (gtk_entry_set_activates_default *attrib-combo-entry TRUE)
 
-        (gobject-set-data-full *dialog *value-entry "value_entry")
+        (gobject-set-data-full *dialog *value-entry "value-entry")
         (gtk_label_set_mnemonic_widget *value-label *value-entry)
         (gtk_entry_set_activates_default *value-entry TRUE)
 
         ;; Visibility.
-        (gobject-set-data-full *dialog *visibility-button "visbutton")
+        (gobject-set-data-full *dialog
+                               *visibility-button
+                               "visibility-button")
         (gtk_toggle_button_set_active *visibility-button visible)
 
         (gtk_combo_box_set_model *show-options *store)
-        (gobject-set-data-full *dialog *show-options "show_options")
+        (gobject-set-data-full *dialog *show-options "show-options")
 
         (gtk_combo_box_text_append_text
          *show-options
@@ -474,20 +476,20 @@
 
             (gobject-set-data-full *dialog
                                    *add-to-all-button
-                                   "addtoallbutton")
+                                   "add-to-all-button")
 
             (gobject-set-data-full *dialog
                                    *add-to-components-button
-                                   "addtocompsbutton")
+                                   "add-to-components-button")
 
             (gobject-set-data-full *dialog
                                    *add-to-nets-button
-                                   "addtonetsbutton")
+                                   "add-to-nets-button")
 
             (gtk_toggle_button_set_active *overwrite-button TRUE)
             (gobject-set-data-full *dialog
                                    *overwrite-button
-                                   "overwritebutton")
+                                   "overwrite-button")
             (if %m4-use-gtk3
                 (let ((*grid (gtk_grid_new)))
                   (gtk_grid_set_row_spacing *grid %dialog-vertical-spacing)
@@ -535,10 +537,10 @@
                                (string->pointer "position")
                                (make-pointer (if position TRUE FALSE)))
             (g_object_set_data *dialog
-                               (string->pointer "position_wx")
+                               (string->pointer "position-wx")
                                (int->pointer wx))
             (g_object_set_data *dialog
-                               (string->pointer "position_wy")
+                               (string->pointer "position-wy")
                                (int->pointer wy))
 
             (let loop ((i 0))
