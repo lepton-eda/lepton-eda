@@ -170,12 +170,9 @@
      ((true? (gtk_toggle_button_get_active *add-to-nets-button)) 1)
      (else 0)))
 
-  (let loop ((*object-ls (glist->list
-                          (lepton_list_get_glist
-                           (schematic_window_get_selection_list *window))
-                          identity)))
-    (unless (null? *object-ls)
-      (let ((*object (car *object-ls)))
+  (let loop ((object-ls (page-selection (active-page))))
+    (unless (null? object-ls)
+      (let ((*object (object->pointer (car object-ls))))
         (when (and (not (null-pointer? *object))
                    (null-pointer? (lepton_object_get_attached_to *object))
                    (false? (lepton_object_is_text *object)))
@@ -219,7 +216,7 @@
                                        FALSE
                                        0
                                        0)))))))
-      (loop (cdr *object-ls))))
+      (loop (cdr object-ls))))
   (o_undo_savestate_old *window))
 
 
