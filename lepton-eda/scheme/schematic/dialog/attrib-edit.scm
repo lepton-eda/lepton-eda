@@ -312,7 +312,7 @@
                           (string->pointer child-name)
                           *child
                           ;; GDestroyNotify
-                          (procedure->pointer void g_object_unref '(*))))
+                          *g_object_unref))
 
 
 (define* (attrib-edit-dialog window #:optional (attrib #f))
