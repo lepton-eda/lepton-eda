@@ -230,10 +230,10 @@
   (define *show-options
     (g_object_get_data *widget (string->pointer "show-options")))
   (define *value (gtk_entry_get_text *value-entry))
-  (define *label (gtk_entry_get_text *name-entry))
+  (define *name (gtk_entry_get_text *name-entry))
   (define value (if (null-pointer? *value) "" (pointer->string *value)))
-  (define label (if (null-pointer? *label) "" (pointer->string *label)))
-  (define newtext (string-append label "=" value))
+  (define name (if (null-pointer? *name) "" (pointer->string *name)))
+  (define newtext (string-append name "=" value))
   (define *newtext (string->pointer newtext))
 
   (when (true? (x_dialog_validate_attribute *widget *newtext))
