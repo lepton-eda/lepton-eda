@@ -38,6 +38,7 @@
   #:use-module (schematic gtk helper)
   #:use-module (schematic selection)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
   #:use-module (schematic window)
 
   #:export (attrib-edit-dialog))
@@ -293,15 +294,16 @@
 
 ;;; Response function for the Attribute add/edit dialog.
 (define (response *widget response *window)
-  (case (gtk-response->symbol response)
-    ((apply)
-     (ok-handler *widget *window))
-    ((reject delete-event)
-     (gtk_grab_remove *widget)
-     (gtk_widget_destroy *widget)
-     (schematic_window_set_attrib_edit_widget *window
-                                              %null-pointer))
-    (else #f)))
+  (with-window *window
+    (case (gtk-response->symbol response)
+      ((apply)
+       (ok-handler *widget *window))
+      ((reject delete-event)
+       (gtk_grab_remove *widget)
+       (gtk_widget_destroy *widget)
+       (schematic_window_set_attrib_edit_widget *window
+                                                %null-pointer))
+      (else #f))))
 
 (define *response
   (procedure->pointer void response (list '* int '*)))
