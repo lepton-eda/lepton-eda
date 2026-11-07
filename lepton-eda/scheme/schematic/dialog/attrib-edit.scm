@@ -191,11 +191,14 @@
                             (if (null? attrib-ls)
                                 replaced?
                                 (loop (cdr attrib-ls)
-                                      (let* ((attrib (car attrib-ls))
-                                             (*attrib (object->pointer attrib)))
+                                      (let ((attrib (car attrib-ls)))
                                         (if (string= (attrib-name attrib) name)
                                             (begin
-                                              (o_text_change *window *attrib *newtext visibility show-mode)
+                                              (o_text_change *window
+                                                             (object->pointer attrib)
+                                                             *newtext
+                                                             visibility
+                                                             show-mode)
                                               (schematic_window_active_page_changed *window)
                                               ;; The attribute has been replaced.
                                               #t)
