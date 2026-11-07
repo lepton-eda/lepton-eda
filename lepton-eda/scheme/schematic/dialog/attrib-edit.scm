@@ -515,9 +515,7 @@
                         (and first-object
                              (net? first-object)
                              "netname")))
-              (*value (if attrib
-                          (string->pointer (attrib-value attrib))
-                          %null-pointer)))
+              (value (and=> attrib attrib-value)))
 
           (g_object_set_data *dialog
                              (string->pointer "attrib")
@@ -525,9 +523,9 @@
           (when name
             (gtk_entry_set_text *attrib-combo-entry
                                 (string->pointer name)))
-
-          (unless (null-pointer? *value)
-            (gtk_entry_set_text *value-entry *value))
+          (when value
+            (gtk_entry_set_text *value-entry
+                                (string->pointer value)))
 
           (let* ((position (and=> (action-position) snap-point))
                  (wx (if position (car position) -1))
