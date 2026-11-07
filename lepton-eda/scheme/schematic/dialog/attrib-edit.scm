@@ -30,6 +30,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton m4)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object)
 
   #:use-module (schematic action)
   #:use-module (schematic ffi gtk)
@@ -446,7 +447,11 @@
                   (gtk_radio_button_get_group *add-to-nets-button))
                  (*overwrite-button
                   (gtk_check_button_new_with_label
-                   (string->pointer (G_ "Replace existing attributes")))))
+                   (string->pointer (G_ "Replace existing attributes"))))
+                 (visible (if (or (not attrib)
+                                  (text-visible? attrib))
+                              TRUE
+                              FALSE)))
 
             (gtk_label_set_use_markup *attach-options-label TRUE)
             (if %m4-use-gtk3
@@ -492,13 +497,9 @@
                   (gtk_table_attach *table *add-to-all-button 0 1 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *add-to-components-button 1 2 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
-                  (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
+                  (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))
 
-        (if (null-pointer? *attrib)
-            (gtk_toggle_button_set_active *visibility-button TRUE)
-            (if (true? (lepton_text_object_is_visible *attrib))
-                (gtk_toggle_button_set_active *visibility-button TRUE)
-                (gtk_toggle_button_set_active *visibility-button FALSE)))
+            (gtk_toggle_button_set_active *visibility-button visible)))
 
         (if (null-pointer? *attrib)
             ;; Show value only.
