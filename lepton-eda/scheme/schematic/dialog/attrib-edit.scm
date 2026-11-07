@@ -236,6 +236,10 @@
   (define name (if (null-pointer? *name) "" (pointer->string *name)))
   (define newtext (string-append name "=" value))
   (define *newtext (string->pointer newtext))
+  (define non-attached-objects-number
+    (pointer->int
+     (g_object_get_data *widget
+                        (string->pointer "number-of-objects"))))
 
   (when (true? (x_dialog_validate_attribute *widget *newtext))
     (let ((visibility
@@ -252,32 +256,20 @@
                       "Got invalid attribute mode option")
               SHOW_NAME_VALUE))))
 
-
       (let ((*attrib
              (g_object_get_data *widget (string->pointer "attrib"))))
         (if (null-pointer? *attrib)
-            (let loop ((number-of-unattached-objects 0)
-                       (ls (glist->list
-                            (lepton_list_get_glist
-                             (schematic_window_get_selection_list *window))
-                            identity)))
-              (if (null? ls)
-                  (if (> number-of-unattached-objects 1)
-                      (add-attrib-to-object! *widget
-                                             *window
-                                             *newtext
-                                             visibility
-                                             show-mode)
-                      (add-new-attrib! *widget
+            (if (> non-attached-objects-number 1)
+                (add-attrib-to-object! *widget
                                        *window
                                        *newtext
                                        visibility
-                                       show-mode))
-                  (let ((*object (car ls)))
-                    (loop (if (null-pointer? (lepton_object_get_attached_to *object))
-                              (1+ number-of-unattached-objects)
-                              number-of-unattached-objects)
-                          (cdr ls)))))
+                                       show-mode)
+                (add-new-attrib! *widget
+                                 *window
+                                 *newtext
+                                 visibility
+                                 show-mode))
             (begin
               (o_text_change *window
                              *attrib
@@ -376,6 +368,10 @@
         (gtk_container_set_border_width *dialog
                                         %dialog-border-spacing)
         (gtk_box_set_spacing *vbox %dialog-vertical-spacing)
+
+        (g_object_set_data *dialog
+                           (string->pointer "number-of-objects")
+                           (int->pointer non-attached-objects-number))
 
         (gtk_label_set_mnemonic_widget *name-label
                                        *attrib-combo-box-entry)
