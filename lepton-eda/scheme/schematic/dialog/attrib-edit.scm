@@ -30,6 +30,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton m4)
 
+  #:use-module (schematic action)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
@@ -581,26 +582,9 @@ FROM_KEY (1)."
                              (string->pointer "invocation_flag")
                              (make-pointer invocation-flag))
 
-          (let* ((wx-bv (make-bytevector (sizeof int) 0))
-                 (wy-bv (make-bytevector (sizeof int) 0))
-                 (found-event-position
-                  (true? (x_event_get_pointer_position
-                          *window
-                          TRUE
-                          (bytevector->pointer wx-bv 0)
-                          (bytevector->pointer wy-bv 0))))
-                 (wx (if found-event-position
-                         (bytevector-sint-ref wx-bv
-                                              0
-                                              (native-endianness)
-                                              (sizeof int))
-                         -1))
-                 (wy (if found-event-position
-                         (bytevector-sint-ref wy-bv
-                                              0
-                                              (native-endianness)
-                                              (sizeof int))
-                         -1)))
+          (let* ((position (and=> (action-position) snap-point))
+                 (wx (if position (car position) -1))
+                 (wy (if position (cdr position) -1)))
 
             (g_object_set_data *attrib-edit-dialog
                                (string->pointer "position_wx")
