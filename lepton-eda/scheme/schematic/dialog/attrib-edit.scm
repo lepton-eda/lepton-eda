@@ -103,11 +103,10 @@
   ;; We should set reasonable defaults for the coordinate of the
   ;; new attribute if it is floating, that is, no object to attach
   ;; to is selected.  We can do it only if the mouse pointer is
-  ;; somewhere over the canvas.  For this, the three following
-  ;; conditions should be met: position must be set to TRUE, and
-  ;; proposed x and y must not have the value of -1. In any other
-  ;; case, let's rely on o_attrib_add_attrib() in choosing some
-  ;; reasonable strategy for this.
+  ;; somewhere over the canvas.  For this, the 'position' property
+  ;; must be set to TRUE.  In any other case, let's rely on
+  ;; o_attrib_add_attrib() in choosing some reasonable strategy
+  ;; for this.
   (define wx
     (pointer->int (g_object_get_data *widget
                                      (string->pointer "position_wx"))))
@@ -117,12 +116,7 @@
   (define position
     (pointer->int (g_object_get_data *widget
                                      (string->pointer "position"))))
-  (define propose-coord (if (and (null-pointer? *object)
-                                 (true? position)
-                                 (not (= wx -1))
-                                 (not (= wy -1)))
-                            TRUE
-                            FALSE))
+  (define propose-coord (if (null-pointer? *object) position FALSE))
 
   (o_attrib_add_attrib *window
                        *newtext
