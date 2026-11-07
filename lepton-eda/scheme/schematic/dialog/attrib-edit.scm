@@ -174,10 +174,7 @@
     (unless (null? object-ls)
       (let* ((object (car object-ls))
              (*object (object->pointer object)))
-        (when (and (not (null-pointer? *object))
-                   (null-pointer? (lepton_object_get_attached_to *object))
-                   (not (text? object)))
-
+        (unless (text? object)
           (let ((add-mask (if (component? object)
                               2
                               (if (net? object)
