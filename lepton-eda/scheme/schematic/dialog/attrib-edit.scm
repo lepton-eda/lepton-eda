@@ -355,7 +355,18 @@
               (gtk_check_button_new_with_mnemonic
                (string->pointer (G_ "Vi_sible"))))
              (*show-options (gtk_combo_box_text_new))
-             (*store (schematic_string_list_store_new)))
+             (*store (schematic_string_list_store_new))
+             (visible (if (or (not attrib)
+                              (text-visible? attrib))
+                          TRUE
+                          FALSE))
+             (show-mode-combobox-number
+              (case (and attrib (text-attribute-mode attrib))
+                ((value) 0)
+                ((name) 1)
+                ((both) 2)
+                ;; Show value.
+                (else 0))))
 
         (gtk_container_set_border_width *dialog
                                         %dialog-border-spacing)
@@ -374,7 +385,7 @@
 
         ;; Visibility.
         (gobject-set-data-full *dialog *visibility-button "visbutton")
-        (gtk_toggle_button_set_active *visibility-button TRUE)
+        (gtk_toggle_button_set_active *visibility-button visible)
 
         (gtk_combo_box_set_model *show-options *store)
         (gobject-set-data-full *dialog *show-options "show_options")
@@ -388,7 +399,8 @@
         (gtk_combo_box_text_append_text
          *show-options
          (string->pointer (G_ "Show Name & Value")))
-        (gtk_combo_box_set_active *show-options 0)
+        (gtk_combo_box_set_active *show-options
+                                  show-mode-combobox-number)
 
         (if %m4-use-gtk3
             (let ((*grid (gtk_grid_new)))
@@ -447,18 +459,7 @@
                   (gtk_radio_button_get_group *add-to-nets-button))
                  (*overwrite-button
                   (gtk_check_button_new_with_label
-                   (string->pointer (G_ "Replace existing attributes"))))
-                 (visible (if (or (not attrib)
-                                  (text-visible? attrib))
-                              TRUE
-                              FALSE))
-                 (show-mode-combobox-number
-                  (case (and attrib (text-attribute-mode attrib))
-                    ((value) 0)
-                    ((name) 1)
-                    ((both) 2)
-                    ;; Show value.
-                    (else 0))))
+                   (string->pointer (G_ "Replace existing attributes")))))
 
             (gtk_label_set_use_markup *attach-options-label TRUE)
             (if %m4-use-gtk3
@@ -504,11 +505,7 @@
                   (gtk_table_attach *table *add-to-all-button 0 1 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *add-to-components-button 1 2 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
-                  (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))
-
-            (gtk_toggle_button_set_active *visibility-button visible)
-            (gtk_combo_box_set_active *show-options
-                                      show-mode-combobox-number)))
+                  (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
         (let ((*name (if (null-pointer? *attrib)
                          (let ((*object (o_select_return_first_object *window)))
