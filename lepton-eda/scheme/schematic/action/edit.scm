@@ -55,7 +55,7 @@ depends of the type of the first object in the object list."
                        ;; Attribute editor only accepts one line values for
                        ;; attributes.
                        (= (line-number str) 1))
-                  (attrib-edit-dialog window *object)
+                  (attrib-edit-dialog window object)
                   (text-edit-dialog window))))
            ;; All other primitives may have attributes attached to
            ;; them.  Show the Multiattrib dialog instead of simply

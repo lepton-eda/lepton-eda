@@ -29,6 +29,7 @@
   #:use-module (lepton ffi gobject)
   #:use-module (lepton gettext)
   #:use-module (lepton m4)
+  #:use-module (lepton object foreign)
 
   #:use-module (schematic action)
   #:use-module (schematic ffi gtk)
@@ -297,9 +298,12 @@
   (procedure->pointer void response (list '* int '*)))
 
 
-(define (attrib-edit-dialog window *attrib)
-  "Launch the single attrib edit dialog in WINDOW for *ATTRIB."
+(define (attrib-edit-dialog window attrib)
+  "Launch the single attrib edit dialog in WINDOW for ATTRIB."
   (define *window (check-window window 1))
+  (define *attrib (if attrib
+                      (check-object attrib 2 attribute? 'attribute)
+                      %null-pointer))
   (define (attached-attribute? object)
     (and (attribute? object)
          (attrib-attachment object)))
