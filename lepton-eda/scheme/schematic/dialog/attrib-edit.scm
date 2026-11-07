@@ -326,9 +326,12 @@
     (and (attribute? object)
          (attrib-attachment object)))
 
+  (define selection (page-selection (active-page)))
+
   (define non-attached-objects-number
-    (length (filter-map (negate attached-attribute?)
-                        (page-selection (active-page)))))
+    (length (filter-map (negate attached-attribute?) selection)))
+
+  (define first-object (and (not (null? selection)) (car selection)))
 
   ;; Return if the widget has already been created.
   (when (null-pointer? (schematic_window_get_attrib_edit_widget *window))
@@ -509,12 +512,9 @@
 
         (let ((*name (if attrib
                          (string->pointer (attrib-name attrib))
-                         (let ((*object (o_select_return_first_object *window)))
-                           (if (null-pointer? *object)
-                               %null-pointer
-                               (if (true? (lepton_object_is_net *object))
-                                   (string->pointer "netname")
-                                   %null-pointer)))))
+                         (if (and first-object (net? first-object))
+                             (string->pointer "netname")
+                             %null-pointer)))
               (*value (if (null-pointer? *attrib)
                           %null-pointer
                           (lepton_text_object_get_value *attrib))))
