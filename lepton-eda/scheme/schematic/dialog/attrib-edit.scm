@@ -248,7 +248,7 @@
              ((2) SHOW_NAME_VALUE)
              (else
               (format (current-error-port)
-                      (G_ "Got invalid show option defaulting to show both\n"))
+                      "Got invalid show option defaulting to show both\n")
               SHOW_NAME_VALUE))))
 
 
