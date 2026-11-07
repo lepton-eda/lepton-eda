@@ -966,18 +966,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  ;; Definitions from "schematic_defines.h".
-  (define FROM_MENU 0)
-  (define FROM_HOTKEY 1)
-
-  (define *window (*current-window))
-
-  (attrib-edit-dialog *window
-                      %null-pointer
-                      (match (action-position)
-                        ((x . y) FROM_HOTKEY)
-                        (_ FROM_MENU)))
-
+  (attrib-edit-dialog (*current-window) %null-pointer)
   (set-action-mode! 'select-mode))
 
 
