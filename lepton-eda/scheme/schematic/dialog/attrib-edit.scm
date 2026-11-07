@@ -314,20 +314,19 @@
 
   ;; Return if the widget has already been created.
   (when (null-pointer? (schematic_window_get_attrib_edit_widget *window))
-    (let ((*attrib-edit-dialog (make-attrib-edit-dialog *window)))
+    (let ((*dialog (make-attrib-edit-dialog *window)))
 
-      (g_signal_connect *attrib-edit-dialog
+      (g_signal_connect *dialog
                         (string->pointer "response")
                         *response
                         *window)
 
-      (gtk_window_set_position *attrib-edit-dialog
+      (gtk_window_set_position *dialog
                                (symbol->gtk-window-position 'mouse))
 
-      (gtk_dialog_set_default_response *attrib-edit-dialog
-                                       GTK_RESPONSE_APPLY)
+      (gtk_dialog_set_default_response *dialog GTK_RESPONSE_APPLY)
 
-      (let* ((*vbox (gtk_dialog_get_content_area *attrib-edit-dialog))
+      (let* ((*vbox (gtk_dialog_get_content_area *dialog))
              ;; Name selection.
              (*name-label (gtk_label_new_with_mnemonic
                            (string->pointer (G_ "N_ame:"))))
@@ -345,11 +344,11 @@
              (*show-options (gtk_combo_box_text_new))
              (*store (schematic_string_list_store_new)))
 
-        (gtk_container_set_border_width *attrib-edit-dialog
+        (gtk_container_set_border_width *dialog
                                         %dialog-border-spacing)
         (gtk_box_set_spacing *vbox %dialog-vertical-spacing)
 
-        (gtk_window_set_title *attrib-edit-dialog
+        (gtk_window_set_title *dialog
                               (string->pointer
                                (if (null-pointer? *attrib)
                                    (G_ "Add Attribute")
@@ -359,7 +358,7 @@
                                        *attrib-combo-box-entry)
         (g_object_ref *attrib-combo-entry)
         (g_object_set_data_full
-         *attrib-edit-dialog
+         *dialog
          (string->pointer "attrib_combo_entry")
          *attrib-combo-entry
          ;; GDestroyNotify
@@ -368,7 +367,7 @@
 
         (g_object_ref *value-entry)
         (g_object_set_data_full
-         *attrib-edit-dialog
+         *dialog
          (string->pointer "value_entry")
          *value-entry
          ;; GDestroyNotify
@@ -379,7 +378,7 @@
         ;; Visibility.
         (g_object_ref *visibility-button)
         (g_object_set_data_full
-         *attrib-edit-dialog
+         *dialog
          (string->pointer "visbutton")
          *visibility-button
          ;; GDestroyNotify
@@ -389,7 +388,7 @@
         (gtk_combo_box_set_model *show-options *store)
         (g_object_ref *show-options)
         (g_object_set_data_full
-         *attrib-edit-dialog
+         *dialog
          (string->pointer "show_options")
          *show-options
          ;; GDestroyNotify
@@ -475,7 +474,7 @@
 
             (g_object_ref *add-to-all-button)
             (g_object_set_data_full
-             *attrib-edit-dialog
+             *dialog
              (string->pointer "addtoallbutton")
              *add-to-all-button
              ;; GDestroyNotify
@@ -483,7 +482,7 @@
 
             (g_object_ref *add-to-components-button)
             (g_object_set_data_full
-             *attrib-edit-dialog
+             *dialog
              (string->pointer "addtocompsbutton")
              *add-to-components-button
              ;; GDestroyNotify
@@ -491,7 +490,7 @@
 
             (g_object_ref *add-to-nets-button)
             (g_object_set_data_full
-             *attrib-edit-dialog
+             *dialog
              (string->pointer "addtonetsbutton")
              *add-to-nets-button
              ;; GDestroyNotify
@@ -500,7 +499,7 @@
             (gtk_toggle_button_set_active *overwrite-button TRUE)
             (g_object_ref *overwrite-button)
             (g_object_set_data_full
-             *attrib-edit-dialog
+             *dialog
              (string->pointer "overwritebutton")
              *overwrite-button
              ;; GDestroyNotify
@@ -555,7 +554,7 @@
                           %null-pointer
                           (lepton_text_object_get_value *attrib))))
 
-          (g_object_set_data *attrib-edit-dialog
+          (g_object_set_data *dialog
                              (string->pointer "attrib")
                              *attrib)
           (unless (null-pointer? *name)
@@ -570,13 +569,13 @@
                  (wx (if position (car position) -1))
                  (wy (if position (cdr position) -1)))
 
-            (g_object_set_data *attrib-edit-dialog
+            (g_object_set_data *dialog
                                (string->pointer "position")
                                (make-pointer (if position TRUE FALSE)))
-            (g_object_set_data *attrib-edit-dialog
+            (g_object_set_data *dialog
                                (string->pointer "position_wx")
                                (int->pointer wx))
-            (g_object_set_data *attrib-edit-dialog
+            (g_object_set_data *dialog
                                (string->pointer "position_wy")
                                (int->pointer wy))
 
@@ -607,10 +606,10 @@
                *attrib-combo-entry
                *attrib-combo-entry-completion))
 
-            (gtk_widget_show_all *attrib-edit-dialog)
-            (schematic_window_set_attrib_edit_widget *window *attrib-edit-dialog)
+            (gtk_widget_show_all *dialog)
+            (schematic_window_set_attrib_edit_widget *window *dialog)
 
-            (gtk_grab_add *attrib-edit-dialog)
+            (gtk_grab_add *dialog)
 
             (if (or (not (null-pointer? *attrib))
                     (and (not (null-pointer? *name))
