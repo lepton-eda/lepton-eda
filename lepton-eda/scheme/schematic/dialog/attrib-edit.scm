@@ -311,11 +311,9 @@
   (define non-attached-objects-number
     (length (filter-map (negate attached-attribute?)
                         (page-selection (active-page)))))
-  (define *widget
-    (schematic_window_get_attrib_edit_widget *window))
 
   ;; Return if the widget has already been created.
-  (when (null-pointer? *widget)
+  (when (null-pointer? (schematic_window_get_attrib_edit_widget *window))
     (let ((*attrib-edit-dialog (make-attrib-edit-dialog *window)))
 
       (g_signal_connect *attrib-edit-dialog
