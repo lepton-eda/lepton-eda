@@ -510,11 +510,11 @@
                   (gtk_table_attach *table *add-to-nets-button 2 3 0 1 GTK_FILL 0 0 0)
                   (gtk_table_attach *table *overwrite-button 0 3 1 2 GTK_FILL 0 0 0)))))
 
-        (let ((*name (if attrib
-                         (string->pointer (attrib-name attrib))
-                         (if (and first-object (net? first-object))
-                             (string->pointer "netname")
-                             %null-pointer)))
+        (let ((name (if attrib
+                        (attrib-name attrib)
+                        (and first-object
+                             (net? first-object)
+                             "netname")))
               (*value (if attrib
                           (string->pointer (attrib-value attrib))
                           %null-pointer)))
@@ -522,8 +522,9 @@
           (g_object_set_data *dialog
                              (string->pointer "attrib")
                              *attrib)
-          (unless (null-pointer? *name)
-            (gtk_entry_set_text *attrib-combo-entry *name))
+          (when name
+            (gtk_entry_set_text *attrib-combo-entry
+                                (string->pointer name)))
 
           (unless (null-pointer? *value)
             (gtk_entry_set_text *value-entry *value)
@@ -577,7 +578,6 @@
             (gtk_grab_add *dialog)
 
             (if (or (not (null-pointer? *attrib))
-                    (and (not (null-pointer? *name))
-                         (string= (pointer->string *name) "netname")))
+                    (and name (string= name "netname")))
                 (gtk_widget_grab_focus *value-entry)
                 (gtk_widget_grab_focus *attrib-combo-entry))))))))
