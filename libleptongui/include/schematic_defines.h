@@ -37,10 +37,6 @@
 #define FREE        1
 #define CONSTRAINED 2
 
-/* for attrib_edit_dialog invocation flag */
-#define FROM_MENU               0
-#define FROM_HOTKEY             1
-
 /* for text cap style */
 #define LOWER 0
 #define UPPER 1

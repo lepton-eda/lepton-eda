@@ -46,10 +46,6 @@
 (define INVISIBLE 0)
 (define VISIBLE 1)
 
-;; Definitions from "schematic_defines.h".
-(define FROM_MENU 0)
-(define FROM_HOTKEY 1)
-
 ;;; Definition from x_dialog.h.
 ;; #define DIALOG_BORDER_SPACING 5
 (define %dialog-border-spacing 5)
@@ -300,11 +296,8 @@
   (procedure->pointer void response (list '* int '*)))
 
 
-(define (attrib-edit-dialog *window *attrib invocation-flag)
-  "Launch the single attrib edit dialog in *WINDOW for *ATTRIB.  The
-INVOCATION-FLAG must be an integer set to a value defined in
-libleptongui/include/schematic_defines.h, namely FROM_MENU (0) or
-FROM_KEY (1)."
+(define (attrib-edit-dialog *window *attrib)
+  "Launch the single attrib edit dialog in *WINDOW for *ATTRIB."
   (define (attached-attribute? object)
     (and (attribute? object)
          (attrib-attachment object)))

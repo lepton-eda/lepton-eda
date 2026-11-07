@@ -30,10 +30,6 @@
 
   #:export (edit-objects))
 
-;; Definitions from "schematic_defines.h".
-(define FROM_MENU 0)
-(define FROM_HOTKEY 1)
-
 
 (define (edit-objects window objects)
   "Start editing action in WINDOW for OBJECTS.  The type of action
@@ -59,7 +55,7 @@ depends of the type of the first object in the object list."
                        ;; Attribute editor only accepts one line values for
                        ;; attributes.
                        (= (line-number str) 1))
-                  (attrib-edit-dialog *window *object FROM_MENU)
+                  (attrib-edit-dialog *window *object)
                   (text-edit-dialog window))))
            ;; All other primitives may have attributes attached to
            ;; them.  Show the Multiattrib dialog instead of simply
