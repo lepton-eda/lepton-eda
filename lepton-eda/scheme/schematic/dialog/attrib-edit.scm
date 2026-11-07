@@ -35,6 +35,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gtk helper)
   #:use-module (schematic selection)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
   #:export (attrib-edit-dialog))
@@ -296,8 +297,9 @@
   (procedure->pointer void response (list '* int '*)))
 
 
-(define (attrib-edit-dialog *window *attrib)
-  "Launch the single attrib edit dialog in *WINDOW for *ATTRIB."
+(define (attrib-edit-dialog window *attrib)
+  "Launch the single attrib edit dialog in WINDOW for *ATTRIB."
+  (define *window (check-window window 1))
   (define (attached-attribute? object)
     (and (attribute? object)
          (attrib-attachment object)))
