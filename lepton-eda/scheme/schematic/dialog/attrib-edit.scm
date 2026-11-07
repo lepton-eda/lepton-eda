@@ -61,6 +61,10 @@
 (define %dialog-indentation 10)
 
 
+;;; The following functions could be replaced with
+;;; number->string() and string->number() with following
+;;; conversion to/from pointers.
+
 ;; This is an analog of GPOINTER_TO_INT.
 (define (pointer->int *p)
   (let ((bv (make-bytevector (sizeof '*) 0)))
