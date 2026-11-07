@@ -527,9 +527,7 @@
                                 (string->pointer name)))
 
           (unless (null-pointer? *value)
-            (gtk_entry_set_text *value-entry *value)
-            (let ((len (string-length (pointer->string *value))))
-              (gtk_editable_select_region *value-entry 0 len)))
+            (gtk_entry_set_text *value-entry *value))
 
           (let* ((position (and=> (action-position) snap-point))
                  (wx (if position (car position) -1))
