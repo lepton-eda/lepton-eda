@@ -192,13 +192,11 @@
 
   (let loop ((object-ls objects))
     (unless (null? object-ls)
-      (let* ((object (car object-ls))
-             (replaced
-               (and replace?
-                    (not (null? (filter-map
-                                 replace-attrib
-                                 (object-attribs object)))))))
-        (unless replaced
+      (let ((object (car object-ls)))
+        (unless (and replace?
+                     (not (null? (filter-map
+                                  replace-attrib
+                                  (object-attribs object)))))
           (o_attrib_add_attrib *window
                                *newtext
                                visibility
