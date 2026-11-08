@@ -110,7 +110,11 @@
 
 (define (add-new-attrib! *widget *window *newtext visibility show-mode)
   ;; There is one or no selected object.
-  (define *object (o_select_return_first_object *window))
+  (define *object
+    (let ((selection (page-selection (active-page))))
+      (if (null? selection)
+          %null-pointer
+          (object->pointer (car selection)))))
 
   ;; We should set reasonable defaults for the coordinate of the
   ;; new attribute if it is floating, that is, no object to attach
