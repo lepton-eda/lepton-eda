@@ -206,8 +206,8 @@
 
   (unless (null? objects)
     (map replace-or-add-attrib objects)
-    (schematic_window_active_page_changed *window))
-  (o_undo_savestate_old *window))
+    (schematic_window_active_page_changed *window)
+    (o_undo_savestate_old *window)))
 
 
 ;;; Handle the OK response of the Attribute add/edit dialog.
