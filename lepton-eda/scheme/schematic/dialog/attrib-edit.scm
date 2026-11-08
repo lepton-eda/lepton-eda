@@ -199,7 +199,6 @@
                                                              *newtext
                                                              visibility
                                                              show-mode)
-                                              (schematic_window_active_page_changed *window)
                                               ;; The attribute has been replaced.
                                               #t)
                                             replaced?))))))))
@@ -211,7 +210,8 @@
                                        *object
                                        FALSE
                                        0
-                                       0)))))))
+                                       0))
+                (schematic_window_active_page_changed *window))))))
       (loop (cdr object-ls))))
   (o_undo_savestate_old *window))
 
