@@ -197,13 +197,9 @@
             (when (logtest add-mask add-to)
               (let ((replaced
                      (and replace?
-                          (let loop ((attrib-ls (object-attribs object))
-                                     (replaced? #f))
-                            (if (null? attrib-ls)
-                                replaced?
-                                (loop (cdr attrib-ls)
-                                      (or (replace-attrib (car attrib-ls))
-                                          replaced?)))))))
+                          (not (null? (filter-map
+                                       replace-attrib
+                                       (object-attribs object)))))))
                 (unless replaced
                   (o_attrib_add_attrib *window
                                        *newtext
