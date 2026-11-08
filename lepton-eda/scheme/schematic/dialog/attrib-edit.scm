@@ -193,22 +193,21 @@
   (let loop ((object-ls objects))
     (unless (null? object-ls)
       (let* ((object (car object-ls))
-             (*object (object->pointer object)))
-        (let ((replaced
+             (replaced
                (and replace?
                     (not (null? (filter-map
                                  replace-attrib
                                  (object-attribs object)))))))
-          (unless replaced
-            (o_attrib_add_attrib *window
-                                 *newtext
-                                 visibility
-                                 show-mode
-                                 *object
-                                 FALSE
-                                 0
-                                 0))
-          (schematic_window_active_page_changed *window)))
+        (unless replaced
+          (o_attrib_add_attrib *window
+                               *newtext
+                               visibility
+                               show-mode
+                               (object->pointer object)
+                               FALSE
+                               0
+                               0))
+        (schematic_window_active_page_changed *window))
       (loop (cdr object-ls))))
   (o_undo_savestate_old *window))
 
