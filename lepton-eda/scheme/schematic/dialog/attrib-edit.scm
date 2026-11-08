@@ -204,12 +204,9 @@
       (filter net? selected-objects))
      (else '())))
 
-  (let loop ((object-ls objects))
-    (unless (null? object-ls)
-      (let ((object (car object-ls)))
-        (replace-or-add-attrib object)
-        (schematic_window_active_page_changed *window))
-      (loop (cdr object-ls))))
+  (unless (null? objects)
+    (map replace-or-add-attrib objects)
+    (schematic_window_active_page_changed *window))
   (o_undo_savestate_old *window))
 
 
