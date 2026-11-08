@@ -54,9 +54,13 @@
             schematic_gtk_justification_from_string
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
+            schematic_gtk_window_position_to_string
+            schematic_gtk_window_position_from_string
+
             schematic_gtk_vbox_new
             schematic_gdk_color_parse
             schematic_pango_text_width
+            schematic_string_list_store_new
 
             generic_confirm_dialog
             generic_error_dialog
@@ -65,6 +69,7 @@
             major_changed_dialog
             schematic_dialog_load_file_error
             schematic_dialog_new_empty
+            x_dialog_validate_attribute
 
             schematic_execute_script
 
@@ -90,6 +95,8 @@
             o_attrib_add_selected
             o_attrib_deselect_invisible
             o_attrib_select_invisible
+
+            o_text_change
 
             schematic_draw_clear
             *schematic_draw_invalidate_object
@@ -193,8 +200,6 @@
 
             schematic_menu_recent_chooser_get_filename
             x_menu_attach_recent_files_submenu
-
-            attrib_edit_dialog
 
             schematic_autonumber_new
             schematic_autonumber_get_autotext
@@ -513,6 +518,7 @@
             schematic_window_set_keyaccel_string_source_id
             schematic_window_get_arc_edit_widget
             schematic_window_get_attrib_edit_widget
+            schematic_window_set_attrib_edit_widget
             schematic_window_get_compselect_widget
             schematic_window_set_compselect_widget
             schematic_window_get_coord_widget
@@ -684,6 +690,8 @@
             schematic_world_size_get_default_top
 
             x_basic_warp_cursor
+
+            s_attrib_get
             ))
 
 ;;; Simplify definition of functions by omitting the library
@@ -729,15 +737,21 @@
 (define-lff schematic_gtk_justification_from_string int '(*))
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
+(define-lff schematic_gtk_window_position_to_string '* (list int))
+(define-lff schematic_gtk_window_position_from_string int '(*))
 (define-lff schematic_gtk_vbox_new '* (list int int))
 (define-lff schematic_gdk_color_parse '* '(*))
 (define-lff schematic_pango_text_width int '(* *))
+(define-lff schematic_string_list_store_new '* '())
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
 (define-lff o_attrib_add_selected void '(* * *))
 (define-lff o_attrib_deselect_invisible void '(* * *))
 (define-lff o_attrib_select_invisible void '(* * *))
+
+;;; o_text.c
+(define-lff o_text_change void (list '* '* '* int int))
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
@@ -953,6 +967,7 @@
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_get_arc_edit_widget '* '(*))
 (define-lff schematic_window_get_attrib_edit_widget '* '(*))
+(define-lff schematic_window_set_attrib_edit_widget void '(* *))
 (define-lff schematic_window_get_compselect_widget '* '(*))
 (define-lff schematic_window_set_compselect_widget void '(* *))
 (define-lff schematic_window_get_coord_widget '* '(*))
@@ -1155,6 +1170,7 @@
 (define-lff major_changed_dialog void '(*))
 (define-lff schematic_dialog_load_file_error void '(* * *))
 (define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
+(define-lff x_dialog_validate_attribute int '(* *))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))
@@ -1273,9 +1289,6 @@
 (define-lff o_place_motion void (list '* int int))
 (define-lff o_place_rotate void '(*))
 (define-lff o_place_start void (list '* int int))
-
-;;; x_attribedit.c
-(define-lff attrib_edit_dialog void (list '* '* int))
 
 ;;; autonumber_dialog.c
 (define-lff schematic_autonumber_new '* '())
@@ -1442,3 +1455,6 @@
 
 ;;; x_stroke.c
 (define-lff schematic_stroke_draw_point void (list '* int int))
+
+;;; s_attrib.c
+(define-lff s_attrib_get '* (list int))

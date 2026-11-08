@@ -54,6 +54,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic file)
   #:use-module (schematic dialog)
+  #:use-module (schematic dialog attrib-edit)
   #:use-module (schematic dialog autonumber)
   #:use-module (schematic dialog close-page)
   #:use-module (schematic dialog color-edit)
@@ -965,18 +966,7 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  ;; Definitions from "schematic_defines.h".
-  (define FROM_MENU 0)
-  (define FROM_HOTKEY 1)
-
-  (define *window (*current-window))
-
-  (attrib_edit_dialog *window
-                      %null-pointer
-                      (match (action-position)
-                        ((x . y) FROM_HOTKEY)
-                        (_ FROM_MENU)))
-
+  (attrib-edit-dialog (current-window))
   (set-action-mode! 'select-mode))
 
 

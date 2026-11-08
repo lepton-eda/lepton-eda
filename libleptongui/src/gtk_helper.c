@@ -595,6 +595,62 @@ schematic_gtk_position_type_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkWindowPosition value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkWindowPosition value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The window position value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_window_position_to_string (int val)
+{
+  const char *result = "none";
+
+  switch (val)
+  {
+  case GTK_WIN_POS_NONE: result = "none"; break;
+  case GTK_WIN_POS_CENTER: result = "center"; break;
+  case GTK_WIN_POS_MOUSE: result = "mouse"; break;
+  case GTK_WIN_POS_CENTER_ALWAYS: result = "center-always"; break;
+  case GTK_WIN_POS_CENTER_ON_PARENT: result = "center-on-parent"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkWindowPosition value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkWindowPosition value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkWindowPosition value.
+ */
+int
+schematic_gtk_window_position_from_string (char *s)
+{
+  int result = GTK_WIN_POS_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_WIN_POS_NONE; }
+  else if (strcmp (s, "center") == 0) {result = GTK_WIN_POS_CENTER; }
+  else if (strcmp (s, "mouse") == 0) {result = GTK_WIN_POS_MOUSE; }
+  else if (strcmp (s, "center-always") == 0) {result = GTK_WIN_POS_CENTER_ALWAYS; }
+  else if (strcmp (s, "center-on-parent") == 0) {result = GTK_WIN_POS_CENTER_ON_PARENT; }
+
+  return result;
+}
+
+
 /*! \brief Create a vertical box widget.
  *
  * \par Function Description
@@ -672,4 +728,19 @@ schematic_pango_text_width (GtkWidget *widget,
   g_object_unref (G_OBJECT (layout));
 
   return width / PANGO_SCALE;
+}
+
+
+/*! \brief Create a list store for strings.
+ *
+ *  \par Function Description
+ *
+ *  Create and return a new list store for strings.
+ *
+ * \return The list store.
+ */
+GtkListStore*
+schematic_string_list_store_new ()
+{
+  return gtk_list_store_new (1, G_TYPE_STRING);
 }

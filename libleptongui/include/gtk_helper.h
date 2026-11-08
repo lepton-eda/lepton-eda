@@ -81,6 +81,12 @@ schematic_gtk_position_type_to_string (int val);
 int
 schematic_gtk_position_type_from_string (char *s);
 
+const char*
+schematic_gtk_window_position_to_string (int val);
+
+int
+schematic_gtk_window_position_from_string (char *s);
+
 GtkWidget*
 schematic_gtk_vbox_new (gboolean homogeneous,
                         gint spacing);
@@ -90,6 +96,9 @@ schematic_gdk_color_parse (char *color_spec);
 int
 schematic_pango_text_width (GtkWidget *widget,
                             char *text);
+GtkListStore*
+schematic_string_list_store_new ();
+
 G_END_DECLS
 
 #endif /* GTK_HELPER_H */

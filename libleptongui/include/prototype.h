@@ -536,15 +536,6 @@ void
 schematic_alignment_combo_set_align (GtkWidget *widget,
                                      int align);
 
-/* x_attribedit.c */
-void
-attrib_edit_dialog_ok (GtkWidget *w,
-                       SchematicWindow *w_current);
-void
-attrib_edit_dialog (SchematicWindow *w_current,
-                    LeptonObject *attr_obj,
-                    int flag);
-
 /* x_basic.c */
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 

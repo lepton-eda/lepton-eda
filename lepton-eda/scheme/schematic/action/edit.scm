@@ -22,16 +22,13 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
 
+  #:use-module (schematic dialog attrib-edit)
   #:use-module (schematic dialog edit-text)
   #:use-module (schematic dialog multiattrib)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
   #:export (edit-objects))
-
-;; Definitions from "schematic_defines.h".
-(define FROM_MENU 0)
-(define FROM_HOTKEY 1)
 
 
 (define (edit-objects window objects)
@@ -58,7 +55,7 @@ depends of the type of the first object in the object list."
                        ;; Attribute editor only accepts one line values for
                        ;; attributes.
                        (= (line-number str) 1))
-                  (attrib_edit_dialog *window *object FROM_MENU)
+                  (attrib-edit-dialog window object)
                   (text-edit-dialog window))))
            ;; All other primitives may have attributes attached to
            ;; them.  Show the Multiattrib dialog instead of simply

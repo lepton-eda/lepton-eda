@@ -41,14 +41,25 @@
             gtk_adjustment_set_value
             gtk_adjustment_new
 
+            gtk_alignment_new
+            gtk_alignment_set_padding
+
             gtk_bin_get_child
 
             gtk_box_pack_start
+            gtk_box_set_spacing
+
+            gtk_check_button_new_with_label
+            gtk_check_button_new_with_mnemonic
 
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
+            gtk_combo_box_set_model
+
             gtk_combo_box_text_append_text
+            gtk_combo_box_text_new
+            gtk_combo_box_text_new_with_entry
 
             gtk_container_add
             gtk_container_set_border_width
@@ -64,11 +75,21 @@
             gtk_dialog_new
             gtk_dialog_run
 
+            gtk_editable_select_region
+
             gtk_entry_new
+            gtk_entry_set_activates_default
             gtk_entry_set_max_length
             gtk_entry_get_text
             gtk_entry_get_text_length
             gtk_entry_set_text
+
+            gtk_entry_completion_new
+            gtk_entry_completion_set_inline_completion
+            gtk_entry_completion_set_model
+            gtk_entry_completion_set_popup_single_match
+            gtk_entry_completion_set_text_column
+            gtk_entry_set_completion
 
             gtk_events_pending
 
@@ -86,6 +107,14 @@
             gtk_file_filter_new
             gtk_file_filter_set_name
 
+            gtk_grab_add
+            gtk_grab_remove
+
+            gtk_grid_attach
+            gtk_grid_new
+            gtk_grid_set_column_spacing
+            gtk_grid_set_row_spacing
+
             gtk_handle_box_new
 
             gtk_icon_theme_append_search_path
@@ -94,7 +123,13 @@
             gtk_init
 
             gtk_label_new
+            gtk_label_new_with_mnemonic
             gtk_label_set_markup
+            gtk_label_set_mnemonic_widget
+            gtk_label_set_use_markup
+
+            gtk_label_set_xalign
+            gtk_label_set_yalign
 
             gtk_list_store_clear
 
@@ -112,6 +147,8 @@
             gtk_message_dialog_new
             gtk_message_dialog_set_markup
 
+            gtk_misc_set_alignment
+
             gtk_notebook_append_page
             gtk_notebook_get_n_pages
             gtk_notebook_new
@@ -124,6 +161,9 @@
             gtk_notebook_set_show_tabs
             gtk_notebook_set_tab_pos
             gtk_notebook_set_tab_reorderable
+
+            gtk_radio_button_get_group
+            gtk_radio_button_new_with_label
 
             GTK_RESPONSE_NONE
             GTK_RESPONSE_REJECT
@@ -150,16 +190,26 @@
             gtk_statusbar_new
             gtk_statusbar_get_message_area
 
-            gtk_toggle_button_get_active
-            gtk_toggle_button_set_active
+            GTK_EXPAND
+            GTK_SHRINK
+            GTK_FILL
+
+            gtk_table_attach
+            gtk_table_new
+            gtk_table_set_col_spacings
+            gtk_table_set_row_spacings
 
             gtk_tearoff_menu_item_new
+
+            gtk_toggle_button_get_active
+            gtk_toggle_button_set_active
 
             gtk_widget_destroy
             gtk_widget_grab_focus
             gtk_widget_has_focus
             gtk_widget_hide
             gtk_widget_set_can_focus
+            gtk_widget_set_hexpand
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
             gtk_widget_get_visible
@@ -172,6 +222,7 @@
             gtk_window_set_default_icon_name
             gtk_window_set_modal
             gtk_window_get_position
+            gtk_window_set_position
             gtk_window_get_size
             gtk_window_get_title
             gtk_window_set_title
@@ -202,6 +253,24 @@
 (define-syntax-rule (define-lfc arg ...)
   (define-lfc-lib arg ... libgtk))
 
+;;; Functions for GTK3 only.
+(define-syntax define-lff-gtk3
+  (syntax-rules ()
+    ((_ name type args)
+     (define name
+       (if %m4-use-gtk3
+           (let ((proc
+                  (delay
+                    (pointer->procedure
+                     type
+                     (dynamic-func (symbol->string (quote name)) libgtk)
+                     args))))
+             (force proc))
+           ;; Error on the compilation stage.
+           (error (string-append "Function "
+                                 (symbol->string (quote name))
+                                 "() is present only in GTK3")))))))
+
 (define GdkModifierType uint32)
 
 (define-lff gtk_about_dialog_new '* '())
@@ -223,15 +292,25 @@
 (define-lff gtk_adjustment_set_value void (list '* double))
 (define-lff gtk_adjustment_new '* (list double double double double double double))
 
+(define-lff gtk_alignment_new '* (list float float float float))
+(define-lff gtk_alignment_set_padding void (list '* unsigned-int unsigned-int unsigned-int unsigned-int))
+
 (define-lff gtk_bin_get_child '* '(*))
 
 (define-lff gtk_box_pack_start void (list '* '* int int int))
+(define-lff gtk_box_set_spacing void (list '* int))
+
+(define-lff gtk_check_button_new_with_label '* '(*))
+(define-lff gtk_check_button_new_with_mnemonic '* '(*))
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
 (define-lff gtk_combo_box_get_model '* '(*))
+(define-lff gtk_combo_box_set_model void '(* *))
 
 (define-lff gtk_combo_box_text_append_text void '(* *))
+(define-lff gtk_combo_box_text_new '* '())
+(define-lff gtk_combo_box_text_new_with_entry '* '())
 
 (define-lff gtk_container_add void '(* *))
 (define-lff gtk_container_set_border_width void (list '* unsigned-int))
@@ -250,11 +329,21 @@
 (define-lff gtk_dialog_new '* '())
 (define-lff gtk_dialog_run int '(*))
 
+(define-lff gtk_editable_select_region void (list '* int int))
+
 (define-lff gtk_entry_new '* '())
+(define-lff gtk_entry_set_activates_default void (list '* int))
 (define-lff gtk_entry_set_max_length void (list '* int))
 (define-lff gtk_entry_get_text '* '(*))
 (define-lff gtk_entry_get_text_length uint16 '(*))
 (define-lff gtk_entry_set_text void '(* *))
+
+(define-lff gtk_entry_completion_new '* '())
+(define-lff gtk_entry_completion_set_inline_completion void (list '* int))
+(define-lff gtk_entry_completion_set_model void '(* *))
+(define-lff gtk_entry_completion_set_popup_single_match void (list '* int))
+(define-lff gtk_entry_completion_set_text_column void (list '* int))
+(define-lff gtk_entry_set_completion void '(* *))
 
 (define-lff gtk_events_pending int '())
 
@@ -272,6 +361,14 @@
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
 
+(define-lff gtk_grab_add void '(*))
+(define-lff gtk_grab_remove void '(*))
+
+(define-lff-gtk3 gtk_grid_attach void (list '* '* int int int int))
+(define-lff-gtk3 gtk_grid_new '* '())
+(define-lff-gtk3 gtk_grid_set_column_spacing void (list '* unsigned-int))
+(define-lff-gtk3 gtk_grid_set_row_spacing void (list '* unsigned-int))
+
 (define-lff gtk_handle_box_new '* '())
 
 (define-lff gtk_icon_theme_append_search_path void '(* *))
@@ -280,7 +377,13 @@
 (define-lff gtk_init void '(* *))
 
 (define-lff gtk_label_new '* '(*))
+(define-lff gtk_label_new_with_mnemonic '* '(*))
 (define-lff gtk_label_set_markup void '(* *))
+(define-lff gtk_label_set_mnemonic_widget void '(* *))
+(define-lff gtk_label_set_use_markup void (list '* int))
+
+(define-lff-gtk3 gtk_label_set_xalign void (list '* float))
+(define-lff-gtk3 gtk_label_set_yalign void (list '* float))
 
 (define-lff gtk_list_store_clear void '(*))
 
@@ -298,6 +401,8 @@
 (define-lff gtk_message_dialog_new '* (list '* int int int '*))
 (define-lff gtk_message_dialog_set_markup void '(* *))
 
+(define-lff gtk_misc_set_alignment void (list '* float float))
+
 (define-lff gtk_notebook_append_page int '(* * *))
 (define-lff gtk_notebook_get_n_pages int '(*))
 (define-lff gtk_notebook_new '* '())
@@ -310,6 +415,9 @@
 (define-lff gtk_notebook_set_show_tabs void (list '* int))
 (define-lff gtk_notebook_set_tab_pos void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
+
+(define-lff gtk_radio_button_get_group '* '(*))
+(define-lff gtk_radio_button_new_with_label '* '(* *))
 
 ;;; Definitions from gtkdialog.h.
 (define GTK_RESPONSE_NONE -1)
@@ -337,6 +445,18 @@
 (define-lff gtk_statusbar_new '* '())
 (define-lff gtk_statusbar_get_message_area '* '(*))
 
+;;; Attach options (for tables) (GtkAttachOptions)
+;;; GTK2: gtkenums.h
+;;; GTK3: deprecated/gtktable.h
+(define GTK_EXPAND (ash 1 0))
+(define GTK_SHRINK (ash 1 1))
+(define GTK_FILL (ash 1 2))
+
+(define-lff gtk_table_attach void (list '* '* unsigned-int unsigned-int unsigned-int unsigned-int int int unsigned-int unsigned-int))
+(define-lff gtk_table_new '* (list unsigned-int unsigned-int int))
+(define-lff gtk_table_set_col_spacings void (list '* unsigned-int))
+(define-lff gtk_table_set_row_spacings void (list '* unsigned-int))
+
 (define-lff gtk_tearoff_menu_item_new '* '())
 
 (define-lff gtk_toggle_button_get_active int '(*))
@@ -347,6 +467,7 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_set_can_focus void (list '* int))
+(define-lff gtk_widget_set_hexpand void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
 (define-lff gtk_widget_get_visible int '(*))
@@ -362,6 +483,7 @@
 (define-lff gtk_window_set_default_icon_name void '(*))
 (define-lff gtk_window_set_modal void (list '* int))
 (define-lff gtk_window_get_position void '(* * *))
+(define-lff gtk_window_set_position void (list '* int))
 (define-lff gtk_window_get_size void '(* * *))
 (define-lff gtk_window_get_title '* '(*))
 (define-lff gtk_window_set_title void '(* *))

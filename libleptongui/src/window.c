@@ -221,7 +221,7 @@ SchematicWindow *schematic_window_new ()
   schematic_window_set_slot_edit_widget (w_current, NULL);
   schematic_window_set_arc_edit_widget (w_current, NULL);
   schematic_window_set_multiattrib_widget (w_current, NULL);
-  w_current->aewindow     = NULL;
+  schematic_window_set_attrib_edit_widget (w_current, NULL);
   w_current->hkwindow     = NULL;
   w_current->cowindow     = NULL;
   w_current->coord_world  = NULL;

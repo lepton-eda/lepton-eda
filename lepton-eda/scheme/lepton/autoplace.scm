@@ -4,7 +4,7 @@
 ;;; Copyright (C) 2010-2011 Peter Brett
 ;;; Copyright (C) 2013-2014 Patrick Bernaud <patrickb@chez.com>
 ;;; Copyright (C) 2006-2014 gEDA Contributors
-;;; Copyright (C) 2017-2022 Lepton EDA Contributors
+;;; Copyright (C) 2017-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -448,13 +448,10 @@
                       )
                   )
               )
-            ; This is not a OBJ_NET object. Return an empty list.
-            (list)
-            )
-        )
-      )
-    )
-  )
+
+            ;; This is not a net object. Return an empty string.
+            "")))))
+
 
 ; This function returns a list with the end coordinate of the pins,
 ; if they are in the desired side.
