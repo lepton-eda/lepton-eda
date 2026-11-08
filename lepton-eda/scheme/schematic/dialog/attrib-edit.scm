@@ -149,6 +149,17 @@
                                name
                                visibility
                                show-mode)
+  (define (replace-attrib attrib)
+    (and (string= (attrib-name attrib) name)
+         (begin
+           (o_text_change *window
+                          (object->pointer attrib)
+                          *newtext
+                          visibility
+                          show-mode)
+           ;; The attribute has been replaced.
+           #t)))
+
   (define *add-to-all-button
     (g_object_get_data *widget (string->pointer "add-to-all-button")))
 
@@ -191,17 +202,8 @@
                             (if (null? attrib-ls)
                                 replaced?
                                 (loop (cdr attrib-ls)
-                                      (let ((attrib (car attrib-ls)))
-                                        (if (string= (attrib-name attrib) name)
-                                            (begin
-                                              (o_text_change *window
-                                                             (object->pointer attrib)
-                                                             *newtext
-                                                             visibility
-                                                             show-mode)
-                                              ;; The attribute has been replaced.
-                                              #t)
-                                            replaced?))))))))
+                                      (or (replace-attrib (car attrib-ls))
+                                          replaced?)))))))
                 (unless replaced
                   (o_attrib_add_attrib *window
                                        *newtext
