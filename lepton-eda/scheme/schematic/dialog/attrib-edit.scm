@@ -175,7 +175,10 @@
   (define replace?
     (true? (gtk_toggle_button_get_active *overwrite-button)))
 
-  (define selected-objects (page-selection (active-page)))
+  (define non-text? (negate text?))
+
+  (define selected-objects
+    (filter non-text? (page-selection (active-page))))
 
   (define add-to
     (cond
@@ -188,30 +191,29 @@
     (unless (null? object-ls)
       (let* ((object (car object-ls))
              (*object (object->pointer object)))
-        (unless (text? object)
-          (let ((add-mask (if (component? object)
-                              2
-                              (if (net? object)
-                                  1
-                                  ;; Default for other objects.
-                                  4))))
+        (let ((add-mask (if (component? object)
+                            2
+                            (if (net? object)
+                                1
+                                ;; Default for other objects.
+                                4))))
 
-            (when (logtest add-mask add-to)
-              (let ((replaced
-                     (and replace?
-                          (not (null? (filter-map
-                                       replace-attrib
-                                       (object-attribs object)))))))
-                (unless replaced
-                  (o_attrib_add_attrib *window
-                                       *newtext
-                                       visibility
-                                       show-mode
-                                       *object
-                                       FALSE
-                                       0
-                                       0))
-                (schematic_window_active_page_changed *window))))))
+          (when (logtest add-mask add-to)
+            (let ((replaced
+                   (and replace?
+                        (not (null? (filter-map
+                                     replace-attrib
+                                     (object-attribs object)))))))
+              (unless replaced
+                (o_attrib_add_attrib *window
+                                     *newtext
+                                     visibility
+                                     show-mode
+                                     *object
+                                     FALSE
+                                     0
+                                     0))
+              (schematic_window_active_page_changed *window)))))
       (loop (cdr object-ls))))
   (o_undo_savestate_old *window))
 
