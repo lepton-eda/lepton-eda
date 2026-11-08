@@ -175,6 +175,8 @@
   (define replace?
     (true? (gtk_toggle_button_get_active *overwrite-button)))
 
+  (define selected-objects (page-selection (active-page)))
+
   (define add-to
     (cond
      ((true? (gtk_toggle_button_get_active *add-to-all-button)) 7)
@@ -182,7 +184,7 @@
      ((true? (gtk_toggle_button_get_active *add-to-nets-button)) 1)
      (else 0)))
 
-  (let loop ((object-ls (page-selection (active-page))))
+  (let loop ((object-ls selected-objects))
     (unless (null? object-ls)
       (let* ((object (car object-ls))
              (*object (object->pointer object)))
