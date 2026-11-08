@@ -1729,6 +1729,9 @@ Put the code in some file and load it from your @file{gafrc}, e.g.:
 @noindent
 or put it directly to @file{gafrc}.
 
+You can find the example schematic using this script in the
+@samp{examples/edit-generated-symbols/} directory.
+
 
 @node reset-component-library,  , component-library-funcs, Component library setup
 @subsubsection reset-component-library
