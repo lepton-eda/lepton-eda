@@ -61,6 +61,44 @@ schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiatt
 }
 
 
+/*! \brief Get the List frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the List frame widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The List frame widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_list_frame (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->list_frame;
+}
+
+
+/*! \brief Set the List frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the List frame widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] list_frame The new List frame widget instance.
+ */
+void
+schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiattrib,
+                                             GtkWidget *list_frame)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->list_frame = list_frame;
+}
+
+
 static gboolean
 snv_shows_name (int snv)
 {

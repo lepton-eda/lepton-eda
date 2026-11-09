@@ -156,6 +156,12 @@ schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiatt
 void
 schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
                                             GtkWidget *add_frame);
+GtkWidget*
+schematic_multiattrib_widget_get_list_frame (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiattrib,
+                                             GtkWidget *list_frame);
 void
 schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
                                               LeptonSelection *selection);
