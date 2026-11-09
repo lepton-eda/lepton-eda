@@ -1599,12 +1599,9 @@ schematic_component_chooser_setup (GtkWidget *chooser,
   /* include the vertical box in horizontal box */
   gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
 
-
   /* -- preview area -- */
-  frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                    /* GtkFrame */
-                                    "label", _("Preview"),
-                                    NULL));
+  frame = gtk_frame_new (_("Preview"));
+
 #ifndef ENABLE_GTK3
   GtkWidget *alignment;
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
