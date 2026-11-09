@@ -2108,8 +2108,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 #endif
 
   /* create the attribute list frame */
-  GtkWidget *list_frame =
-    GTK_WIDGET (g_object_new (GTK_TYPE_FRAME, NULL));
+  GtkWidget *list_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (list_frame), GTK_SHADOW_NONE);
 
   /* create the attribute list frame */
