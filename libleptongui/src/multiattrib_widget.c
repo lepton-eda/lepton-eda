@@ -2106,12 +2106,18 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 #endif
 
   /* create the attribute list frame */
-  multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+  GtkWidget *list_frame =
+    GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
 #ifndef ENABLE_GTK3
-                                                      /* GtkFrame */
-                                                      "shadow", GTK_SHADOW_NONE,
+                              /* GtkFrame */
+                              "shadow", GTK_SHADOW_NONE,
 #endif
-                                                      NULL));
+                              NULL));
+
+  /* create the attribute list frame */
+  schematic_multiattrib_widget_set_list_frame (multiattrib,
+                                               list_frame);
+
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
                                              G_TYPE_BOOLEAN,  /* COLUMN_INHERITED */
@@ -2277,7 +2283,8 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 #endif
 
   /* Pack the vbox into the frame */
-  gtk_container_add (GTK_CONTAINER (multiattrib->list_frame), attrib_vbox);
+  gtk_container_add (GTK_CONTAINER (list_frame),
+                     attrib_vbox);
 
   /* add the scrolled window to box */
   gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
@@ -2294,9 +2301,9 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 
   /* pack the frame */
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      multiattrib->list_frame,
+                      list_frame,
                       TRUE, TRUE, 1);
-  gtk_widget_show_all (multiattrib->list_frame);
+  gtk_widget_show_all (list_frame);
 
 #ifdef ENABLE_GTK3
   GtkWidget *grid = gtk_grid_new ();
