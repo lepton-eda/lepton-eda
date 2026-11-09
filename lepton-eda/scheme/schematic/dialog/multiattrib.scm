@@ -22,6 +22,7 @@
 
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi gobject)
+  #:use-module (lepton gettext)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -61,6 +62,9 @@
 (define (make-multiattrib-dialog *window *selection)
   (define *dialog
     (schematic_multiattrib_widget_new *window *selection))
+
+  (gtk_window_set_title *dialog
+                        (string->pointer (G_ "Edit Attributes")))
 
   (schematic_multiattrib_widget_set_object_list *dialog *selection)
 

@@ -2008,7 +2008,6 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
                 /* GtkContainer */
                 "border-width",    0,
                 /* GtkWindow */
-                "title",           _("Edit Attributes"),
                 "default-width",   320,
                 "default-height",  350,
                 "window-position", GTK_WIN_POS_MOUSE,
