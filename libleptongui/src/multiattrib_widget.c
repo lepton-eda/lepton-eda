@@ -2001,23 +2001,15 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
-#endif
 
-  /* dialog initialization */
+  /* GTK2 specific dialog initialization. */
   g_object_set (G_OBJECT (multiattrib),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "default-width",   320,
-                "default-height",  350,
-                "window-position", GTK_WIN_POS_MOUSE,
-#ifndef ENABLE_GTK3
                 "allow-grow",      TRUE,
                 "allow-shrink",    FALSE,
                 /* GtkDialog */
                 "has-separator",   TRUE,
-#endif
                 NULL);
+#endif
 
   gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))), 5);
 

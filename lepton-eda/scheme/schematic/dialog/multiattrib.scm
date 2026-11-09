@@ -65,6 +65,10 @@
 
   (gtk_window_set_title *dialog
                         (string->pointer (G_ "Edit Attributes")))
+  (gtk_container_set_border_width *dialog 0)
+  (gtk_window_set_default_size *dialog 320 350)
+  (gtk_window_set_position *dialog
+                           (symbol->gtk-window-position 'mouse))
 
   (schematic_multiattrib_widget_set_object_list *dialog *selection)
 
