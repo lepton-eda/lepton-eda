@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2024-2025 Lepton EDA Contributors
+;;; Copyright (C) 2024-2026 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -66,21 +66,21 @@ WINDOW."
   (define *main-window (schematic_window_get_main_window *window))
 
   (if (null-pointer? *widget)
-      (let ((*new-widget (schematic_multiattrib_widget_new *window
+      (let ((*multiattrib (schematic_multiattrib_widget_new *window
                                                            *selection)))
-        (schematic_window_set_multiattrib_widget *window *new-widget)
-        (gtk_window_set_transient_for (gtk_widget_get_gtk_window *new-widget)
+        (schematic_window_set_multiattrib_widget *window *multiattrib)
+        (gtk_window_set_transient_for (gtk_widget_get_gtk_window *multiattrib)
                                       (gtk_widget_get_gtk_window *main-window))
 
-        (g_signal_connect *new-widget
+        (g_signal_connect *multiattrib
                           (string->pointer "delete-event")
                           *delete-event-callback
                           *window)
 
-        (g_signal_connect *new-widget
+        (g_signal_connect *multiattrib
                           (string->pointer "response")
                           *response-callback
                           *window)
-        (gtk_widget_show *new-widget))
+        (gtk_widget_show *multiattrib))
       (let ((*dialog-window (gtk_widget_get_gtk_window *widget)))
         (gtk_window_present *dialog-window))))
