@@ -1989,7 +1989,6 @@ multiattrib_callback_expander_activate (GtkExpander* expander,
 static void
 schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
 {
-  schematic_multiattrib_widget_setup (multiattrib);
 }
 
 

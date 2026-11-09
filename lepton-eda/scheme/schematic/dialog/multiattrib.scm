@@ -63,6 +63,8 @@
   (define *dialog
     (schematic_multiattrib_widget_new *window *selection))
 
+  (schematic_multiattrib_widget_setup *dialog)
+
   (gtk_window_set_title *dialog
                         (string->pointer (G_ "Edit Attributes")))
   (gtk_container_set_border_width *dialog 0)

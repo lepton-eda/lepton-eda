@@ -675,6 +675,7 @@
 
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_set_object_list
+            schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
 
             x_print
@@ -1396,6 +1397,7 @@
 ;;; multiattrib_widget.c
 (define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
+(define-lff schematic_multiattrib_widget_setup void '(*))
 (define-lff schematic_multiattrib_widget_update void '(*))
 
 ;;; new_text_dialog.c
