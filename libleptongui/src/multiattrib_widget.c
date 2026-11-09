@@ -1977,18 +1977,33 @@ multiattrib_callback_expander_activate (GtkExpander* expander,
 }
 
 
-/*! \brief GType instance initialiser for #SchematicMultiattribWidget
+/*! \brief GType instance initialiser for #SchematicMultiattribWidget.
  *
  *  \par Function Description
  *
  *  GType instance initialiser for #SchematicMultiattribWidget.
- *  Create and setup the widgets which make up the dialog.
  *
  *  \param [in] multiattrib The #SchematicMultiattribWidget we are
  *                          initialising
  */
 static void
 schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
+{
+  schematic_multiattrib_widget_setup (multiattrib);
+}
+
+
+/*! \brief Set up a #SchematicMultiattribWidget object.
+ *
+ *  \par Function Description
+ *
+ *  Create and setup the widgets which make up the Multiattrib dialog.
+ *
+ *  \param [in] multiattrib The #SchematicMultiattribWidget
+ *                          instance we are setting up.
+ */
+void
+schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 {
   GtkWidget *label, *scrolled_win, *treeview;
   GtkWidget *textview, *combo, *optionm, *button;
