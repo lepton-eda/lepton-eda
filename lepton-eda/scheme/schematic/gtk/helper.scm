@@ -31,6 +31,8 @@
             symbol->gtk-message-type
             gtk-position-type->symbol
             symbol->gtk-position-type
+            gtk-shadow-type->symbol
+            symbol->gtk-shadow-type
             gtk-window-position->symbol
             symbol->gtk-window-position
             gtk-response->symbol
@@ -88,6 +90,17 @@
 (define (symbol->gtk-position-type sym)
   "Transforms symbol SYM to corresponding GtkPositionType value."
   (schematic_gtk_position_type_from_string
+   (string->pointer (symbol->string sym))))
+
+
+(define (gtk-shadow-type->symbol type)
+  "Transforms GtkShadowType value TYPE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_shadow_type_to_string type))))
+
+(define (symbol->gtk-shadow-type sym)
+  "Transforms symbol SYM to corresponding GtkShadowType value."
+  (schematic_gtk_shadow_type_from_string
    (string->pointer (symbol->string sym))))
 
 

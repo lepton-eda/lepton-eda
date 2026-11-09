@@ -54,6 +54,8 @@
             schematic_gtk_justification_from_string
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
+            schematic_gtk_shadow_type_to_string
+            schematic_gtk_shadow_type_from_string
             schematic_gtk_window_position_to_string
             schematic_gtk_window_position_from_string
 
@@ -740,6 +742,8 @@
 (define-lff schematic_gtk_justification_from_string int '(*))
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
+(define-lff schematic_gtk_shadow_type_to_string '* (list int))
+(define-lff schematic_gtk_shadow_type_from_string int '(*))
 (define-lff schematic_gtk_window_position_to_string '* (list int))
 (define-lff schematic_gtk_window_position_from_string int '(*))
 (define-lff schematic_gtk_vbox_new '* (list int int))
