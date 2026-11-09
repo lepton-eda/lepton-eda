@@ -2067,8 +2067,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
                 NULL);
 #endif
 
-  gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))), 5);
-
   /* create the attribute list frame */
   multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
 #ifndef ENABLE_GTK3

@@ -65,6 +65,7 @@
 
   (schematic_multiattrib_widget_setup *dialog)
 
+  (gtk_box_set_spacing (gtk_dialog_get_content_area *dialog) 5)
   (gtk_window_set_title *dialog
                         (string->pointer (G_ "Edit Attributes")))
   (gtk_container_set_border_width *dialog 0)
