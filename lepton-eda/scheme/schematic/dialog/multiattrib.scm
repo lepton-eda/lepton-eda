@@ -65,6 +65,12 @@
 
   (schematic_multiattrib_widget_setup *dialog)
 
+  ;; Now add the close button to the action area.
+  (gtk_dialog_add_button *dialog
+                         (string->pointer (G_ "_Close"))
+                         GTK_RESPONSE_CLOSE)
+  (schematic_multiattrib_widget_refresh *dialog)
+
   (gtk_box_set_spacing (gtk_dialog_get_content_area *dialog) 5)
   (gtk_window_set_title *dialog
                         (string->pointer (G_ "Edit Attributes")))

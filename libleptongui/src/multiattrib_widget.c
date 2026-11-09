@@ -2464,13 +2464,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
                       FALSE, TRUE, 1);
   gtk_widget_show_all (add_frame);
 
-
-  /* now add the close button to the action area */
-  gtk_dialog_add_button (GTK_DIALOG (multiattrib),
-                         _("_Close"), GTK_RESPONSE_CLOSE);
-
   schematic_multiattrib_widget_set_add_frame (multiattrib, add_frame);
-  schematic_multiattrib_widget_refresh (multiattrib);
 }
 
 
