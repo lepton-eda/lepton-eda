@@ -82,6 +82,12 @@ int
 schematic_gtk_position_type_from_string (char *s);
 
 const char*
+schematic_gtk_shadow_type_to_string (int val);
+
+int
+schematic_gtk_shadow_type_from_string (char *s);
+
+const char*
 schematic_gtk_window_position_to_string (int val);
 
 int

@@ -651,6 +651,62 @@ schematic_gtk_window_position_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkShadowType value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkShadowType value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The shadow type value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_shadow_type_to_string (int val)
+{
+  const char *result = "none";
+
+  switch (val)
+  {
+  case GTK_SHADOW_NONE: result = "none"; break;
+  case GTK_SHADOW_IN: result = "in"; break;
+  case GTK_SHADOW_OUT: result = "out"; break;
+  case GTK_SHADOW_ETCHED_IN: result = "etched-in"; break;
+  case GTK_SHADOW_ETCHED_OUT: result = "etched-out"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkShadowType value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkShadowType value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkShadowType value.
+ */
+int
+schematic_gtk_shadow_type_from_string (char *s)
+{
+  int result = GTK_SHADOW_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_SHADOW_NONE; }
+  else if (strcmp (s, "in") == 0) {result = GTK_SHADOW_IN; }
+  else if (strcmp (s, "out") == 0) {result = GTK_SHADOW_OUT; }
+  else if (strcmp (s, "etched-in") == 0) {result = GTK_SHADOW_ETCHED_IN; }
+  else if (strcmp (s, "etched-out") == 0) {result = GTK_SHADOW_ETCHED_OUT; }
+
+  return result;
+}
+
+
 /*! \brief Create a vertical box widget.
  *
  * \par Function Description
