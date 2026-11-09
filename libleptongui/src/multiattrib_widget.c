@@ -156,6 +156,16 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
                               "schematic-window", w_current,
                               NULL));
 
+#ifndef ENABLE_GTK3
+  /* GTK2 specific dialog initialization. */
+  g_object_set (G_OBJECT (multiattrib_widget),
+                "allow-grow",      TRUE,
+                "allow-shrink",    FALSE,
+                /* GtkDialog */
+                "has-separator",   TRUE,
+                NULL);
+#endif
+
   return multiattrib_widget;
 }
 
@@ -2095,14 +2105,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
-
-  /* GTK2 specific dialog initialization. */
-  g_object_set (G_OBJECT (multiattrib),
-                "allow-grow",      TRUE,
-                "allow-shrink",    FALSE,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-                NULL);
 #endif
 
   /* create the attribute list frame */
