@@ -109,11 +109,11 @@ libleptongui_la_SOURCES = \
 
 libleptongui_la_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
-libleptongui_la_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
+libleptongui_la_CFLAGS = $(GCC_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS) $(CFLAGS)
 libleptongui_la_LDFLAGS = -version-info $(LIBLEPTONGUI_SHLIB_VERSION) \
-	$(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
+	$(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 
 libleptongui_la_LIBADD = \

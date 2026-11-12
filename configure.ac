@@ -222,8 +222,6 @@ AX_OPTION_DOXYGEN
 AX_OPTION_XDG_DATA
 # XDG database updates
 AX_OPTION_XDG_DB
-# libstroke support
-AX_OPTION_STROKE
 # attrib
 AX_OPTION_ATTRIB
 # contributed software
