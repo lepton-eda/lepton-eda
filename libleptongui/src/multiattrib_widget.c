@@ -2310,9 +2310,9 @@ schematic_multiattrib_widget_callback_toggled_show_inherited (GtkToggleButton *b
 
 /*! \brief Remember "expanded" state of the "Add Attribute" section.
  */
-static void
-multiattrib_callback_expander_activate (GtkExpander* expander,
-                                        gpointer     data)
+void
+schematic_multiattrib_widget_callback_expander_activate (GtkExpander* expander,
+                                                         gpointer data)
 {
   SchematicMultiattribWidget* multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
@@ -2427,7 +2427,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   g_signal_connect (add_frame,
                     "activate",
-                    G_CALLBACK (multiattrib_callback_expander_activate),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_expander_activate),
                     multiattrib);
 
 

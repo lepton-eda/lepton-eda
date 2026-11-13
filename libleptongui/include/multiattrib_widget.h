@@ -241,6 +241,9 @@ schematic_multiattrib_widget_callback_edited_value (GtkCellRendererText *cell_re
                                                     gchar *arg1,
                                                     gchar *new_value,
                                                     gpointer user_data);
+void
+schematic_multiattrib_widget_callback_expander_activate (GtkExpander* expander,
+                                                         gpointer data);
 gboolean
 schematic_multiattrib_widget_callback_key_pressed (GtkWidget *widget,
                                                    GdkEventKey *event,
