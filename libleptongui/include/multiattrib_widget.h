@@ -184,6 +184,12 @@ schematic_multiattrib_widget_get_show_inherited (SchematicMultiattribWidget *mul
 void
 schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *multiattrib,
                                                  GtkWidget *widget);
+GtkComboBoxText*
+schematic_multiattrib_widget_get_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib,
+                                                                 GtkComboBoxText *combo_box_text);
 GtkTreeView*
 schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiattrib);
 

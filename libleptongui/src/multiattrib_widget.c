@@ -213,6 +213,46 @@ schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *mul
 }
 
 
+/*! \brief Get the Show name/value GtkComboBoxText instance of a
+ *  Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Show name/value GtkComboBoxText object of the
+ *  Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Show name/value GtkComboBoxText instance.
+ */
+GtkComboBoxText*
+schematic_multiattrib_widget_get_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->optionmenu_shownv;
+}
+
+
+/*! \brief Set the Show name/value widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Show name/value GtkComboBoxText object of the
+ *  Multiattrib widget to the given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] combo_box The new Show name/value widget instance.
+ */
+void
+schematic_multiattrib_widget_set_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib,
+                                                                 GtkComboBoxText *combo_box)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->optionmenu_shownv = combo_box;
+}
+
+
 /*! \brief Get the Value text view of a Multiattrib widget.
  *
  *  \par Function Description
