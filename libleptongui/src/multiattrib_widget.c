@@ -1913,8 +1913,9 @@ schematic_multiattrib_widget_callback_value_grab_focus (GtkWidget *widget, gpoin
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
+void
+schematic_multiattrib_widget_callback_button_add (GtkButton *button,
+                                                  gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2403,7 +2404,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   button = gtk_button_new_with_mnemonic (_("_Add"));
   g_signal_connect (button,
                     "clicked",
-                    G_CALLBACK (multiattrib_callback_button_add),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_button_add),
                     multiattrib);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);

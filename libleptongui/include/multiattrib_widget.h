@@ -224,6 +224,9 @@ schematic_multiattrib_widget_update (SchematicWindow *w_current);
 
 
 /* Callbacks */
+void
+schematic_multiattrib_widget_callback_button_add (GtkButton *button,
+                                                  gpointer user_data);
 gboolean
 schematic_multiattrib_widget_callback_button_pressed (GtkWidget *widget,
                                                       GdkEventButton *event,
