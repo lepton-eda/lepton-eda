@@ -59,7 +59,12 @@
 
 ;;; Create a new Multiattrib dialog widget.
 (define (make-multiattrib-dialog *window *selection)
-  (schematic_multiattrib_widget_new *window *selection))
+  (define *dialog
+    (schematic_multiattrib_widget_new *window *selection))
+
+  (schematic_multiattrib_widget_set_object_list *dialog *selection)
+
+  *dialog)
 
 
 (define (multiattrib-dialog window)

@@ -36,6 +36,30 @@ snv_shows_value (int snv)
 }
 
 
+/*! \brief Set the current window selection as the object list of
+ *  a Multiattrib widget instance.
+ *
+ *  \par Function Description
+ *
+ *  Sets the current selection as the 'object_list' property of
+ *  the Multiattrib widget, which triggers update of the widget.
+ *
+ *  \param [in] multiattrib_widget The Multiattrib widget.
+ *  \param [in] selection The list of currently selected objects.
+ */
+void
+schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
+                                              LeptonSelection *selection)
+{
+  g_return_if_fail (multiattrib_widget != NULL);
+
+  g_object_set (G_OBJECT (multiattrib_widget),
+                "object_list", selection,
+                NULL);
+}
+
+
+
 /*! \brief Create a new multiple attribute editor dialog
  *  \par Function Description
  *  Creates a new multiple attribute editor dialog in this
@@ -51,7 +75,6 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
 {
   GtkWidget *multiattrib_widget =
     GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
-                              "object_list", selection,
                               /* SchematicDialog */
                               "settings-name", "multiattrib",
                               "schematic-window", w_current,
