@@ -19,6 +19,8 @@
 (define-module (schematic gtk helper)
   #:use-module (system foreign)
 
+  #:use-module (lepton m4)
+
   #:use-module (schematic ffi)
 
   #:export (gtk-buttons-type->symbol
@@ -31,6 +33,10 @@
             symbol->gtk-message-type
             gtk-policy-type->symbol
             symbol->gtk-policy-type
+            GTK_POLICY_ALWAYS
+            GTK_POLICY_AUTOMATIC
+            GTK_POLICY_NEVER
+            GTK_POLICY_EXTERNAL
             gtk-position-type->symbol
             symbol->gtk-position-type
             gtk-shadow-type->symbol
@@ -93,6 +99,13 @@
   "Transforms symbol SYM to corresponding GtkPolicyType value."
   (schematic_gtk_policy_type_from_string
    (string->pointer (symbol->string sym))))
+
+(define GTK_POLICY_ALWAYS (symbol->gtk-policy-type 'always))
+(define GTK_POLICY_AUTOMATIC (symbol->gtk-policy-type 'automatic))
+(define GTK_POLICY_NEVER (symbol->gtk-policy-type 'never))
+;;; This one is defined in GTK3 only.
+(define GTK_POLICY_EXTERNAL
+  (and %m4-use-gtk3 (symbol->gtk-policy-type 'external)))
 
 (define (gtk-position-type->symbol type)
   "Transforms GtkPositionType value TYPE to Scheme symbol."
