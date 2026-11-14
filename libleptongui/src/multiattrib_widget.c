@@ -2138,18 +2138,13 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*   - create a scrolled window for the treeview */
-  scrolled_win = GTK_WIDGET (
-                    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                                  /* GtkContainer */
-                                  "border-width",      3,
-                                  /* GtkScrolledWindow */
-                                  "hscrollbar-policy",
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 3);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC,
-                                  "vscrollbar-policy",
-                                  GTK_POLICY_AUTOMATIC,
-                                  "shadow-type",
-                                  GTK_SHADOW_ETCHED_IN,
-                                  NULL));
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_ETCHED_IN);
   /*   - create the treeview */
   treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
                                        /* GtkTreeView */
