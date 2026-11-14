@@ -2118,15 +2118,16 @@ schematic_multiattrib_widget_list_store_new ()
  *  \param [in] multiattrib The #SchematicMultiattribWidget
  *                          instance we are setting up.
  *  \param [in] list_frame The list frame widget of the dialog.
+ *  \param [in] store The list store tree model of the dialog.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *list_frame)
+                                    GtkWidget *list_frame,
+                                    GtkTreeModel *store)
 {
   GtkWidget *label, *scrolled_win, *treeview;
   GtkWidget *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
-  GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
@@ -2135,9 +2136,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #else
   GtkStyle *style;
 #endif
-
-  /*   - create the model for the treeview */
-  store = schematic_multiattrib_widget_list_store_new ();
 
   /*   - create a scrolled window for the treeview */
   scrolled_win = GTK_WIDGET (

@@ -64,13 +64,15 @@
     (schematic_multiattrib_widget_new *window *selection))
   ;; Create the attribute list frame.
   (define *list-frame (gtk_frame_new %null-pointer))
+  ;; Create the model for the treeview.
+  (define *store (schematic_multiattrib_widget_list_store_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
   (schematic_multiattrib_widget_set_list_frame *dialog
                                                *list-frame)
 
-  (schematic_multiattrib_widget_setup *dialog *list-frame)
+  (schematic_multiattrib_widget_setup *dialog *list-frame *store)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog
