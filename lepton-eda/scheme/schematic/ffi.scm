@@ -44,8 +44,8 @@
             gtk_string_to_file_chooser_action
             gtk_message_type_to_string
             gtk_string_to_message_type
-            gtk_policy_to_string
-            gtk_string_to_policy
+            schematic_gtk_policy_type_to_string
+            schematic_gtk_policy_type_from_string
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
@@ -734,8 +734,8 @@
 (define-lff gtk_string_to_file_chooser_action int '(*))
 (define-lff gtk_message_type_to_string '* (list int))
 (define-lff gtk_string_to_message_type int '(*))
-(define-lff gtk_policy_to_string '* (list int))
-(define-lff gtk_string_to_policy int '(*))
+(define-lff schematic_gtk_policy_type_to_string '* (list int))
+(define-lff schematic_gtk_policy_type_from_string int '(*))
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))

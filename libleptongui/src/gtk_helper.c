@@ -181,18 +181,18 @@ gdk_event_scroll_direction_to_string (GdkScrollDirection mode)
 }
 
 
-/*! \brief Transform a GTK policy id value to string.
+/*! \brief Transform a GTK policy type id value to string.
  *
  * \par Function Description
  * Given a \c GtkPolicyType id \p policy, returns the string
  * corresponding to it.  This is mainly intended to be used for
  * value conversion in Scheme FFI functions.
  *
- * \param [in] policy The policy id.
+ * \param [in] policy The policy type id.
  * \return The string corresponding to the id.
  */
 const char*
-gtk_policy_to_string (int policy)
+schematic_gtk_policy_type_to_string (int policy)
 {
   const char *result = "unknown";
 
@@ -211,7 +211,7 @@ gtk_policy_to_string (int policy)
 }
 
 
-/*! \brief Transform a string into GTK policy id value.
+/*! \brief Transform a string into GTK policy type id value.
  *
  * \par Function Description
  * Given a string naming a \c GtkPolicyType id, return the enum
@@ -219,10 +219,10 @@ gtk_policy_to_string (int policy)
  * for value conversion in Scheme FFI functions.
  *
  * \param [in] s The string.
- * \return The GTK policy id value.
+ * \return The GTK policy type id value.
  */
 int
-gtk_string_to_policy (char *s)
+schematic_gtk_policy_type_from_string (char *s)
 {
   int result = GTK_POLICY_ALWAYS;
 

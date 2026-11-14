@@ -73,10 +73,10 @@
 
 
 (define GTK_POLICY_ALWAYS
-  (gtk_string_to_policy (string->pointer "always")))
+  (schematic_gtk_policy_type_from_string (string->pointer "always")))
 
 (define GTK_POLICY_NEVER
-  (gtk_string_to_policy (string->pointer "never")))
+  (schematic_gtk_policy_type_from_string (string->pointer "never")))
 
 (define (setup-canvas-scrolling *scrolled-widget show-scrollbars?)
   "Adjusts the viewport and scrollbars of *SCROLLED-WIDGET and enables or
