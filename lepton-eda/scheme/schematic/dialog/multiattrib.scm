@@ -66,13 +66,25 @@
   (define *list-frame (gtk_frame_new %null-pointer))
   ;; Create the model for the treeview.
   (define *store (schematic_multiattrib_widget_list_store_new))
+  ;; Create a scrolled window for the treeview.
+  (define *scrolled-window
+    (gtk_scrolled_window_new %null-pointer %null-pointer))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
   (schematic_multiattrib_widget_set_list_frame *dialog
                                                *list-frame)
 
-  (schematic_multiattrib_widget_setup *dialog *list-frame *store)
+  (gtk_container_set_border_width *scrolled-window 3)
+  (gtk_scrolled_window_set_policy *scrolled-window
+                                  GTK_POLICY_AUTOMATIC
+                                  GTK_POLICY_AUTOMATIC)
+  (gtk_scrolled_window_set_shadow_type *scrolled-window
+                                       (symbol->gtk-shadow-type 'etched-in))
+  (schematic_multiattrib_widget_setup *dialog
+                                      *list-frame
+                                      *store
+                                      *scrolled-window)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

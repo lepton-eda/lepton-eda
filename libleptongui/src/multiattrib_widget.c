@@ -2119,13 +2119,15 @@ schematic_multiattrib_widget_list_store_new ()
  *                          instance we are setting up.
  *  \param [in] list_frame The list frame widget of the dialog.
  *  \param [in] store The list store tree model of the dialog.
+ *  \param [in] scrolled_win The scrolled window of the dialog.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *list_frame,
-                                    GtkTreeModel *store)
+                                    GtkTreeModel *store,
+                                    GtkWidget *scrolled_win)
 {
-  GtkWidget *label, *scrolled_win, *treeview;
+  GtkWidget *label, *treeview;
   GtkWidget *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
   GtkCellRenderer *renderer;
@@ -2137,14 +2139,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkStyle *style;
 #endif
 
-  /*   - create a scrolled window for the treeview */
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 3);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
-                                       GTK_SHADOW_ETCHED_IN);
   /*   - create the treeview */
   treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
                                        /* GtkTreeView */
