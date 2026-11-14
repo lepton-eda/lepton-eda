@@ -707,6 +707,60 @@ schematic_gtk_shadow_type_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkSelectionMode value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkSelectionMode value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The selection mode value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_selection_mode_to_string (int val)
+{
+  const char *result = "none";
+
+  switch (val)
+  {
+  case GTK_SELECTION_NONE: result = "none"; break;
+  case GTK_SELECTION_SINGLE: result = "single"; break;
+  case GTK_SELECTION_BROWSE: result = "browse"; break;
+  case GTK_SELECTION_MULTIPLE: result = "multiple"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkSelectionMode value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkSelectionMode value, returns the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \returns The \c GtkSelectionMode value.
+ */
+int
+schematic_gtk_selection_mode_from_string (char *s)
+{
+  int result = GTK_SELECTION_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_SELECTION_NONE; }
+  else if (strcmp (s, "single") == 0) {result = GTK_SELECTION_SINGLE; }
+  else if (strcmp (s, "browse") == 0) {result = GTK_SELECTION_BROWSE; }
+  else if (strcmp (s, "multiple") == 0) {result = GTK_SELECTION_MULTIPLE; }
+
+  return result;
+}
+
+
 /*! \brief Create a vertical box widget.
  *
  * \par Function Description
