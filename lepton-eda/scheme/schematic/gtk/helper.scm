@@ -39,6 +39,8 @@
             GTK_POLICY_EXTERNAL
             gtk-position-type->symbol
             symbol->gtk-position-type
+            gtk-selection-mode->symbol
+            symbol->gtk-selection-mode
             gtk-shadow-type->symbol
             symbol->gtk-shadow-type
             gtk-window-position->symbol
@@ -115,6 +117,17 @@
 (define (symbol->gtk-position-type sym)
   "Transforms symbol SYM to corresponding GtkPositionType value."
   (schematic_gtk_position_type_from_string
+   (string->pointer (symbol->string sym))))
+
+
+(define (gtk-selection-mode->symbol mode)
+  "Transforms GtkSelectionMode value MODE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_selection_mode_to_string mode))))
+
+(define (symbol->gtk-selection-mode sym)
+  "Transforms symbol SYM to corresponding GtkSelectionMode value."
+  (schematic_gtk_selection_mode_from_string
    (string->pointer (symbol->string sym))))
 
 
