@@ -23,6 +23,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton gettext)
+  #:use-module (lepton m4)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -69,6 +70,8 @@
   ;; Create a scrolled window for the treeview.
   (define *scrolled-window
     (gtk_scrolled_window_new %null-pointer %null-pointer))
+  ;; Create the treeview.
+  (define *tree-view (gtk_tree_view_new_with_model *store))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -81,10 +84,32 @@
                                   GTK_POLICY_AUTOMATIC)
   (gtk_scrolled_window_set_shadow_type *scrolled-window
                                        (symbol->gtk-shadow-type 'etched-in))
+
+  (unless %m4-use-gtk3
+    (gtk_tree_view_set_rules_hint *tree-view TRUE))
+
+  (g_signal_connect *tree-view
+                    (string->pointer "key-press-event")
+                    *schematic_multiattrib_widget_callback_key_pressed
+                    *dialog)
+  (g_signal_connect *tree-view
+                    (string->pointer "button-press-event")
+                    *schematic_multiattrib_widget_callback_button_pressed
+                    *dialog)
+  (g_signal_connect *tree-view
+                    (string->pointer "popup-menu")
+                    *schematic_multiattrib_widget_callback_popup_menu
+                    *dialog)
+
+  (let ((*selection (gtk_tree_view_get_selection *tree-view)))
+    (gtk_tree_selection_set_mode *selection
+                                 GTK_SELECTION_SINGLE))
+
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
                                       *store
-                                      *scrolled-window)
+                                      *scrolled-window
+                                      *tree-view)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

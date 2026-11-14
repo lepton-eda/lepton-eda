@@ -176,7 +176,8 @@ void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *list_frame,
                                     GtkTreeModel *store,
-                                    GtkWidget *scrolled_win);
+                                    GtkWidget *scrolled_win,
+                                    GtkWidget *treeview);
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 

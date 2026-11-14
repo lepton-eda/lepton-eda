@@ -208,6 +208,12 @@
             gtk_toggle_button_get_active
             gtk_toggle_button_set_active
 
+            gtk_tree_selection_set_mode
+
+            gtk_tree_view_new_with_model
+            gtk_tree_view_set_rules_hint
+            gtk_tree_view_get_selection
+
             gtk_widget_destroy
             gtk_widget_grab_focus
             gtk_widget_has_focus
@@ -467,6 +473,12 @@
 
 (define-lff gtk_toggle_button_get_active int '(*))
 (define-lff gtk_toggle_button_set_active void (list '* int))
+
+(define-lff gtk_tree_selection_set_mode void (list '* int))
+
+(define-lff gtk_tree_view_new_with_model '* '(*))
+(define-lff gtk_tree_view_set_rules_hint void (list '* int))
+(define-lff gtk_tree_view_get_selection '* '(*))
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_has_focus int '(*))

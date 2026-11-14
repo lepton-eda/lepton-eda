@@ -684,6 +684,9 @@
             schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
+            *schematic_multiattrib_widget_callback_button_pressed
+            *schematic_multiattrib_widget_callback_key_pressed
+            *schematic_multiattrib_widget_callback_popup_menu
 
             x_print
 
@@ -1411,8 +1414,11 @@
 (define-lff schematic_multiattrib_widget_set_list_frame void '(* *))
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* * * *))
+(define-lff schematic_multiattrib_widget_setup void '(* * * * *))
 (define-lff schematic_multiattrib_widget_update void '(*))
+(define-lfc *schematic_multiattrib_widget_callback_button_pressed)
+(define-lfc *schematic_multiattrib_widget_callback_key_pressed)
+(define-lfc *schematic_multiattrib_widget_callback_popup_menu)
 
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog_get_aligncb '* '(*))

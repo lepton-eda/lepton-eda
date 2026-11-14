@@ -2120,46 +2120,25 @@ schematic_multiattrib_widget_list_store_new ()
  *  \param [in] list_frame The list frame widget of the dialog.
  *  \param [in] store The list store tree model of the dialog.
  *  \param [in] scrolled_win The scrolled window of the dialog.
+ *  \param [in] treeview The tree view of the dialog.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *list_frame,
                                     GtkTreeModel *store,
-                                    GtkWidget *scrolled_win)
+                                    GtkWidget *scrolled_win,
+                                    GtkWidget *treeview)
 {
-  GtkWidget *label, *treeview;
+  GtkWidget *label;
   GtkWidget *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
-  GtkTreeSelection *selection;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
 #endif
-
-  /*   - create the treeview */
-  treeview = gtk_tree_view_new_with_model (store);
-#ifndef ENABLE_GTK3
-  gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
-#endif
-
-  g_signal_connect (treeview,
-                    "key-press-event",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_key_pressed),
-                    multiattrib);
-  g_signal_connect (treeview,
-                    "button-press-event",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_button_pressed),
-                    multiattrib);
-  g_signal_connect (treeview,
-                    "popup-menu",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_popup_menu),
-                    multiattrib);
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
-  gtk_tree_selection_set_mode (selection,
-                               GTK_SELECTION_SINGLE);
 
   /*   - and now the columns of the treeview */
   /*       - column 1: attribute name */
