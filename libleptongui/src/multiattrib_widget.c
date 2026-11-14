@@ -2082,6 +2082,33 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
 }
 
 
+/*! \brief Create a list store model for the Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Creates and returns a list store tree model for the
+ *  Multiattrib dialog.
+ *
+ *  \returns The new tree model.
+ */
+GtkTreeModel*
+schematic_multiattrib_widget_list_store_new ()
+{
+  return (GtkTreeModel*) gtk_list_store_new (NUM_COLUMNS,
+                                             G_TYPE_BOOLEAN,  /* COLUMN_INHERITED */
+                                             G_TYPE_STRING,   /* COLUMN_NAME */
+                                             G_TYPE_STRING,   /* COLUMN_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_VISIBILITY */
+                                             G_TYPE_INT,      /* COLUMN_SHOW_NAME_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_PRESENT_IN_ALL */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VISIBILITY */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_NAME */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_VALUE */
+                                             G_TYPE_OBJECT);  /* COLUMN_ATTRIBUTE_GEDALIST */
+}
+
+
 /*! \brief Set up a #SchematicMultiattribWidget object.
  *
  *  \par Function Description
@@ -2110,18 +2137,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*   - create the model for the treeview */
-  store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
-                                             G_TYPE_BOOLEAN,  /* COLUMN_INHERITED */
-                                             G_TYPE_STRING,   /* COLUMN_NAME */
-                                             G_TYPE_STRING,   /* COLUMN_VALUE */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_VISIBILITY */
-                                             G_TYPE_INT,      /* COLUMN_SHOW_NAME_VALUE */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_PRESENT_IN_ALL */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VALUE */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VISIBILITY */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_NAME */
-                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_VALUE */
-                                             G_TYPE_OBJECT);  /* COLUMN_ATTRIBUTE_GEDALIST */
+  store = schematic_multiattrib_widget_list_store_new ();
 
   /*   - create a scrolled window for the treeview */
   scrolled_win = GTK_WIDGET (

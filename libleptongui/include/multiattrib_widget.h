@@ -148,6 +148,8 @@ G_BEGIN_DECLS
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);
+GtkTreeModel*
+schematic_multiattrib_widget_list_store_new ();
 
 /* Accessors */
 GtkWidget*
