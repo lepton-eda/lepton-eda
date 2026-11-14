@@ -2141,7 +2141,9 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   /*   - create the treeview */
   treeview = gtk_tree_view_new_with_model (store);
+#ifndef ENABLE_GTK3
   gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 
   g_signal_connect (treeview,
                     "key-press-event",
