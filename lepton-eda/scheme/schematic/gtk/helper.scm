@@ -41,6 +41,10 @@
             symbol->gtk-position-type
             gtk-selection-mode->symbol
             symbol->gtk-selection-mode
+            GTK_SELECTION_NONE
+            GTK_SELECTION_SINGLE
+            GTK_SELECTION_BROWSE
+            GTK_SELECTION_MULTIPLE
             gtk-shadow-type->symbol
             symbol->gtk-shadow-type
             gtk-window-position->symbol
@@ -129,6 +133,11 @@
   "Transforms symbol SYM to corresponding GtkSelectionMode value."
   (schematic_gtk_selection_mode_from_string
    (string->pointer (symbol->string sym))))
+
+(define GTK_SELECTION_NONE (symbol->gtk-selection-mode 'none))
+(define GTK_SELECTION_SINGLE (symbol->gtk-selection-mode 'single))
+(define GTK_SELECTION_BROWSE (symbol->gtk-selection-mode 'browse))
+(define GTK_SELECTION_MULTIPLE (symbol->gtk-selection-mode 'multiple))
 
 
 (define (gtk-shadow-type->symbol type)
