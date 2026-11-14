@@ -1422,10 +1422,10 @@ multiattrib_edit_cell_at_pos (SchematicMultiattribWidget *multiattrib,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_button_pressed (GtkWidget *widget,
-                                     GdkEventButton *event,
-                                     gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_button_pressed (GtkWidget *widget,
+                                                      GdkEventButton *event,
+                                                      gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2151,7 +2151,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                     multiattrib);
   g_signal_connect (treeview,
                     "button-press-event",
-                    G_CALLBACK (multiattrib_callback_button_pressed),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_button_pressed),
                     multiattrib);
   g_signal_connect (treeview,
                     "popup-menu",

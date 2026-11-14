@@ -180,6 +180,12 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 
+
+/* Callbacks */
+gboolean
+schematic_multiattrib_widget_callback_button_pressed (GtkWidget *widget,
+                                                      GdkEventButton *event,
+                                                      gpointer user_data);
 G_END_DECLS
 
 
