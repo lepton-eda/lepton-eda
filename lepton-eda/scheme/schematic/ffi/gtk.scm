@@ -107,6 +107,9 @@
             gtk_file_filter_new
             gtk_file_filter_set_name
 
+            gtk_frame_new
+            gtk_frame_set_shadow_type
+
             gtk_grab_add
             gtk_grab_remove
 
@@ -358,6 +361,9 @@
 (define-lff gtk_file_filter_add_pattern void '(* *))
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
+
+(define-lff gtk_frame_new '* '(*))
+(define-lff gtk_frame_set_shadow_type void (list '* int))
 
 (define-lff gtk_grab_add void '(*))
 (define-lff gtk_grab_remove void '(*))

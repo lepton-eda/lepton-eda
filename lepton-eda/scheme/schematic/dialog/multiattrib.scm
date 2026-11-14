@@ -62,8 +62,15 @@
 (define (make-multiattrib-dialog *window *selection)
   (define *dialog
     (schematic_multiattrib_widget_new *window *selection))
+  ;; Create the attribute list frame.
+  (define *list-frame (gtk_frame_new %null-pointer))
 
-  (schematic_multiattrib_widget_setup *dialog)
+  (gtk_frame_set_shadow_type *list-frame
+                             (symbol->gtk-shadow-type 'none))
+  (schematic_multiattrib_widget_set_list_frame *dialog
+                                               *list-frame)
+
+  (schematic_multiattrib_widget_setup *dialog *list-frame)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

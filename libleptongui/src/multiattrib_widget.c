@@ -2090,9 +2090,11 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
  *
  *  \param [in] multiattrib The #SchematicMultiattribWidget
  *                          instance we are setting up.
+ *  \param [in] list_frame The list frame widget of the dialog.
  */
 void
-schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
+schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
+                                    GtkWidget *list_frame)
 {
   GtkWidget *label, *scrolled_win, *treeview;
   GtkWidget *textview, *combo, *optionm, *button;
@@ -2106,14 +2108,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib)
 #else
   GtkStyle *style;
 #endif
-
-  /* create the attribute list frame */
-  GtkWidget *list_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (list_frame), GTK_SHADOW_NONE);
-
-  /* create the attribute list frame */
-  schematic_multiattrib_widget_set_list_frame (multiattrib,
-                                               list_frame);
 
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
