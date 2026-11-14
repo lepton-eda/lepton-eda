@@ -29,6 +29,8 @@
             symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
+            gtk-policy-type->symbol
+            symbol->gtk-policy-type
             gtk-position-type->symbol
             symbol->gtk-position-type
             gtk-shadow-type->symbol
@@ -81,6 +83,16 @@
   "Transforms symbol SYM to corresponding GtkMessageType value."
   (gtk_string_to_message_type (string->pointer (symbol->string sym))))
 
+
+(define (gtk-policy-type->symbol type)
+  "Transforms GtkPolicyType value TYPE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_policy_type_to_string type))))
+
+(define (symbol->gtk-policy-type sym)
+  "Transforms symbol SYM to corresponding GtkPolicyType value."
+  (schematic_gtk_policy_type_from_string
+   (string->pointer (symbol->string sym))))
 
 (define (gtk-position-type->symbol type)
   "Transforms GtkPositionType value TYPE to Scheme symbol."
