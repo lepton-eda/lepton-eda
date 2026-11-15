@@ -76,6 +76,21 @@
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 
+(define %component-sheet #f)
+
+(define %net-sheet #f)
+
+(define %pin-sheet #f)
+
+(define (sheet num)
+  (case num
+    ((0) %component-sheet)
+    ((1) %net-sheet)
+    ((2) %pin-sheet)))
+
+(define %num-sheets 3)
+
+
 ;;; Sorted list of all component refdeses used in design.
 (define %sheet-component-list %null-pointer)
 
@@ -192,6 +207,42 @@
 ;;; optional and #t by default.
 (define* (set-sheet-changed! #:optional (state #t))
   (set! %sheet-changed state))
+
+
+;;; 2d array of component attribs.
+(define %component-table %null-pointer)
+
+;;; Returns the component table.
+(define (component-table)
+  %component-table)
+
+;;; Sets the component table to *TABLE.
+(define (set-component-table! *table)
+  (set! %component-table *table))
+
+
+;;; 2d array of net attribs.
+(define %net-table %null-pointer)
+
+;;; Returns the net table.
+(define (net-table)
+  %net-table)
+
+;;; Sets the net table to *TABLE.
+(define (set-net-table! *table)
+  (set! %net-table *table))
+
+
+;;; 2d array of pin attribs.
+(define %pin-table %null-pointer)
+
+;;; Returns the pin table.
+(define (pin-table)
+  %pin-table)
+
+;;; Sets the pin table to *TABLE.
+(define (set-pin-table! *table)
+  (set! %pin-table *table))
 
 
 ;;; Initialize liblepton library.
@@ -606,7 +657,6 @@ failure."
 (define (update-component-attribs *toplevel
                                   *object
                                   *new-component-attrib-pair-list)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; To remove dead attribs from an object, we need to form a
   ;; complete list of unique attribs by taking the union of the
   ;; new attribs from the sheet data, and the old attribs living
@@ -712,14 +762,14 @@ failure."
                   (if (not new-attrib-value)
                       0
                       (attrib_table_get_visibility
-                       (attrib_sheet_data_get_component_table *sheet-data)
+                       (component-table)
                        row
                        column)))
                  (show-name-value
                   (if (not new-attrib-value)
                       0
                       (attrib_table_get_show_name_value
-                       (attrib_sheet_data_get_component_table *sheet-data)
+                       (component-table)
                        row
                        column))))
             (g_free *refdes)
@@ -808,7 +858,6 @@ failure."
 
 
 (define (update-design-components *toplevel *page)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list, as objects can be deleted from the
   ;; list during iteration over the list.
   (define *copy-list (g_list_copy (lepton_page_objects *page)))
@@ -831,7 +880,7 @@ failure."
                    (let ((*new-component-attrib-pair-list
                           (make-attrib-pair
                            *temp-uref
-                           (attrib_sheet_data_get_component_table *sheet-data)
+                           (component-table)
                            (sheet-component-list)
                            (sheet-component-attrib-count))))
                      ;; Must create a name=value pair list for
@@ -877,7 +926,6 @@ failure."
 ;;;   pin table on this row.
 ;;; - Return list of name=value pairs found.
 (define (pin->pin-attrib-list *refdes *pin)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *pinnumber
     (lepton_attrib_search_object_attribs_by_name
      *pin
@@ -924,7 +972,7 @@ failure."
                            (glist-data *local-attrib-list)))
                          (*table-value
                           (attrib_table_get_attrib_value
-                           (attrib_sheet_data_get_pin_table *sheet-data) row i))
+                           (pin-table) row i))
                          (new-attrib-value
                           (if (not (null-pointer? *table-value))
                               (pointer->string *table-value)
@@ -1026,7 +1074,6 @@ failure."
 
 
 (define (update-design-pins *toplevel *page)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list in case objects are deleted from the
   ;; list during its iteration.
   (define *copy-list (g_list_copy (lepton_page_objects *page)))
@@ -1135,14 +1182,13 @@ failure."
 ;;; from the cells, and places them back into tables.  This is the
 ;;; first step in saving out a project.
 (define (spreadsheet-data->tables)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; First handle component sheet.
   (let ((rows-number (sheet-component-count))
         (columns-number (sheet-component-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 0))
+        (*gtk-sheet (sheet 0))
         (*row-list (sheet-component-list))
         (*column-list (sheet-component-attrib-list))
-        (*table (attrib_sheet_data_get_component_table *sheet-data)))
+        (*table (component-table)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1154,10 +1200,10 @@ failure."
   ;; Next handle net sheet.
   (let ((rows-number (sheet-net-count))
         (columns-number (sheet-net-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 1))
+        (*gtk-sheet (sheet 1))
         (*row-list (sheet-net-list))
         (*column-list (sheet-net-attrib-list))
-        (*table (attrib_sheet_data_get_net_table *sheet-data)))
+        (*table (net-table)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1169,10 +1215,10 @@ failure."
   ;; Finally handle component pin sheet.
   (let ((rows-number (sheet-pin-count))
         (columns-number (sheet-pin-attrib-count))
-        (*gtk-sheet (attrib_get_sheet 2))
+        (*gtk-sheet (sheet 2))
         (*row-list (sheet-pin-list))
         (*column-list (sheet-pin-attrib-list))
-        (*table (attrib_sheet_data_get_pin_table *sheet-data)))
+        (*table (pin-table)))
 
     (gtk-sheet->table *gtk-sheet
                       *row-list
@@ -1206,8 +1252,7 @@ failure."
 ;;; will mark the document as dirty, while it is, in fact, just
 ;;; has been saved.
 (define (update-current-cell-text)
-  (define *entry-text
-    (gtk_sheet_get_entry_text (attrib_get_sheet 0)))
+  (define *entry-text (gtk_sheet_get_entry_text (current-sheet)))
   (set-current-cell-text! *entry-text)
   (g_free *entry-text))
 
@@ -1294,11 +1339,9 @@ failure."
 
 ;;; Export design components to CSV for external processing.
 (define (export-components)
-  (define *sheet-data (attrib_get_sheet_data))
   (define rows-number (sheet-component-count))
   (define columns-number (sheet-component-attrib-count))
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
+  (define *component-table (component-table))
 
   (define (id->attrib-name id)
     (pointer->string
@@ -1401,10 +1444,10 @@ failure."
   ;; 'deactivate' callback if needed.
   (for-each
    (lambda (i)
-     (let ((*sheet (attrib_get_sheet i)))
+     (let ((*sheet (sheet i)))
        (unless (null-pointer? *sheet)
          (gtk_sheet_set_active_cell *sheet -1 -1))))
-   (iota (attrib_get_sheets_number)))
+   (iota %num-sheets))
 
   (if (sheet-changed?)
       (case (unsaved-changes-dialog *window %program-basename)
@@ -1533,7 +1576,6 @@ failure."
 ;;; attributes that have some predefined 'weight' and go first or
 ;;; last, all other attributes are sorted in alphabetical order.
 (define (sort-component-attrib-list)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *ls (sheet-component-attrib-list))
 
   (set-sheet-component-attrib-list!
@@ -1731,8 +1773,6 @@ failure."
 
 ;;; Adds a new attribute NAME to the component sheet.
 (define (add-attrib-column name)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Only component sheet is supported yet.
   (when (zero? (notebook-current-page-id))
     ;; Eventually, I want to just resize the table to accomodate
@@ -1753,17 +1793,16 @@ failure."
                                   *name)))
 
         ;; Resize table to accomodate new attrib column.
-        (attrib_sheet_data_set_component_table
-         *sheet-data
-         (resize-table
-          (attrib_sheet_data_get_component_table *sheet-data)
-          (sheet-component-count)
-          old-component-attrib-count (sheet-component-attrib-count)))
+        (set-component-table!
+         (resize-table (component-table)
+                       (sheet-component-count)
+                       old-component-attrib-count
+                       (sheet-component-attrib-count)))
 
         ;; Fill out new sheet with new stuff from gtksheet.
-        (gtk_sheet_insert_columns (attrib_get_sheet 0) new-index 1)
+        (gtk_sheet_insert_columns (sheet 0) new-index 1)
         (add-column-labels
-         (attrib_get_sheet 0)
+         (sheet 0)
          (sheet-component-attrib-count)
          (sheet-component-attrib-list))))))
 
@@ -1796,7 +1835,6 @@ failure."
 
 
 (define (delete-component-attrib-column *sheet num)
-  (define *sheet-data (attrib_get_sheet_data))
   ;; Get name (label) of the column to delete from the gtk sheet.
   (define *attrib-name
     (g_strdup (gtk_sheet_column_button_get_label *sheet num)))
@@ -1814,16 +1852,14 @@ failure."
       ;; Make a copy of the TABLE array, minus data in column to
       ;; delete.
       (let ((*new-table
-             (copy-table/delete-column
-              (attrib_sheet_data_get_component_table *sheet-data)
-              num
-              (sheet-component-count)
-              (sheet-component-attrib-count))))
+             (copy-table/delete-column (component-table)
+                                       num
+                                       (sheet-component-count)
+                                       (sheet-component-attrib-count))))
         ;; Destroy the current TABLE array:
-        (destroy-table
-         (attrib_sheet_data_get_component_table *sheet-data)
-         (sheet-component-count)
-         (sheet-component-attrib-count))
+        (destroy-table (component-table)
+                       (sheet-component-count)
+                       (sheet-component-attrib-count))
 
         (set-sheet-component-attrib-list!
          (delete-glist-item (sheet-component-attrib-list)
@@ -1834,13 +1870,17 @@ failure."
         (g_free *attrib-name)
 
         ;; Use the copy made above as the current TABLE array.
-        (attrib_sheet_data_set_component_table *sheet-data *new-table)
+        (set-component-table! *new-table)
 
         ;; Delete column on gtksheet.
         (gtk_sheet_delete_columns *sheet num 1)
 
         ;; Set changed flag so user is prompted when exiting.
         (set-sheet-data-changed #t))))
+
+
+(define (current-sheet)
+  (sheet (notebook-current-page-id)))
 
 
 (define (gtksheet-state->symbol state)
@@ -1882,7 +1922,7 @@ failure."
 ;;; Runs the Delete attribute dialog.
 (define (delete-attrib)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (unless (null-pointer? *sheet)
     (let ((column (selected-sheet-column *sheet)))
       (when (and column
@@ -1915,15 +1955,11 @@ failure."
 ;;; by VISIBLE and SHOW.  The cell is identified by the index of
 ;;; spreadsheet notebook tab PAGE-ID and (ROW, COLUMN).
 (define (set-cell-attrib-visibility page-id row column visible show)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *table
     (cond
-     ((= page-id 0)
-      (attrib_sheet_data_get_component_table *sheet-data))
-     ((= page-id 1)
-      (attrib_sheet_data_get_net_table *sheet-data))
-     ((= page-id 2)
-      (attrib_sheet_data_get_pin_table *sheet-data))
+     ((= page-id 0) (component-table))
+     ((= page-id 1) (net-table))
+     ((= page-id 2) (pin-table))
      (else #f)))
 
   (when (and *table
@@ -1956,7 +1992,7 @@ failure."
 
 (define (set-cells-attribs-visibility visible show color)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define state-bv (make-bytevector (sizeof int) 0))
   (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
 
@@ -2177,9 +2213,6 @@ failure."
 
   (init-window-widgets)
 
-  ;; Create the array of sheets.
-  (attrib_window_sheets_new)
-
   ;; Restore main window's geometry.
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
 
@@ -2234,7 +2267,7 @@ failure."
 
 (define (callback-entry-changed *entry *user-data)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
   (unless (null-pointer? *sheet-entry)
     (let ((*entry-text (gtk_entry_get_text *entry))
@@ -2249,7 +2282,6 @@ failure."
 ;;; Creates and initializes the GtkSheet widget, which is the
 ;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *notebook (attrib_get_notebook))
 
   ;; Create three new sheets.
@@ -2262,7 +2294,7 @@ failure."
                (gtk_sheet_new component-count
                               component-attrib-count
                               (string->pointer (G_ "Components")))))
-          (attrib_set_sheet 0 *component-sheet))
+          (set! %component-sheet *component-sheet))
         (x_dialog_fatal_error
          (string->pointer
           (G_ "No components found in design.  Please check your schematic and try again!\n"))
@@ -2276,12 +2308,12 @@ failure."
                (gtk_sheet_new net-count
                               net-attrib-count
                               (string->pointer (G_ "Nets")))))
-          (attrib_set_sheet 1 *net-sheet)
+          (set! %net-sheet *net-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *net-sheet TRUE))
         (let ((*net-sheet
                (gtk_sheet_new 1 1 (string->pointer (G_ "Nets")))))
-          (attrib_set_sheet 1 *net-sheet)
+          (set! %net-sheet *net-sheet)
           (gtk_sheet_row_button_add_label *net-sheet
                                           0
                                           (string->pointer (G_ "TBD")))
@@ -2305,20 +2337,20 @@ failure."
         (let ((*pin-sheet (gtk_sheet_new pin-count
                                          pin-attrib-count
                                          (string->pointer (G_ "Pins")))))
-          (attrib_set_sheet 2 *pin-sheet)
+          (set! %pin-sheet *pin-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *pin-sheet TRUE))
         (let ((*pin-sheet
                (gtk_sheet_new 1 1 (string->pointer (G_ "Pins")))))
-          (attrib_set_sheet 2 *pin-sheet)
+          (set! %pin-sheet *pin-sheet)
           ;; Disallow editing of attribs for now.
           (gtk_sheet_set_locked *pin-sheet TRUE))))
 
 
   ;; Finally stick labels on the notebooks holding the two sheets.
   (do ((i 0 (1+ i)))
-      ((= i (attrib_get_sheets_number)))
-    (let ((*current-sheet (attrib_get_sheet i)))
+      ((= i %num-sheets))
+    (let ((*current-sheet (sheet i)))
       ;; Is this check needed?
       ;; Yes, it prevents us from segfaulting on empty nets sheet.
       (unless (null-pointer? *current-sheet)
@@ -2412,23 +2444,18 @@ failure."
 
 ;;; Adds all items to the top level window.
 (define (add-items)
-  (define *sheet-data (attrib_get_sheet_data))
   (define *window (attrib_get_window))
 
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
-  (define (component-sheet)
-    (attrib_get_sheet 0))
+  (define *component-table (component-table))
+  (define (component-sheet) (sheet 0))
   (define component-count (sheet-component-count))
   (define component-attrib-count (sheet-component-attrib-count))
-  (define *pin-table (attrib_sheet_data_get_pin_table *sheet-data))
-  (define (pin-sheet)
-    (attrib_get_sheet 2))
+  (define *pin-table (pin-table))
+  (define (pin-sheet) (sheet 2))
   (define pin-count (sheet-pin-count))
   (define pin-attrib-count (sheet-pin-attrib-count))
-  (define *net-table (attrib_sheet_data_get_net_table *sheet-data))
-  (define (net-sheet)
-    (attrib_get_sheet 1))
+  (define *net-table (net-table))
+  (define (net-sheet) (sheet 1))
   (define net-count (sheet-net-count))
   (define net-attrib-count (sheet-net-attrib-count))
 
@@ -2561,28 +2588,9 @@ Please check your design.")))
   (gtk_widget_show_all *window))
 
 
-;;; Creates and returns an initialised but empty SHEET_DATA
-;;; instance.
-(define (make-sheet-data)
-  (define *sheet-data (attrib_sheet_data_new))
-
-  ;; We will malloc and fill out the component table later.
-  (attrib_sheet_data_set_component_table *sheet-data %null-pointer)
-
-  ;; We will malloc and fill out the net table later.
-  (attrib_sheet_data_set_net_table *sheet-data %null-pointer)
-
-  ;; We will malloc and fill out the pin table later.
-  (attrib_sheet_data_set_pin_table *sheet-data %null-pointer)
-
-  *sheet-data)
-
-
 ;;; Adds the list of component refdeses by running through
 ;;; the list of *OBJECTS.
 (define (add-components *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2605,8 +2613,6 @@ Please check your design.")))
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
 (define (add-component-attribs *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2667,8 +2673,6 @@ Please check your design.")))
 ;;; Since this function operates on the global pin list, it
 ;;; doesn't return a value.
 (define (add-pins *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2730,8 +2734,6 @@ Please check your design.")))
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
 (define (add-pin-attribs *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-
   ;; Iterate through all objects found on page looking for
   ;; components.
   (for-each
@@ -2787,9 +2789,7 @@ Please check your design.")))
 ;;; Process *OBJECTS and add attribs of component ones to the
 ;;; component table.
 (define (objects->component-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *component-table
-    (attrib_sheet_data_get_component_table *sheet-data))
+  (define *component-table (component-table))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -2889,9 +2889,7 @@ Please check your design.")))
 
 ;;; Process *OBJECTS and add attribs of net ones to the net table.
 (define (objects->net-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *net-table
-    (attrib_sheet_data_get_net_table *sheet-data))
+  (define *net-table (net-table))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -2957,9 +2955,7 @@ Please check your design.")))
 
 ;;; Process *OBJECTS and add attribs of pin ones to the pin table.
 (define (objects->pin-table *objects)
-  (define *sheet-data (attrib_get_sheet_data))
-  (define *pin-table
-    (attrib_sheet_data_get_pin_table *sheet-data))
+  (define *pin-table (pin-table))
 
   ;; Iterate through all objects found on page.
   (for-each
@@ -3066,7 +3062,6 @@ Please check your design.")))
 
 (define (activate *app *toplevel)
   (define *window-widget (attrib_window_new *app))
-  (define *sheet-data (make-sheet-data))
   (define *pages
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
@@ -3076,9 +3071,6 @@ Please check your design.")))
 
   ;; Initialize GTK window.
   (init-window)
-
-  ;; Initialize main sheet data structure.
-  (attrib_set_sheet_data *sheet-data)
 
   (for-each
    (lambda (*page)
@@ -3113,16 +3105,12 @@ Please check your design.")))
   (sort-pin-attrib-list)
 
   ;; Create and load the tables.
-  (attrib_sheet_data_set_component_table
-   *sheet-data
-   (make-table (sheet-component-count)
-               (sheet-component-attrib-count)))
-  (attrib_sheet_data_set_net_table
-   *sheet-data
-   (make-table (sheet-net-count) (sheet-net-attrib-count)))
-  (attrib_sheet_data_set_pin_table
-   *sheet-data
-   (make-table (sheet-pin-count) (sheet-pin-attrib-count)))
+  (set-component-table! (make-table (sheet-component-count)
+                                    (sheet-component-attrib-count)))
+  (set-net-table! (make-table (sheet-net-count)
+                              (sheet-net-attrib-count)))
+  (set-pin-table! (make-table (sheet-pin-count)
+                              (sheet-pin-attrib-count)))
 
   ;; Must iterate over all pages in design.
   (for-each

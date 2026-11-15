@@ -2,7 +2,6 @@ lib_LTLIBRARIES = libleptonattrib.la
 
 libleptonattrib_la_SOURCES = \
 	attrib.c \
-	s_sheet_data.c \
 	s_table.c \
 	x_dialog.c \
 	x_window.c

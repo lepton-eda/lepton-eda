@@ -81,24 +81,8 @@
 # define N_(String) (String)
 #endif
 
-
-/*------------------------------------------------------------------*/
-/*!
- * My own data structure which I made
- * a global because it was easier to deal with when handing
- * callbacks.  It is defined in structs.h
- */
-/*------------------------------------------------------------------*/
-extern SHEET_DATA *sheet_head;
-/*------------------------------------------------------------------
- * GTKsheet includes: stuff for dealing with windows.
- *------------------------------------------------------------------*/
-#define NUM_SHEETS 3            /* Components, Nets, and Pins */
-
 extern GtkWidget *window;              /* Main window */
 extern GtkWidget *notebook;
-
-extern GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
 
 extern GtkWidget *label;
 

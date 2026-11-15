@@ -12,21 +12,6 @@ attrib_get_notebook ();
 void
 attrib_set_notebook (GtkWidget* widget);
 
-SHEET_DATA*
-attrib_get_sheet_data ();
-
-void
-attrib_set_sheet_data (SHEET_DATA *sheet_data);
-
-GtkSheet*
-attrib_get_sheet (int i);
-
-void
-attrib_set_sheet (int i,
-                  GtkSheet* sheet);
-int
-attrib_get_sheets_number ();
-
 LeptonToplevel*
 attrib_get_toplevel ();
 
@@ -44,30 +29,6 @@ attrib_gtksheet_state_to_string (int val);
 
 int
 attrib_gtksheet_state_from_string (char *s);
-
-/* ------------- s_sheet_data.c ------------- */
-SHEET_DATA*
-attrib_sheet_data_new();
-
-TABLE**
-attrib_sheet_data_get_component_table (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_component_table (SHEET_DATA *data,
-                                       TABLE** table);
-TABLE**
-attrib_sheet_data_get_net_table (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_net_table (SHEET_DATA *data,
-                                 TABLE** table);
-TABLE**
-attrib_sheet_data_get_pin_table (SHEET_DATA *data);
-
-void
-attrib_sheet_data_set_pin_table (SHEET_DATA *data,
-                                 TABLE** table);
-
 
 /* ------------- s_table.c ------------- */
 int
@@ -175,9 +136,6 @@ attrib_window_menubar_new (GtkWidget *window);
 
 GtkWidget*
 attrib_window_new (gpointer app);
-
-void
-attrib_window_sheets_new ();
 
 void
 attrib_window_set_menu_callback (char *name,
