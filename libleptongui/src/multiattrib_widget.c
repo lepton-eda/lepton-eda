@@ -2142,22 +2142,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkStyle *style;
 #endif
 
-  /*   - and now the columns of the treeview */
-  /*       - column 1: attribute name */
-  renderer = gtk_cell_renderer_text_new ();
-  g_signal_connect (renderer,
-                    "edited",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_edited_name),
-                    multiattrib);
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Name"));
-  gtk_tree_view_column_set_min_width (column, 100);
-  gtk_tree_view_column_set_resizable (column, TRUE);
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           schematic_multiattrib_widget_column_set_data_name,
-                                           multiattrib, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
   /*       - column 2: attribute value */
   renderer = GTK_CELL_RENDERER (
                                 g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT,

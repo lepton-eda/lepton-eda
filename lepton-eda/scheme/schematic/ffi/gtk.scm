@@ -52,6 +52,8 @@
             gtk_check_button_new_with_label
             gtk_check_button_new_with_mnemonic
 
+            gtk_cell_renderer_text_new
+
             gtk_combo_box_get_active
             gtk_combo_box_set_active
             gtk_combo_box_get_model
@@ -213,6 +215,13 @@
             gtk_tree_view_new_with_model
             gtk_tree_view_set_rules_hint
             gtk_tree_view_get_selection
+            gtk_tree_view_append_column
+            gtk_tree_view_column_new
+            gtk_tree_view_column_pack_start
+            gtk_tree_view_column_set_cell_data_func
+            gtk_tree_view_column_set_min_width
+            gtk_tree_view_column_set_resizable
+            gtk_tree_view_column_set_title
 
             gtk_widget_destroy
             gtk_widget_grab_focus
@@ -310,6 +319,8 @@
 
 (define-lff gtk_check_button_new_with_label '* '(*))
 (define-lff gtk_check_button_new_with_mnemonic '* '(*))
+
+(define-lff gtk_cell_renderer_text_new '* '())
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
@@ -479,6 +490,13 @@
 (define-lff gtk_tree_view_new_with_model '* '(*))
 (define-lff gtk_tree_view_set_rules_hint void (list '* int))
 (define-lff gtk_tree_view_get_selection '* '(*))
+(define-lff gtk_tree_view_append_column int '(* *))
+(define-lff gtk_tree_view_column_new '* '())
+(define-lff gtk_tree_view_column_pack_start void (list '* '* int))
+(define-lff gtk_tree_view_column_set_cell_data_func void '(* * * * *))
+(define-lff gtk_tree_view_column_set_min_width void (list '* int))
+(define-lff gtk_tree_view_column_set_resizable void (list '* int))
+(define-lff gtk_tree_view_column_set_title void '(* *))
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_has_focus int '(*))

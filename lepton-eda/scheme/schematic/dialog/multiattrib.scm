@@ -72,6 +72,11 @@
     (gtk_scrolled_window_new %null-pointer %null-pointer))
   ;; Create the treeview.
   (define *tree-view (gtk_tree_view_new_with_model *store))
+  ;; The columns of the treeview.
+  ;;
+  ;; Column 1: attribute name.
+  (define *name-column-renderer (gtk_cell_renderer_text_new))
+  (define *name-column (gtk_tree_view_column_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -104,6 +109,25 @@
   (let ((*selection (gtk_tree_view_get_selection *tree-view)))
     (gtk_tree_selection_set_mode *selection
                                  GTK_SELECTION_SINGLE))
+
+  (g_signal_connect *name-column-renderer
+                    (string->pointer "edited")
+                    *schematic_multiattrib_widget_callback_edited_name
+                    *dialog)
+  (gtk_tree_view_column_set_title *name-column
+                                  (string->pointer (G_ "Name")))
+  (gtk_tree_view_column_set_min_width *name-column 100)
+  (gtk_tree_view_column_set_resizable *name-column TRUE)
+  (gtk_tree_view_column_pack_start *name-column
+                                   *name-column-renderer
+                                   TRUE)
+  (gtk_tree_view_column_set_cell_data_func
+   *name-column
+   *name-column-renderer
+   *schematic_multiattrib_widget_column_set_data_name
+   *dialog
+   %null-pointer)
+  (gtk_tree_view_append_column *tree-view *name-column)
 
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
