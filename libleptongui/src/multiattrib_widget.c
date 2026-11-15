@@ -1343,10 +1343,10 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_key_pressed (GtkWidget *widget,
-                                  GdkEventKey *event,
-                                  gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_key_pressed (GtkWidget *widget,
+                                                   GdkEventKey *event,
+                                                   gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2147,7 +2147,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   g_signal_connect (treeview,
                     "key-press-event",
-                    G_CALLBACK (multiattrib_callback_key_pressed),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_key_pressed),
                     multiattrib);
   g_signal_connect (treeview,
                     "button-press-event",
