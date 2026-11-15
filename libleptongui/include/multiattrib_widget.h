@@ -133,10 +133,6 @@ struct _CellRendererMultiLineTextClass {
 
 struct _CellRendererMultiLineText {
   GtkCellRendererText parent_instance;
-
-  /*< private >*/
-  guint focus_out_id;
-
 };
 
 

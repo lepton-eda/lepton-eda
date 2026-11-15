@@ -366,9 +366,6 @@ static void cellrenderermultilinetext_init (CellRendererMultiLineText *obj)
 }
 static void cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
                                                     gpointer         user_data);
-static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
-                                                           GdkEvent  *event,
-                                                           gpointer   user_data);
 
 
 #define CELL_RENDERER_MULTI_LINE_TEXT_PATH "cell-renderer-multi-line-text-path"
@@ -447,11 +444,6 @@ cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
                     "editing_done",
                     G_CALLBACK (cellrenderermultilinetext_editing_done),
                     cell_mlt);
-  cell_mlt->focus_out_id =
-  g_signal_connect (textview,
-                    "focus_out_event",
-                    G_CALLBACK (cellrenderermultilinetext_focus_out_event),
-                    cell_mlt);
 
   return GTK_CELL_EDITABLE (textview);
 }
@@ -471,12 +463,6 @@ cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
   gchar *new_text;
   const gchar *path;
 
-  if (cell->focus_out_id > 0) {
-    g_signal_handler_disconnect (cell_editable,
-                                 cell->focus_out_id);
-    cell->focus_out_id = 0;
-  }
-
   if (CELL_TEXT_VIEW (cell_editable)->editing_canceled) {
     g_signal_emit_by_name (cell, "editing-canceled");
     return;
@@ -494,21 +480,6 @@ cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
   g_free (new_text);
 }
 
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
-static gboolean
-cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
-                                           GdkEvent *event,
-                                           gpointer user_data)
-{
-//  cellrenderermultilinetext_editing_done (GTK_CELL_EDITABLE (widget),
-//                                          user_data);
-
-  return FALSE;
-}
 
 /*! \todo Finish function documentation
  *  \brief
