@@ -190,6 +190,9 @@ gboolean
 schematic_multiattrib_widget_callback_key_pressed (GtkWidget *widget,
                                                    GdkEventKey *event,
                                                    gpointer user_data);
+gboolean
+schematic_multiattrib_widget_callback_popup_menu (GtkWidget *widget,
+                                                  gpointer user_data);
 G_END_DECLS
 
 
