@@ -816,10 +816,12 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                       -1);
 
   /*
-   * Set "editable" property to TRUE even for inherited attributes.
-   * This is done to allow the user to copy cell contents to clipboard.
-   * For inherited attributes no action will be taken on edit:
-   * multiattrib_callback_edited_name() will just return.
+   * Set "editable" property to TRUE even for inherited
+   * attributes.  This is done to allow the user to copy cell
+   * contents to clipboard.  For inherited attributes no action
+   * will be taken on edit:
+   * schematic_multiattrib_widget_callback_edited_name() will just
+   * return.
   */
 
   g_object_set (cell,
@@ -966,11 +968,11 @@ multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
-                                  gchar *arg1,
-                                  gchar *new_name,
-                                  gpointer user_data)
+void
+schematic_multiattrib_widget_callback_edited_name (GtkCellRendererText *cellrenderertext,
+                                                   gchar *arg1,
+                                                   gchar *new_name,
+                                                   gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2145,7 +2147,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   renderer = gtk_cell_renderer_text_new ();
   g_signal_connect (renderer,
                     "edited",
-                    G_CALLBACK (multiattrib_callback_edited_name),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_edited_name),
                     multiattrib);
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("Name"));
