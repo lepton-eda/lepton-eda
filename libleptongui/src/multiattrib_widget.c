@@ -2082,6 +2082,21 @@ schematic_multiattrib_widget_list_store_new ()
 }
 
 
+/*! \brief Create a custom multi-line text cell renderer.
+ *
+ *  \par Function Description
+ *
+ *  Creates and returns a custom multi-line text cell renderer.
+ *
+ *  \returns The new renderer.
+ */
+GtkCellRenderer*
+schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
+{
+  return GTK_CELL_RENDERER (g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT, NULL));
+}
+
+
 /*! \brief Set up a #SchematicMultiattribWidget object.
  *
  *  \par Function Description
@@ -2114,13 +2129,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*       - column 2: attribute value */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT,
-                                              /* GtkCellRendererText */
-                                              /* unknown in GTK 2.4 */
-                                              /* "ellipsize",
-                                                 PANGO_ELLIPSIZE_END, */
-                                              NULL));
+  renderer = schematic_multiattrib_widget_cell_renderer_multi_line_text_new ();
   g_signal_connect (renderer,
                     "edited",
                     G_CALLBACK (multiattrib_callback_edited_value),

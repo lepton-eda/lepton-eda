@@ -144,6 +144,9 @@ G_BEGIN_DECLS
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);
+GtkCellRenderer*
+schematic_multiattrib_widget_cell_renderer_multi_line_text_new ();
+
 GtkTreeModel*
 schematic_multiattrib_widget_list_store_new ();
 
