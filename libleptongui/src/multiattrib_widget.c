@@ -2142,13 +2142,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   /*   - and now the columns of the treeview */
   /*       - column 1: attribute name */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                                              /* GtkCellRendererText */
-                                              /* unknown in GTK 2.4 */
-                                              /* "ellipsize",
-                                               * PANGO_ELLIPSIZE_END, */
-                                              NULL));
+  renderer = gtk_cell_renderer_text_new ();
   g_signal_connect (renderer,
                     "edited",
                     G_CALLBACK (multiattrib_callback_edited_name),
