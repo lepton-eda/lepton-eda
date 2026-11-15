@@ -77,6 +77,10 @@
   ;; Column 1: attribute name.
   (define *name-column-renderer (gtk_cell_renderer_text_new))
   (define *name-column (gtk_tree_view_column_new))
+  ;; Column 2: attribute value.
+  (define *value-column-renderer
+    (schematic_multiattrib_widget_cell_renderer_multi_line_text_new))
+  (define *value-column (gtk_tree_view_column_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -128,6 +132,25 @@
    *dialog
    %null-pointer)
   (gtk_tree_view_append_column *tree-view *name-column)
+
+  (g_signal_connect *value-column-renderer
+                    (string->pointer "edited")
+                    *schematic_multiattrib_widget_callback_edited_value
+                    *dialog)
+  (gtk_tree_view_column_set_title *value-column
+                                  (string->pointer (G_ "Value")))
+  (gtk_tree_view_column_set_min_width *value-column 140)
+  (gtk_tree_view_column_set_resizable *value-column TRUE)
+  (gtk_tree_view_column_pack_start *value-column
+                                   *value-column-renderer
+                                   TRUE)
+  (gtk_tree_view_column_set_cell_data_func
+   *value-column
+   *value-column-renderer
+   *schematic_multiattrib_widget_column_set_data_value
+   *dialog
+   %null-pointer)
+  (gtk_tree_view_append_column *tree-view *value-column)
 
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
