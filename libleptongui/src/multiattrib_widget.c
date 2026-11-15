@@ -2147,13 +2147,10 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                     "edited",
                     G_CALLBACK (multiattrib_callback_edited_name),
                     multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("Name"),
-                                               "min-width", 100,
-                                               "resizable", TRUE,
-                                               NULL));
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Name"));
+  gtk_tree_view_column_set_min_width (column, 100);
+  gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
                                            multiattrib_column_set_data_name,
