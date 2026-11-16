@@ -35,8 +35,10 @@
   (define *main-window (schematic_window_get_main_window *window))
   (define *widget (schematic_compselect_new *window))
 
+  ;; Dialog initialization.
   (gtk_window_set_title *widget
                         (string->pointer (G_ "Add Component")))
+  (gtk_window_set_default_size *widget 300 400)
 
   (schematic_component_chooser_setup *widget)
 

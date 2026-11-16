@@ -1462,13 +1462,6 @@ schematic_component_chooser_setup (GtkWidget *chooser)
 
   Compselect *compselect = COMPSELECT (chooser);
 
-  /* dialog initialization */
-  g_object_set (G_OBJECT (chooser),
-                /* GtkWindow */
-                "default-height",  300,
-                "default-width",   400,
-                NULL);
-
   /* vpaned is vertical pane containing preview and attributes.
    * hpaned is horizontal pane containing selection and
    * preview. */
