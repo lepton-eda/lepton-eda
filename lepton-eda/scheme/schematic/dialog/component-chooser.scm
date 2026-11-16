@@ -19,10 +19,13 @@
 
 (define-module (schematic dialog component-chooser)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (make-component-chooser-dialog))
 
 
-(define (make-component-chooser-dialog *window)
-  "Create and return a new component selection dialog in *WINDOW."
+(define (make-component-chooser-dialog window)
+  "Create and return a new component selection dialog in WINDOW."
+  (define *window (check-window window 1))
+
   (schematic_compselect_new *window))

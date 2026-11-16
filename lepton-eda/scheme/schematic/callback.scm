@@ -156,7 +156,7 @@
 
   (set-action-mode! 'component-mode #:window window)
   (when (null-pointer? (schematic_window_get_compselect_widget *window))
-    (let ((*compselect-widget (make-component-chooser-dialog *window)))
+    (let ((*compselect-widget (make-component-chooser-dialog window)))
       (g_signal_connect *compselect-widget
                         (string->pointer "response")
                         *x_compselect_callback_response
