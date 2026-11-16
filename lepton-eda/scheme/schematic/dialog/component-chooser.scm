@@ -18,6 +18,7 @@
 
 
 (define-module (schematic dialog component-chooser)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -27,5 +28,11 @@
 (define (make-component-chooser-dialog window)
   "Create and return a new component selection dialog in WINDOW."
   (define *window (check-window window 1))
+  (define *main-window (schematic_window_get_main_window *window))
+  (define *widget (schematic_compselect_new *window))
 
-  (schematic_compselect_new *window))
+  (gtk_window_set_transient_for *widget *main-window)
+
+  (gtk_widget_show *widget)
+
+  *widget)

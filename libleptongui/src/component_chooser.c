@@ -215,19 +215,11 @@ schematic_compselect_get_preview (GtkWidget *cs)
 GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current)
 {
-  GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
-                                            /* SchematicDialog */
-                                            "settings-name", "compselect",
-                                            "schematic-window", w_current,
-                                            NULL));
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
-  gtk_window_set_transient_for (GTK_WINDOW (cs),
-                                GTK_WINDOW (main_window));
-
-  gtk_widget_show (cs);
-
-  return cs;
+  return GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
+                                   /* SchematicDialog */
+                                   "settings-name", "compselect",
+                                   "schematic-window", w_current,
+                                   NULL));
 }
 
 
