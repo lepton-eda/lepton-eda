@@ -31,6 +31,8 @@
   (define *main-window (schematic_window_get_main_window *window))
   (define *widget (schematic_compselect_new *window))
 
+  (schematic_component_chooser_setup *widget)
+
   (gtk_window_set_transient_for *widget *main-window)
 
   (gtk_widget_show *widget)

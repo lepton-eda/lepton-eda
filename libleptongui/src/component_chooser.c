@@ -1598,8 +1598,6 @@ compselect_constructor (GType type,
   object = G_OBJECT_CLASS (compselect_parent_class)->
     constructor (type, n_construct_properties, construct_params);
 
-  schematic_component_chooser_setup (GTK_WIDGET (object));
-
   return object;
 }
 
