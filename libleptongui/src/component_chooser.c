@@ -1471,10 +1471,7 @@ schematic_component_chooser_setup (GtkWidget *chooser)
   hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
 #else
   vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED, NULL));
-  hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
-                                    /* GtkContainer */
-                                    "border-width", 5,
-                                     NULL));
+  hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED, NULL));
 #endif
 
   gtk_container_set_border_width (GTK_CONTAINER (hpaned), 5);
