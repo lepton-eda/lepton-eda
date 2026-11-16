@@ -787,7 +787,7 @@
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
 (define-lff schematic_compselect_get_preview '* '(*))
-(define-lff schematic_component_chooser_setup void '(*))
+(define-lff schematic_component_chooser_setup void '(* * *))
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))

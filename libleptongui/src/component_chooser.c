@@ -1453,26 +1453,16 @@ compselect_class_init (CompselectClass *klass)
 
 
 void
-schematic_component_chooser_setup (GtkWidget *chooser)
+schematic_component_chooser_setup (GtkWidget *chooser,
+                                   GtkWidget *hpaned,
+                                   GtkWidget *vpaned)
 {
-  GtkWidget *hpaned, *vpaned, *notebook, *attributes;
+  GtkWidget *notebook, *attributes;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
   GtkWidget *frame;
 
   Compselect *compselect = COMPSELECT (chooser);
-
-  /* vpaned is vertical pane containing preview and attributes.
-   * hpaned is horizontal pane containing selection and
-   * preview. */
-
-#ifdef ENABLE_GTK3
-  vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
-  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-#else
-  vpaned = gtk_vpaned_new ();
-  hpaned = gtk_hpaned_new ();
-#endif
 
   gtk_container_set_border_width (GTK_CONTAINER (hpaned), 5);
 

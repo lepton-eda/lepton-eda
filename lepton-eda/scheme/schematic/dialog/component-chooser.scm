@@ -21,9 +21,11 @@
   #:use-module (system foreign)
 
   #:use-module (lepton gettext)
+  #:use-module (lepton m4)
 
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic window foreign)
 
   #:export (make-component-chooser-dialog))
@@ -35,12 +37,21 @@
   (define *main-window (schematic_window_get_main_window *window))
   (define *widget (schematic_compselect_new *window))
 
+  ;; Vertical pane containing preview and attributes.
+  (define *vpaned (if %m4-use-gtk3
+                      (gtk_paned_new GTK_ORIENTATION_VERTICAL)
+                      (gtk_vpaned_new)))
+  ;; Horizontal pane containing selection and preview.
+  (define *hpaned (if %m4-use-gtk3
+                      (gtk_paned_new GTK_ORIENTATION_HORIZONTAL)
+                      (gtk_hpaned_new)))
+
   ;; Dialog initialization.
   (gtk_window_set_title *widget
                         (string->pointer (G_ "Add Component")))
   (gtk_window_set_default_size *widget 300 400)
 
-  (schematic_component_chooser_setup *widget)
+  (schematic_component_chooser_setup *widget *hpaned *vpaned)
 
   (gtk_window_set_transient_for *widget *main-window)
 

@@ -162,6 +162,10 @@
             gtk_notebook_set_tab_pos
             gtk_notebook_set_tab_reorderable
 
+            gtk_paned_new
+            gtk_hpaned_new
+            gtk_vpaned_new
+
             gtk_radio_button_get_group
             gtk_radio_button_new_with_label
 
@@ -413,6 +417,10 @@
 (define-lff gtk_notebook_set_show_tabs void (list '* int))
 (define-lff gtk_notebook_set_tab_pos void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
+
+(define-lff-gtk3 gtk_paned_new '* (list int))
+(define-lff gtk_hpaned_new '* '())
+(define-lff gtk_vpaned_new '* '())
 
 (define-lff gtk_radio_button_get_group '* '(*))
 (define-lff gtk_radio_button_new_with_label '* '(* *))

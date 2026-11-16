@@ -107,7 +107,9 @@ GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current);
 
 void
-schematic_component_chooser_setup (GtkWidget *chooser);
+schematic_component_chooser_setup (GtkWidget *chooser,
+                                   GtkWidget *hpaned,
+                                   GtkWidget *vpaned);
 G_END_DECLS
 
 #endif /* __COMPONENT_CHOOSER_H__ */
