@@ -1451,26 +1451,19 @@ compselect_class_init (CompselectClass *klass)
                        G_PARAM_READWRITE));
 }
 
-static GObject*
-compselect_constructor (GType type,
-                        guint n_construct_properties,
-                        GObjectConstructParam *construct_params)
-{
-  GObject *object;
-  Compselect *compselect;
 
+void
+schematic_component_chooser_setup (GtkWidget *chooser)
+{
   GtkWidget *hpaned, *vpaned, *notebook, *attributes;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
   GtkWidget *frame;
 
-  /* chain up to constructor of parent class */
-  object = G_OBJECT_CLASS (compselect_parent_class)->
-    constructor (type, n_construct_properties, construct_params);
-  compselect = COMPSELECT (object);
+  Compselect *compselect = COMPSELECT (chooser);
 
   /* dialog initialization */
-  g_object_set (object,
+  g_object_set (G_OBJECT (chooser),
                 /* GtkWindow */
                 "title",           _("Add Component"),
                 "default-height",  300,
@@ -1591,6 +1584,21 @@ compselect_constructor (GType type,
                                           GTK_RESPONSE_CLOSE,
                                           -1);
 #endif
+}
+
+
+static GObject*
+compselect_constructor (GType type,
+                        guint n_construct_properties,
+                        GObjectConstructParam *construct_params)
+{
+  GObject *object;
+
+  /* chain up to constructor of parent class */
+  object = G_OBJECT_CLASS (compselect_parent_class)->
+    constructor (type, n_construct_properties, construct_params);
+
+  schematic_component_chooser_setup (GTK_WIDGET (object));
 
   return object;
 }

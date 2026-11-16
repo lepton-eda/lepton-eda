@@ -106,6 +106,8 @@ schematic_compselect_get_preview (GtkWidget *cs);
 GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current);
 
+void
+schematic_component_chooser_setup (GtkWidget *chooser);
 G_END_DECLS
 
 #endif /* __COMPONENT_CHOOSER_H__ */
