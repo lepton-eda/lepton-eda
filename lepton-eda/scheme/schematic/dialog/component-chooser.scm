@@ -18,6 +18,10 @@
 
 
 (define-module (schematic dialog component-chooser)
+  #:use-module (system foreign)
+
+  #:use-module (lepton gettext)
+
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
@@ -30,6 +34,9 @@
   (define *window (check-window window 1))
   (define *main-window (schematic_window_get_main_window *window))
   (define *widget (schematic_compselect_new *window))
+
+  (gtk_window_set_title *widget
+                        (string->pointer (G_ "Add Component")))
 
   (schematic_component_chooser_setup *widget)
 

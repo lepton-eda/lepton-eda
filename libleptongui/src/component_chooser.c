@@ -1465,7 +1465,6 @@ schematic_component_chooser_setup (GtkWidget *chooser)
   /* dialog initialization */
   g_object_set (G_OBJECT (chooser),
                 /* GtkWindow */
-                "title",           _("Add Component"),
                 "default-height",  300,
                 "default-width",   400,
                 NULL);
