@@ -33,6 +33,7 @@
   #:use-module (schematic action-mode)
   #:use-module (schematic callback cancel)
   #:use-module (schematic dialog close-page)
+  #:use-module (schematic dialog component-chooser)
   #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog new-text)
   #:use-module (schematic ffi)
@@ -155,7 +156,7 @@
 
   (set-action-mode! 'component-mode #:window window)
   (when (null-pointer? (schematic_window_get_compselect_widget *window))
-    (let ((*compselect-widget (schematic_compselect_new *window)))
+    (let ((*compselect-widget (make-component-chooser-dialog *window)))
       (g_signal_connect *compselect-widget
                         (string->pointer "response")
                         *x_compselect_callback_response
