@@ -166,6 +166,12 @@ schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiat
 void
 schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
                                               LeptonSelection *selection);
+GtkTreeView*
+schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiattrib,
+                                            GtkTreeView *treeview);
 
 /* Methods */
 void

@@ -99,6 +99,43 @@ schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiat
 }
 
 
+/*! \brief Get the tree view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the tree view of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The tree view.
+ */
+GtkTreeView*
+schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->treeview;
+}
+
+
+/*! \brief Set the tree view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the tree view of a Multiattrib widget to the given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] treeview The new tree view instance.
+ */
+void
+schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiattrib,
+                                            GtkTreeView *treeview)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->treeview = treeview;
+}
+
+
 static gboolean
 snv_shows_name (int snv)
 {
