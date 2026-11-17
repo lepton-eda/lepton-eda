@@ -208,6 +208,10 @@ schematic_multiattrib_widget_callback_toggled_show_name (GtkCellRendererToggle *
                                                          gchar *path,
                                                          gpointer user_data);
 void
+schematic_multiattrib_widget_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
+                                                          gchar *path,
+                                                          gpointer user_data);
+void
 schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
                                                        gchar *path,
                                                        gpointer user_data);
