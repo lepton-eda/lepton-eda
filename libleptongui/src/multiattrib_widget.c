@@ -2166,8 +2166,8 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   /* add the treeview to the scrolled window */
   gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
   /* set treeview of multiattrib */
-  multiattrib->treeview = GTK_TREE_VIEW (treeview);
-
+  schematic_multiattrib_widget_set_tree_view (multiattrib,
+                                              GTK_TREE_VIEW (treeview));
 #ifdef ENABLE_GTK3
   attrib_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 #else
