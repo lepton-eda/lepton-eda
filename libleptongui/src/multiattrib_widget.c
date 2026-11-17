@@ -2165,13 +2165,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkStyle *style;
 #endif
 
-  /* Pack the vbox into the frame */
-  gtk_container_add (GTK_CONTAINER (list_frame),
-                     attrib_vbox);
-
-  /* add the scrolled window to box */
-  gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
-
   /* create the show inherited button */
   show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
   multiattrib->show_inherited = show_inherited;

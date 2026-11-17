@@ -227,6 +227,11 @@
   ;; Set tree view of the dialog.
   (schematic_multiattrib_widget_set_tree_view *dialog *tree-view)
 
+  ;; Pack the attrib vbox into the frame.
+  (gtk_container_add *list-frame *attrib-vbox)
+  ;; Add the scrolled window to the box.
+  (gtk_box_pack_start *attrib-vbox *scrolled-window TRUE TRUE 0)
+
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
                                       *store
