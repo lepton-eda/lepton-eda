@@ -2128,19 +2128,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkStyle *style;
 #endif
 
-  /*       - column 4: show name */
-  renderer = gtk_cell_renderer_toggle_new ();
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_toggled_show_name),
-                    multiattrib);
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("N"));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           schematic_multiattrib_widget_column_set_data_show_name,
-                                           NULL, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
   /*       - column 5: show value */
   renderer = GTK_CELL_RENDERER (
                                 g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
