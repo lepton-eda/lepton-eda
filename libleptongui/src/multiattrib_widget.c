@@ -2089,9 +2089,9 @@ schematic_multiattrib_widget_class_init (SchematicMultiattribWidgetClass *klass)
 /*! \brief Regenerate the attribute list when the visibility
  *         setting for inherited attributes changes
  */
-static void
-multiattrib_show_inherited_toggled (GtkToggleButton *button,
-                                    gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_show_inherited (GtkToggleButton *button,
+                                                              gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2210,7 +2210,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   g_signal_connect (show_inherited,
                     "toggled",
-                    G_CALLBACK (multiattrib_show_inherited_toggled),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_toggled_show_inherited),
                     multiattrib);
 
   /* pack the frame */
