@@ -2180,44 +2180,20 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
  *
  *  \param [in] multiattrib The #SchematicMultiattribWidget
  *                          instance we are setting up.
- *  \param [in] list_frame The list frame widget of the dialog.
- *  \param [in] store The list store tree model of the dialog.
- *  \param [in] scrolled_win The scrolled window of the dialog.
  *  \param [in] treeview The tree view of the dialog.
- *  \param [in] attrib_vbox The Attrib vertical box widget.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *list_frame,
-                                    GtkTreeModel *store,
-                                    GtkWidget *scrolled_win,
-                                    GtkWidget *treeview,
-                                    GtkWidget *attrib_vbox)
+                                    GtkWidget *treeview)
 {
+  GtkWidget *scrolled_win;
   GtkWidget *label;
   GtkWidget *textview, *combo, *optionm, *button;
-  GtkWidget *show_inherited;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
 #endif
-
-  /* create the show inherited button */
-  show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
-  schematic_multiattrib_widget_set_show_inherited (multiattrib, show_inherited);
-  gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
-
-  g_signal_connect (show_inherited,
-                    "toggled",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_toggled_show_inherited),
-                    multiattrib);
-
-  /* pack the frame */
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      list_frame,
-                      TRUE, TRUE, 1);
-  gtk_widget_show_all (list_frame);
 
 #ifdef ENABLE_GTK3
   GtkWidget *grid = gtk_grid_new ();

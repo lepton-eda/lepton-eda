@@ -95,6 +95,10 @@
     (if %m4-use-gtk3
         (gtk_box_new GTK_ORIENTATION_VERTICAL 0)
         (gtk_vbox_new FALSE 0)))
+  ;; Show inherited attribs check button.
+  (define *show-inherited
+    (gtk_check_button_new_with_mnemonic
+     (string->pointer (G_ "Sho_w inherited attributes"))))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -232,12 +236,24 @@
   ;; Add the scrolled window to the box.
   (gtk_box_pack_start *attrib-vbox *scrolled-window TRUE TRUE 0)
 
-  (schematic_multiattrib_widget_setup *dialog
-                                      *list-frame
-                                      *store
-                                      *scrolled-window
-                                      *tree-view
-                                      *attrib-vbox)
+  (schematic_multiattrib_widget_set_show_inherited *dialog
+                                                   *show-inherited)
+  (gtk_box_pack_start *attrib-vbox *show-inherited FALSE FALSE 0)
+
+  (g_signal_connect *show-inherited
+                    (string->pointer "toggled")
+                    *schematic_multiattrib_widget_callback_toggled_show_inherited
+                    *dialog)
+
+  ;; Pack the List frame.
+  (gtk_box_pack_start (gtk_dialog_get_content_area *dialog)
+                      *list-frame
+                      TRUE
+                      TRUE
+                      1)
+  (gtk_widget_show_all *list-frame)
+
+  (schematic_multiattrib_widget_setup *dialog *tree-view)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

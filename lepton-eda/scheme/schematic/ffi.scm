@@ -684,6 +684,7 @@
             schematic_multiattrib_widget_list_store_new
             schematic_multiattrib_widget_set_list_frame
             schematic_multiattrib_widget_set_object_list
+            schematic_multiattrib_widget_set_show_inherited
             schematic_multiattrib_widget_set_tree_view
             schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_setup
@@ -693,6 +694,7 @@
             *schematic_multiattrib_widget_callback_edited_value
             *schematic_multiattrib_widget_callback_key_pressed
             *schematic_multiattrib_widget_callback_popup_menu
+            *schematic_multiattrib_widget_callback_toggled_show_inherited
             *schematic_multiattrib_widget_callback_toggled_show_name
             *schematic_multiattrib_widget_callback_toggled_show_value
             *schematic_multiattrib_widget_callback_toggled_visible
@@ -1430,15 +1432,17 @@
 (define-lff schematic_multiattrib_widget_list_store_new '* '())
 (define-lff schematic_multiattrib_widget_set_list_frame void '(* *))
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
+(define-lff schematic_multiattrib_widget_set_show_inherited void '(* *))
 (define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* * * * * *))
+(define-lff schematic_multiattrib_widget_setup void '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 (define-lfc *schematic_multiattrib_widget_callback_button_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_edited_name)
 (define-lfc *schematic_multiattrib_widget_callback_edited_value)
 (define-lfc *schematic_multiattrib_widget_callback_key_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_popup_menu)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_show_inherited)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_name)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_value)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_visible)
