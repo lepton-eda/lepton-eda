@@ -2129,9 +2129,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*       - column 4: show name */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-                                              NULL));
+  renderer = gtk_cell_renderer_toggle_new ();
   g_signal_connect (renderer,
                     "toggled",
                     G_CALLBACK (multiattrib_callback_toggled_show_name),
