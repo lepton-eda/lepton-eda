@@ -53,6 +53,7 @@
             gtk_check_button_new_with_mnemonic
 
             gtk_cell_renderer_text_new
+            gtk_cell_renderer_toggle_new
 
             gtk_combo_box_get_active
             gtk_combo_box_set_active
@@ -321,6 +322,7 @@
 (define-lff gtk_check_button_new_with_mnemonic '* '(*))
 
 (define-lff gtk_cell_renderer_text_new '* '())
+(define-lff gtk_cell_renderer_toggle_new '* '())
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))

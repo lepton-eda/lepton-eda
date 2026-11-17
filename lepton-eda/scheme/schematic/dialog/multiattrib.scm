@@ -81,6 +81,9 @@
   (define *value-column-renderer
     (schematic_multiattrib_widget_cell_renderer_multi_line_text_new))
   (define *value-column (gtk_tree_view_column_new))
+  ;; Column 3: visibility.
+  (define *visibility-renderer (gtk_cell_renderer_toggle_new))
+  (define *visibility-column (gtk_tree_view_column_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -151,6 +154,25 @@
    *dialog
    %null-pointer)
   (gtk_tree_view_append_column *tree-view *value-column)
+
+
+  (g_signal_connect *visibility-renderer
+                    (string->pointer "toggled")
+                    *schematic_multiattrib_widget_callback_toggled_visible
+                    *dialog)
+  (gtk_tree_view_column_set_title *visibility-column
+                                  (string->pointer (G_ "Vis?")))
+  (gtk_tree_view_column_pack_start *visibility-column
+                                   *visibility-renderer
+                                   TRUE)
+  (gtk_tree_view_column_set_cell_data_func
+   *visibility-column
+   *visibility-renderer
+   *schematic_multiattrib_widget_column_set_data_visible
+   *dialog
+   %null-pointer)
+
+  (gtk_tree_view_append_column *tree-view *visibility-column)
 
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
