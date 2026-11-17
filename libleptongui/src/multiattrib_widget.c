@@ -909,12 +909,12 @@ schematic_multiattrib_widget_column_set_data_show_name (GtkTreeViewColumn *tree_
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
-                                        GtkCellRenderer *cell,
-                                        GtkTreeModel *tree_model,
-                                        GtkTreeIter *iter,
-                                        gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_show_value (GtkTreeViewColumn *tree_column,
+                                                         GtkCellRenderer *cell,
+                                                         GtkTreeModel *tree_model,
+                                                         GtkTreeIter *iter,
+                                                         gpointer data)
 {
   int show_name_value;
   gboolean identical_show_value;
@@ -2138,7 +2138,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   gtk_tree_view_column_set_title (column, _("V"));
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_show_value,
+                                           schematic_multiattrib_widget_column_set_data_show_value,
                                            NULL, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 

@@ -228,6 +228,12 @@ schematic_multiattrib_widget_column_set_data_show_name (GtkTreeViewColumn *tree_
                                                         GtkTreeIter *iter,
                                                         gpointer data);
 void
+schematic_multiattrib_widget_column_set_data_show_value (GtkTreeViewColumn *tree_column,
+                                                         GtkCellRenderer *cell,
+                                                         GtkTreeModel *tree_model,
+                                                         GtkTreeIter *iter,
+                                                         gpointer data);
+void
 schematic_multiattrib_widget_column_set_data_value (GtkTreeViewColumn *tree_column,
                                                     GtkCellRenderer *cell,
                                                     GtkTreeModel *tree_model,
