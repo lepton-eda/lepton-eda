@@ -99,6 +99,44 @@ schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiat
 }
 
 
+/*! \brief Get the Show inherited widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Show inherited widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Show inherited widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_show_inherited (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->show_inherited;
+}
+
+
+/*! \brief Set the Show inherited widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Show inherited widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] widget The new Show inherited widget value.
+ */
+void
+schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *multiattrib,
+                                                 GtkWidget *widget)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->show_inherited = widget;
+}
+
+
 /*! \brief Get the tree view of a Multiattrib widget.
  *
  *  \par Function Description
