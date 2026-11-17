@@ -2205,7 +2205,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   /* create the show inherited button */
   show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
-  multiattrib->show_inherited = show_inherited;
+  schematic_multiattrib_widget_set_show_inherited (multiattrib, show_inherited);
   gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
 
   g_signal_connect (show_inherited,
