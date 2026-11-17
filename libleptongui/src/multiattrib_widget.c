@@ -1130,10 +1130,10 @@ schematic_multiattrib_widget_callback_edited_value (GtkCellRendererText *cell_re
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
-                                      gchar *path,
-                                      gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
+                                                       gchar *path,
+                                                       gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -2132,7 +2132,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   renderer = gtk_cell_renderer_toggle_new ();
   g_signal_connect (renderer,
                     "toggled",
-                    G_CALLBACK (multiattrib_callback_toggled_visible),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_toggled_visible),
                     multiattrib);
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("Vis?"));
