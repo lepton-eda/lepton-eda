@@ -217,6 +217,11 @@
 
   (gtk_tree_view_append_column *tree-view *show-value-column)
 
+  ;; Add the tree view to the scrolled window.
+  (gtk_container_add *scrolled-window *tree-view)
+  ;; Set tree view of the dialog.
+  (schematic_multiattrib_widget_set_tree_view *dialog *tree-view)
+
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame
                                       *store

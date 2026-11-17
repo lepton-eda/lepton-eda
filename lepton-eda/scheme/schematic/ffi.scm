@@ -682,6 +682,7 @@
             schematic_multiattrib_widget_list_store_new
             schematic_multiattrib_widget_set_list_frame
             schematic_multiattrib_widget_set_object_list
+            schematic_multiattrib_widget_set_tree_view
             schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
@@ -1425,6 +1426,7 @@
 (define-lff schematic_multiattrib_widget_list_store_new '* '())
 (define-lff schematic_multiattrib_widget_set_list_frame void '(* *))
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
+(define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
 (define-lff schematic_multiattrib_widget_setup void '(* * * * *))
 (define-lff schematic_multiattrib_widget_update void '(*))
