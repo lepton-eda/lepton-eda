@@ -204,6 +204,10 @@ gboolean
 schematic_multiattrib_widget_callback_popup_menu (GtkWidget *widget,
                                                   gpointer user_data);
 void
+schematic_multiattrib_widget_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
+                                                         gchar *path,
+                                                         gpointer user_data);
+void
 schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
                                                        gchar *path,
                                                        gpointer user_data);
