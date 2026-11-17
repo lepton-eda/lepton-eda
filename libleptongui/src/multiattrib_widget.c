@@ -2181,10 +2181,12 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
  *  \param [in] multiattrib The #SchematicMultiattribWidget
  *                          instance we are setting up.
  *  \param [in] treeview The tree view of the dialog.
+ *  \param [in] grid_or_table GtkGrid for GTK3 and GtkTable for GTK2.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *treeview)
+                                    GtkWidget *treeview,
+                                    GtkWidget *grid_or_table)
 {
   GtkWidget *scrolled_win;
   GtkWidget *name_label, *value_label;
@@ -2196,9 +2198,9 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
 #ifdef ENABLE_GTK3
-  GtkWidget *grid = gtk_grid_new ();
+  GtkWidget *grid = grid_or_table;
 #else
-  GtkWidget *table = gtk_table_new (4, 2, FALSE);
+  GtkWidget *table = grid_or_table;
 #endif
 
   /*   - the name entry: a GtkComboBoxEntry */

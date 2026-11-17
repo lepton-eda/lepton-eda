@@ -1435,7 +1435,7 @@
 (define-lff schematic_multiattrib_widget_set_show_inherited void '(* *))
 (define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* *))
+(define-lff schematic_multiattrib_widget_setup void '(* * *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 (define-lfc *schematic_multiattrib_widget_callback_button_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_edited_name)

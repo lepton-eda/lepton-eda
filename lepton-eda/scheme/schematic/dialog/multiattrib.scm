@@ -99,6 +99,9 @@
   (define *show-inherited
     (gtk_check_button_new_with_mnemonic
      (string->pointer (G_ "Sho_w inherited attributes"))))
+  (define *grid-or-table (if %m4-use-gtk3
+                             (gtk_grid_new)
+                             (gtk_table_new 4 2 FALSE)))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -253,7 +256,9 @@
                       1)
   (gtk_widget_show_all *list-frame)
 
-  (schematic_multiattrib_widget_setup *dialog *tree-view)
+  (schematic_multiattrib_widget_setup *dialog
+                                      *tree-view
+                                      *grid-or-table)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog
