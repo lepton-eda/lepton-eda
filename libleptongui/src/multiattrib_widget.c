@@ -2198,12 +2198,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #ifdef ENABLE_GTK3
   GtkWidget *grid = gtk_grid_new ();
 #else
-  GtkWidget *table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
-                                               /* GtkTable */
-                                               "n-rows",      4,
-                                               "n-columns",   2,
-                                               "homogeneous", FALSE,
-                                               NULL));
+  GtkWidget *table = gtk_table_new (4, 2, FALSE);
 #endif
 
   /*   - the name entry: a GtkComboBoxEntry */
