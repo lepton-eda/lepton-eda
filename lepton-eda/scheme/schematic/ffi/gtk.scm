@@ -46,6 +46,8 @@
 
             gtk_bin_get_child
 
+            gtk_box_new
+            gtk_vbox_new
             gtk_box_pack_start
             gtk_box_set_spacing
 
@@ -315,6 +317,8 @@
 
 (define-lff gtk_bin_get_child '* '(*))
 
+(define-lff-gtk3 gtk_box_new '* (list int int))
+(define-lff gtk_vbox_new '* (list int int))
 (define-lff gtk_box_pack_start void (list '* '* int int int))
 (define-lff gtk_box_set_spacing void (list '* int))
 

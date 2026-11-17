@@ -2146,27 +2146,23 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
  *  \param [in] store The list store tree model of the dialog.
  *  \param [in] scrolled_win The scrolled window of the dialog.
  *  \param [in] treeview The tree view of the dialog.
+ *  \param [in] attrib_vbox The Attrib vertical box widget.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *list_frame,
                                     GtkTreeModel *store,
                                     GtkWidget *scrolled_win,
-                                    GtkWidget *treeview)
+                                    GtkWidget *treeview,
+                                    GtkWidget *attrib_vbox)
 {
   GtkWidget *label;
   GtkWidget *textview, *combo, *optionm, *button;
-  GtkWidget *attrib_vbox, *show_inherited;
+  GtkWidget *show_inherited;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
-#endif
-
-#ifdef ENABLE_GTK3
-  attrib_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
-  attrib_vbox = gtk_vbox_new (FALSE, 0);
 #endif
 
   /* Pack the vbox into the frame */

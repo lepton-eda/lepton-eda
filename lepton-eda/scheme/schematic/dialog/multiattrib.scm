@@ -90,6 +90,11 @@
   ;; Column 5: show value.
   (define *show-value-renderer (gtk_cell_renderer_toggle_new))
   (define *show-value-column (gtk_tree_view_column_new))
+  ;; Vertical box in the attribute list frame.
+  (define *attrib-vbox
+    (if %m4-use-gtk3
+        (gtk_box_new GTK_ORIENTATION_VERTICAL 0)
+        (gtk_vbox_new FALSE 0)))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -226,7 +231,8 @@
                                       *list-frame
                                       *store
                                       *scrolled-window
-                                      *tree-view)
+                                      *tree-view
+                                      *attrib-vbox)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog
