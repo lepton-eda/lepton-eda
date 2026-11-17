@@ -691,9 +691,11 @@
             *schematic_multiattrib_widget_callback_key_pressed
             *schematic_multiattrib_widget_callback_popup_menu
             *schematic_multiattrib_widget_callback_toggled_show_name
+            *schematic_multiattrib_widget_callback_toggled_show_value
             *schematic_multiattrib_widget_callback_toggled_visible
             *schematic_multiattrib_widget_column_set_data_name
             *schematic_multiattrib_widget_column_set_data_show_name
+            *schematic_multiattrib_widget_column_set_data_show_value
             *schematic_multiattrib_widget_column_set_data_value
             *schematic_multiattrib_widget_column_set_data_visible
 
@@ -1432,9 +1434,11 @@
 (define-lfc *schematic_multiattrib_widget_callback_key_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_popup_menu)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_name)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_show_value)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_visible)
 (define-lfc *schematic_multiattrib_widget_column_set_data_name)
 (define-lfc *schematic_multiattrib_widget_column_set_data_show_name)
+(define-lfc *schematic_multiattrib_widget_column_set_data_show_value)
 (define-lfc *schematic_multiattrib_widget_column_set_data_value)
 (define-lfc *schematic_multiattrib_widget_column_set_data_visible)
 

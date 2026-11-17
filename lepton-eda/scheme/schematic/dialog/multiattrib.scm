@@ -87,6 +87,9 @@
   ;; Column 4: show name.
   (define *show-name-renderer (gtk_cell_renderer_toggle_new))
   (define *show-name-column (gtk_tree_view_column_new))
+  ;; Column 5: show value.
+  (define *show-value-renderer (gtk_cell_renderer_toggle_new))
+  (define *show-value-column (gtk_tree_view_column_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -194,6 +197,25 @@
    %null-pointer)
 
   (gtk_tree_view_append_column *tree-view *show-name-column)
+
+  (g_signal_connect *show-value-renderer
+                    (string->pointer "toggled")
+                    *schematic_multiattrib_widget_callback_toggled_show_value
+                    *dialog)
+
+  (gtk_tree_view_column_set_title *show-value-column
+                                  (string->pointer (G_ "V")))
+  (gtk_tree_view_column_pack_start *show-value-column
+                                   *show-value-renderer
+                                   TRUE)
+  (gtk_tree_view_column_set_cell_data_func
+   *show-value-column
+   *show-value-renderer
+   *schematic_multiattrib_widget_column_set_data_show_value
+   %null-pointer
+   %null-pointer)
+
+  (gtk_tree_view_append_column *tree-view *show-value-column)
 
   (schematic_multiattrib_widget_setup *dialog
                                       *list-frame

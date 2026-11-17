@@ -2120,27 +2120,11 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkWidget *label;
   GtkWidget *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
-  GtkCellRenderer *renderer;
-  GtkTreeViewColumn *column;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
 #else
   GtkStyle *style;
 #endif
-
-  /*       - column 5: show value */
-  renderer = gtk_cell_renderer_toggle_new ();
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_toggled_show_value),
-                    multiattrib);
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("V"));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           schematic_multiattrib_widget_column_set_data_show_value,
-                                           NULL, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
   /* add the treeview to the scrolled window */
   gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
