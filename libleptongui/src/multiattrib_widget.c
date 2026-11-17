@@ -2187,7 +2187,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *treeview)
 {
   GtkWidget *scrolled_win;
-  GtkWidget *label;
+  GtkWidget *name_label, *value_label;
   GtkWidget *textview, *combo, *optionm, *button;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
@@ -2202,12 +2202,12 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*   - the name entry: a GtkComboBoxEntry */
-  label = gtk_label_new_with_mnemonic (_("_Name:"));
+  name_label = gtk_label_new_with_mnemonic (_("_Name:"));
 #ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+  gtk_label_set_xalign (GTK_LABEL (name_label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (name_label), 0.5);
 #else
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (name_label), 0.0, 0.5);
 #endif
 
   combo = gtk_combo_box_text_new_with_entry ();
@@ -2215,15 +2215,15 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   multiattrib_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
   multiattrib->combo_name = GTK_COMBO_BOX_TEXT (combo);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+  gtk_label_set_mnemonic_widget (GTK_LABEL (name_label),
                                  GTK_WIDGET (multiattrib->combo_name));
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (combo), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), name_label, 0, 0, 1, 1);
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
 #else
-  gtk_table_attach (GTK_TABLE (table), label,
+  gtk_table_attach (GTK_TABLE (table), name_label,
                     0, 1, 0, 1,
                     (GtkAttachOptions) 0,
                     (GtkAttachOptions) 0,
@@ -2236,12 +2236,12 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #endif
 
   /*   - the value entry: a GtkEntry */
-  label = gtk_label_new_with_mnemonic (_("_Value:"));
+  value_label = gtk_label_new_with_mnemonic (_("_Value:"));
 #ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+  gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);
 #else
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
 #endif
 
   scrolled_win = GTK_WIDGET (
@@ -2270,7 +2270,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                     G_CALLBACK (multiattrib_callback_value_grab_focus),
                     multiattrib);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textview);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (value_label), textview);
 
 #ifdef ENABLE_GTK3
   /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
@@ -2311,10 +2311,10 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
 #ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), value_label, 0, 1, 1, 1);
   gtk_grid_attach (GTK_GRID (grid), scrolled_win, 1, 1, 1, 1);
 #else
-  gtk_table_attach (GTK_TABLE (table), label,
+  gtk_table_attach (GTK_TABLE (table), value_label,
                     0, 1, 1, 2,
                     (GtkAttachOptions) 0,
                     (GtkAttachOptions) 0,
