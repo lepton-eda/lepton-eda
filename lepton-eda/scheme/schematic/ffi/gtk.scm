@@ -464,7 +464,7 @@
 (define-lff gtk_widget_grab_focus void '(*))
 (define-lff gtk_widget_hide void '(*))
 (define-lff gtk_widget_set_can_focus void (list '* int))
-(define-lff gtk_widget_set_hexpand void (list '* int))
+(define-lff-gtk3 gtk_widget_set_hexpand void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
 (define-lff gtk_widget_get_visible int '(*))
