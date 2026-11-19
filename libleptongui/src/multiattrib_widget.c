@@ -2250,16 +2250,13 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
 #endif
 
-  scrolled_win = GTK_WIDGET (
-                             g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                                           /* GtkScrolledWindow */
-                                           "hscrollbar-policy",
-                                           GTK_POLICY_AUTOMATIC,
-                                           "vscrollbar-policy",
-                                           GTK_POLICY_AUTOMATIC,
-                                           "shadow-type",
-                                           GTK_SHADOW_IN,
-                                           NULL));
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_IN);
+
   /*! \todo Forcing the size request is a horrible band-aid and
    *  should be replaced by a better heuristic. */
   textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
