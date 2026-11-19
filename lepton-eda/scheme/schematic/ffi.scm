@@ -682,10 +682,13 @@
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_cell_renderer_multi_line_text_new
             schematic_multiattrib_widget_list_store_new
+            schematic_multiattrib_widget_get_combo_name
+            schematic_multiattrib_widget_set_combo_name
             schematic_multiattrib_widget_set_list_frame
             schematic_multiattrib_widget_set_object_list
             schematic_multiattrib_widget_set_show_inherited
             schematic_multiattrib_widget_set_tree_view
+            schematic_multiattrib_widget_init_attrib_names
             schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
@@ -1430,10 +1433,13 @@
 (define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_cell_renderer_multi_line_text_new '* '())
 (define-lff schematic_multiattrib_widget_list_store_new '* '())
+(define-lff schematic_multiattrib_widget_get_combo_name '* '(*))
+(define-lff schematic_multiattrib_widget_set_combo_name void '(* *))
 (define-lff schematic_multiattrib_widget_set_list_frame void '(* *))
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
 (define-lff schematic_multiattrib_widget_set_show_inherited void '(* *))
 (define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
+(define-lff schematic_multiattrib_widget_init_attrib_names void '(*))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
 (define-lff schematic_multiattrib_widget_setup void '(* * *))
 (define-lff schematic_multiattrib_widget_update void '(*))

@@ -102,6 +102,10 @@
   (define *grid-or-table (if %m4-use-gtk3
                              (gtk_grid_new)
                              (gtk_table_new 4 2 FALSE)))
+  ;; The name entry: a GtkComboBoxEntry.
+  (define *name-label
+    (gtk_label_new_with_mnemonic (string->pointer (G_ "_Name:"))))
+  (define *name-combo (gtk_combo_box_text_new_with_entry))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -255,6 +259,29 @@
                       TRUE
                       1)
   (gtk_widget_show_all *list-frame)
+
+  ;; The name entry: a GtkComboBoxEntry.
+  (if %m4-use-gtk3
+      (begin
+        (gtk_label_set_xalign *name-label 0.0)
+        (gtk_label_set_yalign *name-label 0.5))
+
+      (gtk_misc_set_alignment *name-label 0.0 0.5))
+
+  (schematic_multiattrib_widget_init_attrib_names *name-combo)
+  (schematic_multiattrib_widget_set_combo_name *dialog *name-combo)
+  (gtk_label_set_mnemonic_widget
+   *name-label
+   (schematic_multiattrib_widget_get_combo_name *dialog))
+
+  (if %m4-use-gtk3
+      (begin
+        (gtk_widget_set_hexpand *name-combo TRUE)
+        (gtk_grid_attach *grid-or-table *name-label 0 0 1 1)
+        (gtk_grid_attach *grid-or-table *name-combo 1 0 1 1))
+      (begin
+        (gtk_table_attach *grid-or-table *name-label 0 1 0 1 0 0 0 0)
+        (gtk_table_attach *grid-or-table *name-combo 1 2 0 1 (logior GTK_EXPAND GTK_FILL) 0 6 3)))
 
   (schematic_multiattrib_widget_setup *dialog
                                       *tree-view
