@@ -2359,22 +2359,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   GtkWidget *table = grid_or_table;
 #endif
 
-  /*   - the visible status */
-  button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-  schematic_multiattrib_widget_set_button_visible (multiattrib,
-                                                   GTK_CHECK_BUTTON (button));
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), button, 0, 2, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), button,
-                    0, 1, 2, 3,
-                    GTK_FILL,
-                    (GtkAttachOptions) 0,
-                    3, 0);
-#endif
-
   /*   - the visibility type */
   optionm = gtk_combo_box_text_new ();
   multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));

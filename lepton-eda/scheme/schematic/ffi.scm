@@ -682,6 +682,7 @@
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_cell_renderer_multi_line_text_new
             schematic_multiattrib_widget_list_store_new
+            schematic_multiattrib_widget_set_button_visible
             schematic_multiattrib_widget_get_combo_name
             schematic_multiattrib_widget_set_combo_name
             schematic_multiattrib_widget_set_list_frame
@@ -1437,6 +1438,7 @@
 (define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_cell_renderer_multi_line_text_new '* '())
 (define-lff schematic_multiattrib_widget_list_store_new '* '())
+(define-lff schematic_multiattrib_widget_set_button_visible void '(* *))
 (define-lff schematic_multiattrib_widget_get_combo_name '* '(*))
 (define-lff schematic_multiattrib_widget_set_combo_name void '(* *))
 (define-lff schematic_multiattrib_widget_set_list_frame void '(* *))

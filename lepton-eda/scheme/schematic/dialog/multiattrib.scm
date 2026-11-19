@@ -112,6 +112,10 @@
   (define *value-scrolled-window
     (gtk_scrolled_window_new %null-pointer %null-pointer))
   (define *text-view (gtk_text_view_new))
+  ;; The visible status.
+  (define *visibility-button
+    (gtk_check_button_new_with_mnemonic
+     (string->pointer (G_ "Vi_sible"))))
 
   (gtk_frame_set_shadow_type *list-frame GTK_SHADOW_NONE)
   (schematic_multiattrib_widget_set_list_frame *dialog
@@ -331,6 +335,16 @@
       (begin
         (gtk_table_attach *grid-or-table *value-label 0 1 1 2 0 0 0 0)
         (gtk_table_attach *grid-or-table *value-scrolled-window 1 2 1 2 (logior GTK_EXPAND GTK_FILL) 0 6 3)))
+
+  (gtk_toggle_button_set_active *visibility-button TRUE)
+
+  (schematic_multiattrib_widget_set_button_visible
+   *dialog
+   *visibility-button)
+
+  (if %m4-use-gtk3
+      (gtk_grid_attach *grid-or-table *visibility-button 0 2 1 1)
+      (gtk_table_attach *grid-or-table *visibility-button 0 1 2 3 GTK_FILL 0 3 0))
 
   (schematic_multiattrib_widget_setup *dialog *grid-or-table)
 
