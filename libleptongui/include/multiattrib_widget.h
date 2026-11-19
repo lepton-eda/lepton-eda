@@ -157,6 +157,12 @@ schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiatt
 void
 schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
                                             GtkWidget *add_frame);
+GtkComboBoxText*
+schematic_multiattrib_widget_get_combo_name (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_combo_name (SchematicMultiattribWidget *multiattrib,
+                                             GtkComboBoxText *val);
 GtkWidget*
 schematic_multiattrib_widget_get_list_frame (SchematicMultiattribWidget *multiattrib);
 

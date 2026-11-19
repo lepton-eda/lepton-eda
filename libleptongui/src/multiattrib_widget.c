@@ -61,6 +61,44 @@ schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiatt
 }
 
 
+/*! \brief Get the name combo text value of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the name combo text value of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The name combo text value.
+ */
+GtkComboBoxText*
+schematic_multiattrib_widget_get_combo_name (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->combo_name;
+}
+
+
+/*! \brief Set the name combo text value of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the name combo text value of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] val The new name combo text value.
+ */
+void
+schematic_multiattrib_widget_set_combo_name (SchematicMultiattribWidget *multiattrib,
+                                             GtkComboBoxText *val)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->combo_name = val;
+}
+
+
 /*! \brief Get the List frame widget of a Multiattrib widget.
  *
  *  \par Function Description
