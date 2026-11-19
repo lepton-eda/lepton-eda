@@ -2379,68 +2379,6 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
 }
 
 
-/*! \brief Set up a #SchematicMultiattribWidget object.
- *
- *  \par Function Description
- *
- *  Create and setup the widgets which make up the Multiattrib dialog.
- *
- *  \param [in] multiattrib The #SchematicMultiattribWidget
- *                          instance we are setting up.
- *  \param [in] grid_or_table GtkGrid for GTK3 and GtkTable for GTK2.
- */
-void
-schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *grid_or_table)
-{
-  GtkWidget *button;
-#ifdef ENABLE_GTK3
-  GtkWidget *grid = grid_or_table;
-#else
-  GtkWidget *table = grid_or_table;
-#endif
-
-  /* create the add button */
-  button = gtk_button_new_with_mnemonic (_("_Add"));
-  g_signal_connect (button,
-                    "clicked",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_button_add),
-                    multiattrib);
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);
-
-  GtkWidget *add_frame =
-    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
-                                                 grid);
-#else
-  gtk_table_attach (GTK_TABLE (table), button,
-                    2, 3, 0, 3,
-                    (GtkAttachOptions) 0,
-                    (GtkAttachOptions) 0,
-                    6, 3);
-
-
-  GtkWidget *add_frame =
-    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
-                                                 table);
-#endif
-
-  g_signal_connect (add_frame,
-                    "activate",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_expander_activate),
-                    multiattrib);
-
-
-  /* pack the frame in the dialog */
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      add_frame,
-                      FALSE, TRUE, 1);
-  gtk_widget_show_all (add_frame);
-
-  schematic_multiattrib_widget_set_add_frame (multiattrib, add_frame);
-}
-
-
 /*! \brief GObject property setter function
  *
  *  \par Function Description

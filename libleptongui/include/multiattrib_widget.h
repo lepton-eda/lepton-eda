@@ -217,9 +217,6 @@ void
 schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib);
 
 void
-schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *grid_or_table);
-void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 
 

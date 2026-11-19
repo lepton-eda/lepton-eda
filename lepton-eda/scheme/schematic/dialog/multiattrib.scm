@@ -59,7 +59,7 @@
   (procedure->pointer int delete-event-callback '(* * *)))
 
 
-;;; Create a new Multiattrib dialog widget.
+;;; Create a new Multiattrib dialog and set up its widgets.
 (define (make-multiattrib-dialog *window *selection)
   (define *dialog
     (schematic_multiattrib_widget_new *window *selection))
@@ -118,6 +118,13 @@
      (string->pointer (G_ "Vi_sible"))))
   ;; Attribute show mode.
   (define *show-mode-combo (gtk_combo_box_text_new))
+  ;; Create the Add button.
+  (define *add-button
+    (gtk_button_new_with_mnemonic (string->pointer (G_ "_Add"))))
+  (define *add-frame
+    (schematic_dialog_misc_create_section_widget
+     (string->pointer (G_ "<b>Add Attribute</b>"))
+     *grid-or-table))
 
   (gtk_frame_set_shadow_type *list-frame GTK_SHADOW_NONE)
   (schematic_multiattrib_widget_set_list_frame *dialog
@@ -361,7 +368,30 @@
         (gtk_table_attach *grid-or-table *show-mode-combo 1 2 2 3 (logior GTK_EXPAND GTK_FILL) 0 6 3)
         (gtk_widget_show_all *grid-or-table)))
 
-  (schematic_multiattrib_widget_setup *dialog *grid-or-table)
+  (g_signal_connect *add-button
+                    (string->pointer "clicked")
+                    *schematic_multiattrib_widget_callback_button_add
+                    *dialog)
+
+  (if %m4-use-gtk3
+      (gtk_grid_attach *grid-or-table *add-button 2 0 1 1)
+      (gtk_table_attach *grid-or-table *add-button 2 3 0 3 0 0 6 3))
+
+  (g_signal_connect *add-frame
+                    (string->pointer "activate")
+                    *schematic_multiattrib_widget_callback_expander_activate
+                    *dialog)
+
+  ;; Pack the frame in the dialog.
+  (gtk_box_pack_start (gtk_dialog_get_content_area *dialog)
+                      *add-frame
+                      FALSE
+                      TRUE
+                      1)
+
+  (gtk_widget_show_all *add-frame)
+
+  (schematic_multiattrib_widget_set_add_frame *dialog *add-frame)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

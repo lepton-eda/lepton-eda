@@ -77,6 +77,8 @@
             schematic_dialog_new_empty
             x_dialog_validate_attribute
 
+            schematic_dialog_misc_create_section_widget
+
             schematic_execute_script
 
             i_action_start
@@ -682,6 +684,7 @@
             schematic_multiattrib_widget_new
             schematic_multiattrib_widget_cell_renderer_multi_line_text_new
             schematic_multiattrib_widget_list_store_new
+            schematic_multiattrib_widget_set_add_frame
             schematic_multiattrib_widget_set_button_visible
             schematic_multiattrib_widget_get_combo_name
             schematic_multiattrib_widget_set_combo_name
@@ -695,11 +698,12 @@
             schematic_multiattrib_widget_init_text_fg_colors
             schematic_multiattrib_widget_init_visible_types
             schematic_multiattrib_widget_refresh
-            schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
+            *schematic_multiattrib_widget_callback_button_add
             *schematic_multiattrib_widget_callback_button_pressed
             *schematic_multiattrib_widget_callback_edited_name
             *schematic_multiattrib_widget_callback_edited_value
+            *schematic_multiattrib_widget_callback_expander_activate
             *schematic_multiattrib_widget_callback_key_pressed
             *schematic_multiattrib_widget_callback_popup_menu
             *schematic_multiattrib_widget_callback_toggled_show_inherited
@@ -1216,6 +1220,9 @@
 (define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
 (define-lff x_dialog_validate_attribute int '(* *))
 
+;;; dialog_misc.c
+(define-lff schematic_dialog_misc_create_section_widget '* '(* *))
+
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))
 
@@ -1440,6 +1447,7 @@
 (define-lff schematic_multiattrib_widget_new '* '(* *))
 (define-lff schematic_multiattrib_widget_cell_renderer_multi_line_text_new '* '())
 (define-lff schematic_multiattrib_widget_list_store_new '* '())
+(define-lff schematic_multiattrib_widget_set_add_frame void '(* *))
 (define-lff schematic_multiattrib_widget_set_button_visible void '(* *))
 (define-lff schematic_multiattrib_widget_get_combo_name '* '(*))
 (define-lff schematic_multiattrib_widget_set_combo_name void '(* *))
@@ -1453,11 +1461,12 @@
 (define-lff schematic_multiattrib_widget_init_text_fg_colors void '(* *))
 (define-lff schematic_multiattrib_widget_init_visible_types void '(*))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
+(define-lfc *schematic_multiattrib_widget_callback_button_add)
 (define-lfc *schematic_multiattrib_widget_callback_button_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_edited_name)
 (define-lfc *schematic_multiattrib_widget_callback_edited_value)
+(define-lfc *schematic_multiattrib_widget_callback_expander_activate)
 (define-lfc *schematic_multiattrib_widget_callback_key_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_popup_menu)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_inherited)
