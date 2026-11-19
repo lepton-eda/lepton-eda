@@ -61,6 +61,44 @@ schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiatt
 }
 
 
+/*! \brief Get the Visible button widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Visible button widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Visible button widget.
+ */
+GtkCheckButton*
+schematic_multiattrib_widget_get_button_visible (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->button_visible;
+}
+
+
+/*! \brief Set the Visible button widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Visible button widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] button The new Visible button widget instance.
+ */
+void
+schematic_multiattrib_widget_set_button_visible (SchematicMultiattribWidget *multiattrib,
+                                                 GtkCheckButton *button)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->button_visible = button;
+}
+
+
 /*! \brief Get the name combo text value of a Multiattrib widget.
  *
  *  \par Function Description

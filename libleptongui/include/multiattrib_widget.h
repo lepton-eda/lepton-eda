@@ -157,6 +157,12 @@ schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiatt
 void
 schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
                                             GtkWidget *add_frame);
+GtkCheckButton*
+schematic_multiattrib_widget_get_button_visible (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_button_visible (SchematicMultiattribWidget *multiattrib,
+                                                 GtkCheckButton *button);
 GtkComboBoxText*
 schematic_multiattrib_widget_get_combo_name (SchematicMultiattribWidget *multiattrib);
 
