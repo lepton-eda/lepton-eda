@@ -2256,7 +2256,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   /* Save this one so we can pick it as a sensible colour to show the
    * inherited attributes dimmed.
    */
-  stylectx = gtk_widget_get_style_context (treeview);
   gtk_style_context_get_color (stylectx,
                                GTK_STATE_FLAG_INSENSITIVE,
                                &multiattrib->insensitive_text_color);
