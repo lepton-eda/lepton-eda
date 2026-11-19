@@ -211,6 +211,9 @@ void
 schematic_multiattrib_widget_init_text_fg_colors (SchematicMultiattribWidget *multiattrib,
                                                   GtkWidget *textview);
 void
+schematic_multiattrib_widget_init_visible_types (GtkComboBoxText *optionmenu);
+
+void
 schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib);
 
 void

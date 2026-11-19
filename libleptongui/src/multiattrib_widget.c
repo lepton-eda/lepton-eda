@@ -1977,8 +1977,8 @@ schematic_multiattrib_widget_init_attrib_names (GtkComboBoxText *combo)
  *  \par Function Description
  *
  */
-static void
-multiattrib_init_visible_types (GtkComboBoxText *optionmenu)
+void
+schematic_multiattrib_widget_init_visible_types (GtkComboBoxText *optionmenu)
 {
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
                                   _("Show Name & Value"));
@@ -2401,7 +2401,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   /*   - the visibility type */
   optionm = gtk_combo_box_text_new ();
-  multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
+  schematic_multiattrib_widget_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
   schematic_multiattrib_widget_set_show_name_value_combo_box_text (multiattrib,
                                                                    GTK_COMBO_BOX_TEXT (optionm));
 #ifdef ENABLE_GTK3
