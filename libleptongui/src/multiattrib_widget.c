@@ -2402,7 +2402,8 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   /*   - the visibility type */
   optionm = gtk_combo_box_text_new ();
   multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
-  multiattrib->optionmenu_shownv = GTK_COMBO_BOX_TEXT (optionm);
+  schematic_multiattrib_widget_set_show_name_value_combo_box_text (multiattrib,
+                                                                   GTK_COMBO_BOX_TEXT (optionm));
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), optionm, 1, 2, 1, 1);
   gtk_widget_show_all (grid);
