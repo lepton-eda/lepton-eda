@@ -175,6 +175,44 @@ schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *mul
 }
 
 
+/*! \brief Get the Value text view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Value text view of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Value text view.
+ */
+GtkTextView*
+schematic_multiattrib_widget_get_value_textview (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->textview_value;
+}
+
+
+/*! \brief Set the Value text view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Value text view of a Multiattrib widget to the given
+ *  value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] textview The new Value text view instance.
+ */
+void
+schematic_multiattrib_widget_set_value_textview (SchematicMultiattribWidget *multiattrib,
+                                                 GtkTextView *textview)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->textview_value = textview;
+}
+
+
 /*! \brief Get the tree view of a Multiattrib widget.
  *
  *  \par Function Description
@@ -2295,7 +2333,8 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                                     textview);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
-  multiattrib->textview_value = GTK_TEXT_VIEW (textview);
+  schematic_multiattrib_widget_set_value_textview (multiattrib,
+                                                   GTK_TEXT_VIEW (textview));
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), value_label, 0, 1, 1, 1);
   gtk_grid_attach (GTK_GRID (grid), scrolled_win, 1, 1, 1, 1);

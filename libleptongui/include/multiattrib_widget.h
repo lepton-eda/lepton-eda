@@ -184,6 +184,12 @@ schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiatt
 void
 schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiattrib,
                                             GtkTreeView *treeview);
+GtkTextView*
+schematic_multiattrib_widget_get_value_textview (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_value_textview (SchematicMultiattribWidget *multiattrib,
+                                                 GtkTextView *textview);
 
 /* Methods */
 void
