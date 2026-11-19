@@ -2392,28 +2392,11 @@ void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *grid_or_table)
 {
-  GtkWidget *optionm, *button;
+  GtkWidget *button;
 #ifdef ENABLE_GTK3
   GtkWidget *grid = grid_or_table;
 #else
   GtkWidget *table = grid_or_table;
-#endif
-
-  /*   - the visibility type */
-  optionm = gtk_combo_box_text_new ();
-  schematic_multiattrib_widget_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
-  schematic_multiattrib_widget_set_show_name_value_combo_box_text (multiattrib,
-                                                                   GTK_COMBO_BOX_TEXT (optionm));
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), optionm, 1, 2, 1, 1);
-  gtk_widget_show_all (grid);
-#else
-  gtk_table_attach (GTK_TABLE (table), optionm,
-                    1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) 0,
-                    6, 3);
-  gtk_widget_show_all (table);
 #endif
 
   /* create the add button */

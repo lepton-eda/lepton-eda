@@ -116,6 +116,8 @@
   (define *visibility-button
     (gtk_check_button_new_with_mnemonic
      (string->pointer (G_ "Vi_sible"))))
+  ;; Attribute show mode.
+  (define *show-mode-combo (gtk_combo_box_text_new))
 
   (gtk_frame_set_shadow_type *list-frame GTK_SHADOW_NONE)
   (schematic_multiattrib_widget_set_list_frame *dialog
@@ -345,6 +347,19 @@
   (if %m4-use-gtk3
       (gtk_grid_attach *grid-or-table *visibility-button 0 2 1 1)
       (gtk_table_attach *grid-or-table *visibility-button 0 1 2 3 GTK_FILL 0 3 0))
+
+  (schematic_multiattrib_widget_init_visible_types *show-mode-combo)
+  (schematic_multiattrib_widget_set_show_name_value_combo_box_text
+   *dialog
+   *show-mode-combo)
+
+  (if %m4-use-gtk3
+      (begin
+        (gtk_grid_attach *grid-or-table *show-mode-combo 1 2 1 1)
+        (gtk_widget_show_all *grid-or-table))
+      (begin
+        (gtk_table_attach *grid-or-table *show-mode-combo 1 2 2 3 (logior GTK_EXPAND GTK_FILL) 0 6 3)
+        (gtk_widget_show_all *grid-or-table)))
 
   (schematic_multiattrib_widget_setup *dialog *grid-or-table)
 
