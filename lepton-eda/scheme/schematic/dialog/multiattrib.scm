@@ -113,8 +113,7 @@
     (gtk_scrolled_window_new %null-pointer %null-pointer))
   (define *text-view (gtk_text_view_new))
 
-  (gtk_frame_set_shadow_type *list-frame
-                             (symbol->gtk-shadow-type 'none))
+  (gtk_frame_set_shadow_type *list-frame GTK_SHADOW_NONE)
   (schematic_multiattrib_widget_set_list_frame *dialog
                                                *list-frame)
 
@@ -123,8 +122,7 @@
                                   GTK_POLICY_AUTOMATIC
                                   GTK_POLICY_AUTOMATIC)
   (gtk_scrolled_window_set_shadow_type *scrolled-window
-                                       (symbol->gtk-shadow-type 'etched-in))
-
+                                       GTK_SHADOW_ETCHED_IN)
   (unless %m4-use-gtk3
     (gtk_tree_view_set_rules_hint *tree-view TRUE))
 
@@ -299,7 +297,7 @@
                                   GTK_POLICY_AUTOMATIC
                                   GTK_POLICY_AUTOMATIC)
   (gtk_scrolled_window_set_shadow_type *value-scrolled-window
-                                       (symbol->gtk-shadow-type 'in))
+                                       GTK_SHADOW_IN)
   ;; TODO: Forcing the size request is a horrible band-aid and
   ;; should be replaced by a better heuristic.
   (gtk_widget_set_size_request *text-view -1 50)
