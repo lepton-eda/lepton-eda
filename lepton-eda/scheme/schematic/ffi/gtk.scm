@@ -210,6 +210,8 @@
 
             gtk_tearoff_menu_item_new
 
+            gtk_text_view_new
+
             gtk_toggle_button_get_active
             gtk_toggle_button_set_active
 
@@ -234,6 +236,7 @@
             gtk_widget_set_hexpand
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
+            gtk_widget_set_tooltip_text
             gtk_widget_get_visible
             gtk_widget_set_visible
             gtk_widget_show
@@ -488,6 +491,8 @@
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
+(define-lff gtk_text_view_new '* '())
+
 (define-lff gtk_toggle_button_get_active int '(*))
 (define-lff gtk_toggle_button_set_active void (list '* int))
 
@@ -512,6 +517,7 @@
 (define-lff-gtk3 gtk_widget_set_hexpand void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
+(define-lff gtk_widget_set_tooltip_text void '(* *))
 (define-lff gtk_widget_get_visible int '(*))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))

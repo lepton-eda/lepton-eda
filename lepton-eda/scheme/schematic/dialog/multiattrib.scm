@@ -106,6 +106,12 @@
   (define *name-label
     (gtk_label_new_with_mnemonic (string->pointer (G_ "_Name:"))))
   (define *name-combo (gtk_combo_box_text_new_with_entry))
+  ;; The value entry: a GtkEntry.
+  (define *value-label
+    (gtk_label_new_with_mnemonic (string->pointer (G_ "_Value:"))))
+  (define *value-scrolled-window
+    (gtk_scrolled_window_new %null-pointer %null-pointer))
+  (define *text-view (gtk_text_view_new))
 
   (gtk_frame_set_shadow_type *list-frame
                              (symbol->gtk-shadow-type 'none))
@@ -283,9 +289,43 @@
         (gtk_table_attach *grid-or-table *name-label 0 1 0 1 0 0 0 0)
         (gtk_table_attach *grid-or-table *name-combo 1 2 0 1 (logior GTK_EXPAND GTK_FILL) 0 6 3)))
 
+  (if %m4-use-gtk3
+      (begin
+        (gtk_label_set_xalign *value-label 0.0)
+        (gtk_label_set_yalign *value-label 0.5))
+      (gtk_misc_set_alignment *value-label 0.0 0.5))
+
+  (gtk_scrolled_window_set_policy *value-scrolled-window
+                                  GTK_POLICY_AUTOMATIC
+                                  GTK_POLICY_AUTOMATIC)
+  (gtk_scrolled_window_set_shadow_type *value-scrolled-window
+                                       (symbol->gtk-shadow-type 'in))
+  ;; TODO: Forcing the size request is a horrible band-aid and
+  ;; should be replaced by a better heuristic.
+  (gtk_widget_set_size_request *text-view -1 50)
+  (gtk_widget_set_tooltip_text
+   *text-view
+   (string->pointer
+    (G_ "Ctrl+Enter inserts new line Ctrl+Tab inserts Tab")))
+
+  (g_signal_connect *text-view
+                    (string->pointer "key_press_event")
+                    *schematic_multiattrib_widget_callback_value_key_pressed
+                    *dialog)
+
+  (g_signal_connect *text-view
+                    (string->pointer "grab-focus")
+                    *schematic_multiattrib_widget_callback_value_grab_focus
+                    *dialog)
+
+  (gtk_label_set_mnemonic_widget *value-label *text-view)
+
   (schematic_multiattrib_widget_setup *dialog
                                       *tree-view
-                                      *grid-or-table)
+                                      *grid-or-table
+                                      *text-view
+                                      *value-scrolled-window
+                                      *value-label)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog

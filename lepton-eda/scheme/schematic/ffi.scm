@@ -701,6 +701,8 @@
             *schematic_multiattrib_widget_callback_toggled_show_name
             *schematic_multiattrib_widget_callback_toggled_show_value
             *schematic_multiattrib_widget_callback_toggled_visible
+            *schematic_multiattrib_widget_callback_value_grab_focus
+            *schematic_multiattrib_widget_callback_value_key_pressed
             *schematic_multiattrib_widget_column_set_data_name
             *schematic_multiattrib_widget_column_set_data_show_name
             *schematic_multiattrib_widget_column_set_data_show_value
@@ -1441,7 +1443,7 @@
 (define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
 (define-lff schematic_multiattrib_widget_init_attrib_names void '(*))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* * *))
+(define-lff schematic_multiattrib_widget_setup void '(* * * * * *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 (define-lfc *schematic_multiattrib_widget_callback_button_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_edited_name)
@@ -1452,6 +1454,8 @@
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_name)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_show_value)
 (define-lfc *schematic_multiattrib_widget_callback_toggled_visible)
+(define-lfc *schematic_multiattrib_widget_callback_value_grab_focus)
+(define-lfc *schematic_multiattrib_widget_callback_value_key_pressed)
 (define-lfc *schematic_multiattrib_widget_column_set_data_name)
 (define-lfc *schematic_multiattrib_widget_column_set_data_show_name)
 (define-lfc *schematic_multiattrib_widget_column_set_data_show_value)

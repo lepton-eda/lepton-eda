@@ -2220,15 +2220,19 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
  *                          instance we are setting up.
  *  \param [in] treeview The tree view of the dialog.
  *  \param [in] grid_or_table GtkGrid for GTK3 and GtkTable for GTK2.
+ *  \param [in] textview The text view of the value entry.
+ *  \param [in] scrolled_win The scrolled window of the value text view.
+ *  \param [in] value_label The label of the value text entry.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                                     GtkWidget *treeview,
-                                    GtkWidget *grid_or_table)
+                                    GtkWidget *grid_or_table,
+                                    GtkWidget *textview,
+                                    GtkWidget *scrolled_win,
+                                    GtkWidget *value_label)
 {
-  GtkWidget *scrolled_win;
-  GtkWidget *value_label;
-  GtkWidget *textview, *optionm, *button;
+  GtkWidget *optionm, *button;
 #ifdef ENABLE_GTK3
   GtkStyleContext *stylectx;
 #else
@@ -2240,40 +2244,6 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 #else
   GtkWidget *table = grid_or_table;
 #endif
-
-  /*   - the value entry: a GtkEntry */
-  value_label = gtk_label_new_with_mnemonic (_("_Value:"));
-#ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (value_label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (value_label), 0.5);
-#else
-  gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
-#endif
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
-                                       GTK_SHADOW_IN);
-
-  /*! \todo Forcing the size request is a horrible band-aid and
-   *  should be replaced by a better heuristic. */
-  textview = gtk_text_view_new ();
-  /* Request only height. */
-  gtk_widget_set_size_request (textview, -1, 50);
-  gtk_widget_set_tooltip_text (GTK_WIDGET (textview),
-                  _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
-  g_signal_connect (textview,
-                    "key_press_event",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_value_key_pressed),
-                    multiattrib);
-  g_signal_connect (textview,
-                    "grab-focus",
-                    G_CALLBACK (schematic_multiattrib_widget_callback_value_grab_focus),
-                    multiattrib);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (value_label), textview);
 
 #ifdef ENABLE_GTK3
   /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
