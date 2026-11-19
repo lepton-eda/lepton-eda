@@ -875,6 +875,58 @@ multiattrib_action_copy_attribute_to_all (SchematicMultiattribWidget *multiattri
   o_undo_savestate_old (w_current);
 }
 
+
+/*! \brief Init the set of foreground cell text colors.
+ *
+ *  \par Function Description
+ *
+ *  Obtains a set of foreground text colors for rendering text
+ *  strings in the cells of the attrib list view.  The colors are
+ *  stored in the fields of the \p multiattrib object.  A couple
+ *  of them is retrieved from the \p textview object.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] textview A text view widget to obtain colors from.
+ */
+void
+schematic_multiattrib_widget_init_text_fg_colors (SchematicMultiattribWidget *multiattrib,
+                                                  GtkWidget *textview)
+{
+#ifdef ENABLE_GTK3
+  /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
+   * GtkTextView's stubborn refusal to draw with
+   * GTK_STATE_FLAG_INSENSITIVE later on */
+  GtkStyleContext *stylectx = gtk_widget_get_style_context (textview);
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_NORMAL,
+                               &multiattrib->value_normal_text_color);
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_INSENSITIVE,
+                               &multiattrib->insensitive_text_color);
+
+  gdk_rgba_parse (&multiattrib->not_identical_value_text_color, "grey");
+  gdk_rgba_parse (&multiattrib->not_present_in_all_text_color, "red");
+
+#else /* GTK2 */
+  /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
+   * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
+  GtkStyle *style = gtk_widget_get_style (textview);
+  multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
+
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
+
+  gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
+  gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
+#endif
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -2234,50 +2286,13 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 {
   GtkWidget *optionm, *button;
 #ifdef ENABLE_GTK3
-  GtkStyleContext *stylectx;
-#else
-  GtkStyle *style;
-#endif
-
-#ifdef ENABLE_GTK3
   GtkWidget *grid = grid_or_table;
 #else
   GtkWidget *table = grid_or_table;
 #endif
 
-#ifdef ENABLE_GTK3
-  /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
-   * GtkTextView's stubborn refusal to draw with
-   * GTK_STATE_FLAG_INSENSITIVE later on */
-  stylectx = gtk_widget_get_style_context (textview);
-  gtk_style_context_get_color (stylectx,
-                               GTK_STATE_FLAG_NORMAL,
-                               &multiattrib->value_normal_text_color);
-  /* Save this one so we can pick it as a sensible colour to show the
-   * inherited attributes dimmed.
-   */
-  gtk_style_context_get_color (stylectx,
-                               GTK_STATE_FLAG_INSENSITIVE,
-                               &multiattrib->insensitive_text_color);
-
-  gdk_rgba_parse (&multiattrib->not_identical_value_text_color, "grey");
-  gdk_rgba_parse (&multiattrib->not_present_in_all_text_color, "red");
-
-#else /* GTK2 */
-
-  /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
-   * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
-  style = gtk_widget_get_style (textview);
-  multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
-
-  /* Save this one so we can pick it as a sensible colour to show the
-   * inherited attributes dimmed.
-   */
-  multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
-
-  gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
-  gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
-#endif
+  schematic_multiattrib_widget_init_text_fg_colors (multiattrib,
+                                                    textview);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
