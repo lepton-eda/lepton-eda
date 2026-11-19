@@ -2259,9 +2259,9 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   /*! \todo Forcing the size request is a horrible band-aid and
    *  should be replaced by a better heuristic. */
-  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
-                                       "height-request", 50,
-                                       NULL));
+  textview = gtk_text_view_new ();
+  /* Request only height. */
+  gtk_widget_set_size_request (textview, -1, 50);
   gtk_widget_set_tooltip_text (GTK_WIDGET (textview),
                   _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
   g_signal_connect (textview,
