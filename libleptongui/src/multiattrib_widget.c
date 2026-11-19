@@ -2253,10 +2253,10 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   combo = gtk_combo_box_text_new_with_entry ();
 
   multiattrib_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
-  multiattrib->combo_name = GTK_COMBO_BOX_TEXT (combo);
-
+  schematic_multiattrib_widget_set_combo_name (multiattrib,
+                                               GTK_COMBO_BOX_TEXT (combo));
   gtk_label_set_mnemonic_widget (GTK_LABEL (name_label),
-                                 GTK_WIDGET (multiattrib->combo_name));
+                                 GTK_WIDGET (schematic_multiattrib_widget_get_combo_name (multiattrib)));
 
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (combo), TRUE);
