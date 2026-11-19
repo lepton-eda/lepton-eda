@@ -237,6 +237,10 @@ void
 schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
                                                        gchar *path,
                                                        gpointer user_data);
+gboolean
+schematic_multiattrib_widget_callback_value_key_pressed (GtkWidget *widget,
+                                                         GdkEventKey *event,
+                                                         gpointer user_data);
 void
 schematic_multiattrib_widget_column_set_data_name (GtkTreeViewColumn *tree_column,
                                                    GtkCellRenderer *cell,

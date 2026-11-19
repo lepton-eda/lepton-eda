@@ -1687,10 +1687,10 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_value_key_pressed (GtkWidget *widget,
-                                        GdkEventKey *event,
-                                        gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_value_key_pressed (GtkWidget *widget,
+                                                         GdkEventKey *event,
+                                                         gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (widget);
@@ -2266,7 +2266,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                   _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
   g_signal_connect (textview,
                     "key_press_event",
-                    G_CALLBACK (multiattrib_callback_value_key_pressed),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_value_key_pressed),
                     multiattrib);
   g_signal_connect (textview,
                     "grab-focus",
