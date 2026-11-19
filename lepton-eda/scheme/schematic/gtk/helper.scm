@@ -51,6 +51,11 @@
             GTK_SELECTION_MULTIPLE
             gtk-shadow-type->symbol
             symbol->gtk-shadow-type
+            GTK_SHADOW_NONE
+            GTK_SHADOW_IN
+            GTK_SHADOW_OUT
+            GTK_SHADOW_ETCHED_IN
+            GTK_SHADOW_ETCHED_OUT
             gtk-window-position->symbol
             symbol->gtk-window-position
             gtk-response->symbol
@@ -170,6 +175,12 @@
   "Transforms symbol SYM to corresponding GtkShadowType value."
   (schematic_gtk_shadow_type_from_string
    (string->pointer (symbol->string sym))))
+
+(define GTK_SHADOW_NONE (symbol->gtk-shadow-type 'none))
+(define GTK_SHADOW_IN (symbol->gtk-shadow-type 'in))
+(define GTK_SHADOW_OUT (symbol->gtk-shadow-type 'out))
+(define GTK_SHADOW_ETCHED_IN (symbol->gtk-shadow-type 'etched-in))
+(define GTK_SHADOW_ETCHED_OUT (symbol->gtk-shadow-type 'etched-out))
 
 
 (define (gtk-window-position->symbol pos)
