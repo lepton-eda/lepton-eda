@@ -688,7 +688,9 @@
             schematic_multiattrib_widget_set_object_list
             schematic_multiattrib_widget_set_show_inherited
             schematic_multiattrib_widget_set_tree_view
+            schematic_multiattrib_widget_set_value_textview
             schematic_multiattrib_widget_init_attrib_names
+            schematic_multiattrib_widget_init_text_fg_colors
             schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_setup
             schematic_multiattrib_widget_update
@@ -1441,9 +1443,11 @@
 (define-lff schematic_multiattrib_widget_set_object_list void '(* *))
 (define-lff schematic_multiattrib_widget_set_show_inherited void '(* *))
 (define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
+(define-lff schematic_multiattrib_widget_set_value_textview void '(* *))
 (define-lff schematic_multiattrib_widget_init_attrib_names void '(*))
+(define-lff schematic_multiattrib_widget_init_text_fg_colors void '(* *))
 (define-lff schematic_multiattrib_widget_refresh void '(*))
-(define-lff schematic_multiattrib_widget_setup void '(* * * * * *))
+(define-lff schematic_multiattrib_widget_setup void '(* *))
 (define-lff schematic_multiattrib_widget_update void '(*))
 (define-lfc *schematic_multiattrib_widget_callback_button_pressed)
 (define-lfc *schematic_multiattrib_widget_callback_edited_name)

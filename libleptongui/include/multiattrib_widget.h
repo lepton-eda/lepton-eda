@@ -203,11 +203,7 @@ schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib);
 
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *treeview,
-                                    GtkWidget *grid_or_table,
-                                    GtkWidget *textview,
-                                    GtkWidget *scrolled_win,
-                                    GtkWidget *value_label);
+                                    GtkWidget *grid_or_table);
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 

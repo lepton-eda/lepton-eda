@@ -2308,47 +2308,17 @@ schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
  *
  *  \param [in] multiattrib The #SchematicMultiattribWidget
  *                          instance we are setting up.
- *  \param [in] treeview The tree view of the dialog.
  *  \param [in] grid_or_table GtkGrid for GTK3 and GtkTable for GTK2.
- *  \param [in] textview The text view of the value entry.
- *  \param [in] scrolled_win The scrolled window of the value text view.
- *  \param [in] value_label The label of the value text entry.
  */
 void
 schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
-                                    GtkWidget *treeview,
-                                    GtkWidget *grid_or_table,
-                                    GtkWidget *textview,
-                                    GtkWidget *scrolled_win,
-                                    GtkWidget *value_label)
+                                    GtkWidget *grid_or_table)
 {
   GtkWidget *optionm, *button;
 #ifdef ENABLE_GTK3
   GtkWidget *grid = grid_or_table;
 #else
   GtkWidget *table = grid_or_table;
-#endif
-
-  schematic_multiattrib_widget_init_text_fg_colors (multiattrib,
-                                                    textview);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
-  schematic_multiattrib_widget_set_value_textview (multiattrib,
-                                                   GTK_TEXT_VIEW (textview));
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), value_label, 0, 1, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_win, 1, 1, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), value_label,
-                    0, 1, 1, 2,
-                    (GtkAttachOptions) 0,
-                    (GtkAttachOptions) 0,
-                    0, 0);
-  gtk_table_attach (GTK_TABLE (table), scrolled_win,
-                    1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) 0,
-                    6, 3);
 #endif
 
   /*   - the visible status */

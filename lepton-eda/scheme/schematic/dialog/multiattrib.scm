@@ -318,12 +318,21 @@
 
   (gtk_label_set_mnemonic_widget *value-label *text-view)
 
-  (schematic_multiattrib_widget_setup *dialog
-                                      *tree-view
-                                      *grid-or-table
-                                      *text-view
-                                      *value-scrolled-window
-                                      *value-label)
+  (schematic_multiattrib_widget_init_text_fg_colors *dialog
+                                                    *text-view)
+
+  (gtk_container_add *value-scrolled-window *text-view)
+  (schematic_multiattrib_widget_set_value_textview *dialog
+                                                   *text-view)
+  (if %m4-use-gtk3
+      (begin
+        (gtk_grid_attach *grid-or-table *value-label 0 1 1 1)
+        (gtk_grid_attach *grid-or-table *value-scrolled-window 1 1 1 1))
+      (begin
+        (gtk_table_attach *grid-or-table *value-label 0 1 1 2 0 0 0 0)
+        (gtk_table_attach *grid-or-table *value-scrolled-window 1 2 1 2 (logior GTK_EXPAND GTK_FILL) 0 6 3)))
+
+  (schematic_multiattrib_widget_setup *dialog *grid-or-table)
 
   ;; Now add the close button to the action area.
   (gtk_dialog_add_button *dialog
