@@ -1726,8 +1726,8 @@ schematic_multiattrib_widget_callback_value_key_pressed (GtkWidget *widget,
  *  \par Function Description
  *  Select the text in the GtkTextView so it may be over-typed quickly
  */
-static void
-multiattrib_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
+void
+schematic_multiattrib_widget_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
 {
   GtkTextView *textview = GTK_TEXT_VIEW (widget);
   GtkTextBuffer *textbuffer;
@@ -2270,7 +2270,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
                     multiattrib);
   g_signal_connect (textview,
                     "grab-focus",
-                    G_CALLBACK (multiattrib_callback_value_grab_focus),
+                    G_CALLBACK (schematic_multiattrib_widget_callback_value_grab_focus),
                     multiattrib);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (value_label), textview);
