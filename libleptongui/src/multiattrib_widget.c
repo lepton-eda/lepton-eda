@@ -2363,7 +2363,8 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
   button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-  multiattrib->button_visible = GTK_CHECK_BUTTON (button);
+  schematic_multiattrib_widget_set_button_visible (multiattrib,
+                                                   GTK_CHECK_BUTTON (button));
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid), button, 0, 2, 1, 1);
 #else
