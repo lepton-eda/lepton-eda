@@ -187,6 +187,9 @@ schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiatt
 
 /* Methods */
 void
+schematic_multiattrib_widget_init_attrib_names (GtkComboBoxText *combo);
+
+void
 schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib);
 
 void

@@ -1791,8 +1791,8 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
  *  \par Function Description
  *
  */
-static void
-multiattrib_init_attrib_names (GtkComboBoxText *combo)
+void
+schematic_multiattrib_widget_init_attrib_names (GtkComboBoxText *combo)
 {
   const gchar *string;
   gint i;
@@ -2252,7 +2252,7 @@ schematic_multiattrib_widget_setup (SchematicMultiattribWidget *multiattrib,
 
   combo = gtk_combo_box_text_new_with_entry ();
 
-  multiattrib_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
+  schematic_multiattrib_widget_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
   schematic_multiattrib_widget_set_combo_name (multiattrib,
                                                GTK_COMBO_BOX_TEXT (combo));
   gtk_label_set_mnemonic_widget (GTK_LABEL (name_label),
