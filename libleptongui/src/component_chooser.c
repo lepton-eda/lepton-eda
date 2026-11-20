@@ -37,7 +37,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "../include/dialog.h"
-#include "../include/x_compselect.h"
+#include "../include/component_chooser.h"
 
 /*! \def COMPSELECT_FILTER_INTERVAL
  *  \brief The time interval between request and actual filtering
