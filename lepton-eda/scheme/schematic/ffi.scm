@@ -313,7 +313,7 @@
             x_compselect_deselect
             x_compselect_open
             schematic_compselect_new
-            schematic_compselect_get_preview
+            schematic_component_chooser_get_preview
             schematic_component_chooser_setup
 
             recent_manager_add
@@ -786,7 +786,7 @@
 (define-lff x_compselect_deselect void '(*))
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
-(define-lff schematic_compselect_get_preview '* '(*))
+(define-lff schematic_component_chooser_get_preview '* '(*))
 (define-lff schematic_component_chooser_setup void '(* * *))
 
 ;;; action_mode.c

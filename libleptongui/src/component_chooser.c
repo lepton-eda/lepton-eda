@@ -139,6 +139,24 @@ schematic_component_chooser_set_notebook (Compselect *chooser,
 }
 
 
+/*! \brief Get the preview widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the preview widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The preview widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_preview (GtkWidget *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return GTK_WIDGET (COMPSELECT (chooser)->preview);
+}
+
+
 /*! \brief Get the vertical paned widget of a component chooser.
  *
  *  \par Function Description
@@ -314,15 +332,6 @@ x_compselect_callback_response (GtkDialog *dialog,
         break;
   }
 
-}
-
-
-GtkWidget*
-schematic_compselect_get_preview (GtkWidget *cs)
-{
-  g_return_val_if_fail (cs != NULL, NULL);
-
-  return GTK_WIDGET (COMPSELECT (cs)->preview);
 }
 
 

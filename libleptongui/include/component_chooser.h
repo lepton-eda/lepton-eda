@@ -101,9 +101,6 @@ x_compselect_callback_response (GtkDialog *dialog,
                                 gint arg1,
                                 gpointer user_data);
 GtkWidget*
-schematic_compselect_get_preview (GtkWidget *cs);
-
-GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current);
 
 GtkWidget*
@@ -118,6 +115,9 @@ schematic_component_chooser_get_notebook (Compselect *chooser);
 void
 schematic_component_chooser_set_notebook (Compselect *chooser,
                                           GtkNotebook *notebook);
+GtkWidget*
+schematic_component_chooser_get_preview (GtkWidget *chooser);
+
 GtkWidget*
 schematic_component_chooser_get_vpaned (Compselect *chooser);
 

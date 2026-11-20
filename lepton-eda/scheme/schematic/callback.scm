@@ -162,7 +162,7 @@
                         *x_compselect_callback_response
                         *window)
       (init-preview-widget-signals
-       (schematic_compselect_get_preview *compselect-widget))
+       (schematic_component_chooser_get_preview *compselect-widget))
       (schematic_window_set_compselect_widget *window *compselect-widget)))
   (x_compselect_open (schematic_window_get_compselect_widget *window))
 
