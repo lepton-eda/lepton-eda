@@ -1585,7 +1585,8 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
   /* notebook for library and inuse views */
   notebook = gtk_notebook_new ();
-  compselect->viewtabs = GTK_NOTEBOOK (notebook);
+  schematic_component_chooser_set_notebook (compselect,
+                                            GTK_NOTEBOOK (notebook));
 
   inuseview = create_inuse_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
