@@ -1542,8 +1542,8 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
   gtk_container_set_border_width (GTK_CONTAINER (hpaned), 5);
 
-  compselect->vpaned = vpaned;
-  compselect->hpaned = hpaned;
+  schematic_component_chooser_set_vpaned (compselect, vpaned);
+  schematic_component_chooser_set_hpaned (compselect, hpaned);
 
   /* notebook for library and inuse views */
   notebook = GTK_WIDGET (g_object_new (GTK_TYPE_NOTEBOOK,
