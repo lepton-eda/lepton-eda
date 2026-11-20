@@ -118,6 +118,9 @@ schematic_component_chooser_set_notebook (Compselect *chooser,
 GtkWidget*
 schematic_component_chooser_get_preview (GtkWidget *chooser);
 
+void
+schematic_component_chooser_set_preview (GtkWidget *chooser,
+                                         GtkWidget *preview);
 GtkWidget*
 schematic_component_chooser_get_vpaned (Compselect *chooser);
 

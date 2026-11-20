@@ -157,6 +157,26 @@ schematic_component_chooser_get_preview (GtkWidget *chooser)
 }
 
 
+/*! \brief Set the preview widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the preview widget of the component chooser to
+ *  \p preview.
+ *
+ *  \param [in] chooser The component chooser widget.
+ *  \param [in] preview The preview widget.
+ */
+void
+schematic_component_chooser_set_preview (GtkWidget *chooser,
+                                         GtkWidget *preview)
+{
+  g_return_if_fail (chooser != NULL);
+
+  COMPSELECT (chooser)->preview = SCHEMATIC_PREVIEW (preview);
+}
+
+
 /*! \brief Get the vertical paned widget of a component chooser.
  *
  *  \par Function Description
