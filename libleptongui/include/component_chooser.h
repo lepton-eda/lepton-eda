@@ -112,6 +112,12 @@ schematic_component_chooser_get_hpaned (Compselect *chooser);
 void
 schematic_component_chooser_set_hpaned (Compselect *chooser,
                                         GtkWidget *hpaned);
+GtkNotebook*
+schematic_component_chooser_get_notebook (Compselect *chooser);
+
+void
+schematic_component_chooser_set_notebook (Compselect *chooser,
+                                          GtkNotebook *notebook);
 GtkWidget*
 schematic_component_chooser_get_vpaned (Compselect *chooser);
 

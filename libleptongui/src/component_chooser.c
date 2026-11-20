@@ -101,6 +101,44 @@ schematic_component_chooser_set_hpaned (Compselect *chooser,
 }
 
 
+/*! \brief Get the notebook widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the notebook widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The notebook widget of the component chooser.
+ */
+GtkNotebook*
+schematic_component_chooser_get_notebook (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->viewtabs;
+}
+
+
+/*! \brief Set the notebook widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the notebook widget of the component chooser to
+ *  \p notebook.
+ *
+ *  \param [in] chooser  The component chooser instance.
+ *  \param [in] notebook The notebook widget.
+ */
+void
+schematic_component_chooser_set_notebook (Compselect *chooser,
+                                          GtkNotebook *notebook)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->viewtabs = notebook;
+}
+
+
 /*! \brief Get the vertical paned widget of a component chooser.
  *
  *  \par Function Description
