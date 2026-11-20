@@ -106,6 +106,18 @@ schematic_compselect_get_preview (GtkWidget *cs);
 GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current);
 
+GtkWidget*
+schematic_component_chooser_get_hpaned (Compselect *chooser);
+
+void
+schematic_component_chooser_set_hpaned (Compselect *chooser,
+                                        GtkWidget *hpaned);
+GtkWidget*
+schematic_component_chooser_get_vpaned (Compselect *chooser);
+
+void
+schematic_component_chooser_set_vpaned (Compselect *chooser,
+                                        GtkWidget *vpaned);
 void
 schematic_component_chooser_setup (GtkWidget *chooser,
                                    GtkWidget *hpaned,

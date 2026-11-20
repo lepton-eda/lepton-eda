@@ -63,6 +63,82 @@ G_DEFINE_TYPE (Compselect,
                SCHEMATIC_TYPE_DIALOG);
 
 
+/*! \brief Get the horizontal paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the horizontal paned widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The horizontal paned widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_hpaned (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->hpaned;
+}
+
+
+/*! \brief Set the horizontal paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the horizontal paned widget of the component chooser to
+ *  \p hpaned.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] hpaned The horizontal paned widget.
+ */
+void
+schematic_component_chooser_set_hpaned (Compselect *chooser,
+                                        GtkWidget *hpaned)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->hpaned = hpaned;
+}
+
+
+/*! \brief Get the vertical paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the vertical paned widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The vertical paned widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_vpaned (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->vpaned;
+}
+
+
+/*! \brief Set the vertical paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the vertical paned widget of the component chooser to
+ *  \p vpaned.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] vpaned The vertical paned widget.
+ */
+void
+schematic_component_chooser_set_vpaned (Compselect *chooser,
+                                        GtkWidget *vpaned)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->vpaned = vpaned;
+}
+
+
 /*! \brief Return currently active component-selector view
  *
  *  \par Function Description
