@@ -1604,14 +1604,8 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
 #ifndef ENABLE_GTK3
   GtkWidget *alignment;
-  alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
-                                        /* GtkAlignment */
-                                        "border-width", 5,
-                                        "xscale",         1.0,
-                                        "yscale",         1.0,
-                                        "xalign",         0.5,
-                                        "yalign",         0.5,
-                                        NULL));
+  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 5);
 #endif
 
   preview = schematic_preview_new ();
