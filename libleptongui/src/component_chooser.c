@@ -1486,8 +1486,8 @@ schematic_component_chooser_create_lib_treeview (Compselect *compselect)
 
 /*! \brief Creates the treeview widget for the attributes
  */
-static GtkWidget*
-create_attributes_treeview (Compselect *compselect)
+GtkWidget*
+schematic_component_chooser_create_attributes_treeview (Compselect *compselect)
 {
   GtkWidget *attrtreeview, *scrolled_win;
   GtkListStore *model;
@@ -1730,7 +1730,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
   GtkWidget *attrframe = gtk_frame_new (_("Attributes"));
   schematic_component_chooser_set_attrframe (compselect, attrframe);
-  attributes = create_attributes_treeview (compselect);
+  attributes = schematic_component_chooser_create_attributes_treeview (compselect);
   gtk_paned_pack2 (GTK_PANED (vpaned), attrframe, FALSE, FALSE);
   gtk_container_add (GTK_CONTAINER (attrframe), attributes);
 
