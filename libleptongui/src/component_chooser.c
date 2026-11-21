@@ -1752,8 +1752,8 @@ schematic_component_chooser_setup (GtkWidget *chooser,
                       combobox, FALSE, FALSE, 10);
   gtk_widget_show_all (combobox);
   /* set behavior combo box of compselect */
-  compselect->combobox_behaviors = GTK_COMBO_BOX (combobox);
-
+  schematic_component_chooser_set_combobox_behaviors (compselect,
+                                                      GTK_COMBO_BOX (combobox));
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (compselect),
                           /*  - close button */
