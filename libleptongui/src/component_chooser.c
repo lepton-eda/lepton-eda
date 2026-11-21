@@ -1648,10 +1648,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 #endif
   /* set preview of compselect */
   schematic_component_chooser_set_preview (chooser, preview);
-  g_object_set (GTK_WIDGET (preview),
-                "width-request",  160,
-                "height-request", 120,
-                NULL);
+  gtk_widget_set_size_request (preview, 160, 120);
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
