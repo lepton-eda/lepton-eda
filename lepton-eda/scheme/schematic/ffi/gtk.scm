@@ -46,11 +46,18 @@
 
             gtk_bin_get_child
 
+            gtk_box_new
+            gtk_vbox_new
             gtk_box_pack_start
             gtk_box_set_spacing
 
+            gtk_button_new_with_mnemonic
+
             gtk_check_button_new_with_label
             gtk_check_button_new_with_mnemonic
+
+            gtk_cell_renderer_text_new
+            gtk_cell_renderer_toggle_new
 
             gtk_combo_box_get_active
             gtk_combo_box_set_active
@@ -106,6 +113,9 @@
             gtk_file_filter_add_pattern
             gtk_file_filter_new
             gtk_file_filter_set_name
+
+            gtk_frame_new
+            gtk_frame_set_shadow_type
 
             gtk_grab_add
             gtk_grab_remove
@@ -182,6 +192,7 @@
             gtk_scrolled_window_new
             gtk_scrolled_window_set_hadjustment
             gtk_scrolled_window_set_policy
+            gtk_scrolled_window_set_shadow_type
             gtk_scrolled_window_set_vadjustment
 
             gtk_spin_button_get_value_as_int
@@ -201,8 +212,23 @@
 
             gtk_tearoff_menu_item_new
 
+            gtk_text_view_new
+
             gtk_toggle_button_get_active
             gtk_toggle_button_set_active
+
+            gtk_tree_selection_set_mode
+
+            gtk_tree_view_new_with_model
+            gtk_tree_view_set_rules_hint
+            gtk_tree_view_get_selection
+            gtk_tree_view_append_column
+            gtk_tree_view_column_new
+            gtk_tree_view_column_pack_start
+            gtk_tree_view_column_set_cell_data_func
+            gtk_tree_view_column_set_min_width
+            gtk_tree_view_column_set_resizable
+            gtk_tree_view_column_set_title
 
             gtk_widget_destroy
             gtk_widget_grab_focus
@@ -212,6 +238,7 @@
             gtk_widget_set_hexpand
             gtk_widget_set_sensitive
             gtk_widget_set_size_request
+            gtk_widget_set_tooltip_text
             gtk_widget_get_visible
             gtk_widget_set_visible
             gtk_widget_show
@@ -220,6 +247,7 @@
             *gtk_widget_hide_on_delete
 
             gtk_window_set_default_icon_name
+            gtk_window_set_default_size
             gtk_window_set_modal
             gtk_window_get_position
             gtk_window_set_position
@@ -294,11 +322,18 @@
 
 (define-lff gtk_bin_get_child '* '(*))
 
+(define-lff-gtk3 gtk_box_new '* (list int int))
+(define-lff gtk_vbox_new '* (list int int))
 (define-lff gtk_box_pack_start void (list '* '* int int int))
 (define-lff gtk_box_set_spacing void (list '* int))
 
+(define-lff gtk_button_new_with_mnemonic '* '(*))
+
 (define-lff gtk_check_button_new_with_label '* '(*))
 (define-lff gtk_check_button_new_with_mnemonic '* '(*))
+
+(define-lff gtk_cell_renderer_text_new '* '())
+(define-lff gtk_cell_renderer_toggle_new '* '())
 
 (define-lff gtk_combo_box_get_active int '(*))
 (define-lff gtk_combo_box_set_active void (list '* int))
@@ -357,6 +392,9 @@
 (define-lff gtk_file_filter_add_pattern void '(* *))
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
+
+(define-lff gtk_frame_new '* '(*))
+(define-lff gtk_frame_set_shadow_type void (list '* int))
 
 (define-lff gtk_grab_add void '(*))
 (define-lff gtk_grab_remove void '(*))
@@ -434,6 +472,7 @@
 (define-lff gtk_scrolled_window_new '* '(* *))
 (define-lff gtk_scrolled_window_set_hadjustment void '(* *))
 (define-lff gtk_scrolled_window_set_policy void (list '* int int))
+(define-lff gtk_scrolled_window_set_shadow_type void (list '* int))
 (define-lff gtk_scrolled_window_set_vadjustment void '(* *))
 
 (define-lff gtk_spin_button_get_value_as_int int '(*))
@@ -456,8 +495,23 @@
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
+(define-lff gtk_text_view_new '* '())
+
 (define-lff gtk_toggle_button_get_active int '(*))
 (define-lff gtk_toggle_button_set_active void (list '* int))
+
+(define-lff gtk_tree_selection_set_mode void (list '* int))
+
+(define-lff gtk_tree_view_new_with_model '* '(*))
+(define-lff gtk_tree_view_set_rules_hint void (list '* int))
+(define-lff gtk_tree_view_get_selection '* '(*))
+(define-lff gtk_tree_view_append_column int '(* *))
+(define-lff gtk_tree_view_column_new '* '())
+(define-lff gtk_tree_view_column_pack_start void (list '* '* int))
+(define-lff gtk_tree_view_column_set_cell_data_func void '(* * * * *))
+(define-lff gtk_tree_view_column_set_min_width void (list '* int))
+(define-lff gtk_tree_view_column_set_resizable void (list '* int))
+(define-lff gtk_tree_view_column_set_title void '(* *))
 
 (define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_has_focus int '(*))
@@ -467,6 +521,7 @@
 (define-lff-gtk3 gtk_widget_set_hexpand void (list '* int))
 (define-lff gtk_widget_set_sensitive void (list '* int))
 (define-lff gtk_widget_set_size_request void (list '* int int))
+(define-lff gtk_widget_set_tooltip_text void '(* *))
 (define-lff gtk_widget_get_visible int '(*))
 (define-lff gtk_widget_set_visible void (list '* int))
 (define-lff gtk_widget_show void '(*))
@@ -477,6 +532,7 @@
 (define-lff gtk_window_move void (list '* int int))
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_resize void (list '* int int))
+(define-lff gtk_window_set_default_size void (list '* int int))
 (define-lff gtk_window_set_default_icon_name void '(*))
 (define-lff gtk_window_set_modal void (list '* int))
 (define-lff gtk_window_get_position void '(* * *))

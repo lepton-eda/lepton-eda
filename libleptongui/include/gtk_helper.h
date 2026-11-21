@@ -40,10 +40,10 @@ void
 gtk_widget_pack_child (GtkWidget *parent_widget,
                        GtkWidget *child_widget);
 const char*
-gtk_policy_to_string (int policy);
+schematic_gtk_policy_type_to_string (int policy);
 
 int
-gtk_string_to_policy (char *s);
+schematic_gtk_policy_type_from_string (char *s);
 
 const char*
 gdk_window_type_hint_to_string (int hint);
@@ -76,10 +76,28 @@ int
 schematic_gtk_justification_from_string (char *s);
 
 const char*
+schematic_gtk_orientation_to_string (int val);
+
+int
+schematic_gtk_orientation_from_string (char *s);
+
+const char*
 schematic_gtk_position_type_to_string (int val);
 
 int
 schematic_gtk_position_type_from_string (char *s);
+
+const char*
+schematic_gtk_selection_mode_to_string (int val);
+
+int
+schematic_gtk_selection_mode_from_string (char *s);
+
+const char*
+schematic_gtk_shadow_type_to_string (int val);
+
+int
+schematic_gtk_shadow_type_from_string (char *s);
 
 const char*
 schematic_gtk_window_position_to_string (int val);
