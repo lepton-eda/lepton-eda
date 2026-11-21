@@ -1289,8 +1289,8 @@ schematic_component_chooser_create_inuse_treeview (Compselect *compselect)
 }
 
 /*! \brief Creates the treeview for the "Library" view */
-static GtkWidget *
-create_lib_treeview (Compselect *compselect)
+GtkWidget *
+schematic_component_chooser_create_lib_treeview (Compselect *compselect)
 {
   GtkWidget *libtreeview, *vbox, *scrolled_win, *label,
     *hbox, *entry, *button;
@@ -1697,7 +1697,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
                             gtk_label_new_with_mnemonic (_("In Us_e")));
 
-  libview = create_lib_treeview (compselect);
+  libview = schematic_component_chooser_create_lib_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
                             gtk_label_new_with_mnemonic (_("Lib_raries")));
 

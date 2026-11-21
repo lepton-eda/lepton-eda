@@ -142,6 +142,9 @@ schematic_component_chooser_set_vpaned (Compselect *chooser,
 GtkWidget*
 schematic_component_chooser_create_inuse_treeview (Compselect *compselect);
 
+GtkWidget *
+schematic_component_chooser_create_lib_treeview (Compselect *compselect);
+
 void
 schematic_component_chooser_setup (GtkWidget *chooser,
                                    GtkWidget *hpaned,
