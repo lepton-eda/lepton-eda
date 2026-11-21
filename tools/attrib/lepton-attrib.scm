@@ -76,6 +76,15 @@
 (define GTK_JUSTIFY_LEFT (symbol->gtk-justification 'left))
 
 
+;; The project and UI toplevel structure defining their data and
+;; settings.
+(define %toplevel (make-toplevel))
+
+;;; Returns the C pointer to the current toplevel instance.
+(define (*current-toplevel)
+  (toplevel->pointer (current-toplevel)))
+
+
 ;;; Sorted list of all component refdeses used in design.
 (define %sheet-component-list %null-pointer)
 
@@ -390,9 +399,8 @@ failure."
               (loop (cdr *attrib-ls)))))))
 
 
-;; Remove an attribute with *ATTRIB-NAME from *OBJECT in
-;; *TOPLEVEL.
-(define (remove-attrib *toplevel *object *attrib-name)
+;; Remove an attribute with *ATTRIB-NAME from *OBJECT.
+(define (remove-attrib *object *attrib-name)
   (let loop ((*attrib-ls
               (glist->list (lepton_object_get_attribs *object)
                            identity)))
@@ -419,7 +427,7 @@ failure."
                     ;; We've found the attrib.  Delete it and then
                     ;; return.
                     (let ((*active-page
-                           (lepton_toplevel_get_page_current *toplevel)))
+                           (lepton_toplevel_get_page_current (*current-toplevel))))
                       (lepton_object_delete *attrib)
                       (lepton_page_set_changed *active-page 1)
                       ;; We are done -- leave.
@@ -580,8 +588,8 @@ failure."
                 (loop (glist-next *ls))))))))
 
 
-;;; Updates *OBJECT component attributes in *TOPLEVEL using the
-;;; value held in the list of name=value attribute pairs
+;;; Updates *OBJECT component attributes using the value held in
+;;; the list of name=value attribute pairs
 ;;; *NEW-COMPONENT-ATTRIB-LIST.
 ;;;
 ;;; For each attrib string attached to the component, update it
@@ -603,8 +611,7 @@ failure."
 ;;; - If the attribs doesn't exist on *OBJECT, but is non-NULL in
 ;;;   the name=value pair, create an attrib object and add it to
 ;;;   the part on *OBJECT.
-(define (update-component-attribs *toplevel
-                                  *object
+(define (update-component-attribs *object
                                   *new-component-attrib-pair-list)
   (define *sheet-data (attrib_get_sheet_data))
   ;; To remove dead attribs from an object, we need to form a
@@ -739,8 +746,7 @@ failure."
                 (if (and (not (null-pointer? *old-attrib-value))
                          (not new-attrib-value))
                     ;; Remove attrib from component.
-                    (remove-attrib *toplevel
-                                   *object
+                    (remove-attrib *object
                                    (string->pointer old-attrib-name))
                     ;; Four cases to consider: Case 3.
                     (if (and (null-pointer? *old-attrib-value)
@@ -807,7 +813,7 @@ failure."
                                           *name-value-pair)))))))))
 
 
-(define (update-design-components *toplevel *page)
+(define (update-design-components *page)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list, as objects can be deleted from the
   ;; list during iteration over the list.
@@ -843,7 +849,6 @@ failure."
                      ;; Now update attribs in toplevel using this
                      ;; list.
                      (update-component-attribs
-                      *toplevel
                       *object
                       *new-component-attrib-pair-list)
 
@@ -861,7 +866,7 @@ failure."
   (g_list_free *copy-list))
 
 
-(define (update-design-nets *toplevel *page)
+(define (update-design-nets *page)
   ;; Not implemented yet.
   #f)
 
@@ -964,7 +969,7 @@ failure."
 ;;; - If the attrib doesn't exist on pin, but is non-NULL in the
 ;;;   name=value pair, create an attrib object and add it to the
 ;;;   pin.
-(define (update-pin-attribs *toplevel *refdes *pin *pin-attrib-list)
+(define (update-pin-attribs *refdes *pin *pin-attrib-list)
   (when (null-pointer? *pin)
     (error "NULL pin."))
 
@@ -997,8 +1002,7 @@ failure."
             (if (and (not (null-pointer? *old-attrib-value))
                      (not new-attrib-value))
                 ;; Remove attrib from pin.
-                (remove-attrib *toplevel
-                               *pin
+                (remove-attrib *pin
                                (string->pointer new-attrib-name))
                 ;; Four cases to consider: Case 3: No old attrib, new one
                 ;; exists.
@@ -1025,7 +1029,7 @@ failure."
         (loop (glist-next *local-list))))))
 
 
-(define (update-design-pins *toplevel *page)
+(define (update-design-pins *page)
   (define *sheet-data (attrib_get_sheet_data))
   ;; Work from a copy list in case objects are deleted from the
   ;; list during its iteration.
@@ -1056,7 +1060,6 @@ failure."
                        (pin->pin-attrib-list *temp-uref
                                              *component-primitive-object)))
                   (update-pin-attribs
-                   *toplevel
                    *temp-uref
                    *component-primitive-object
                    *new-pin-attrib-list))))
@@ -1079,13 +1082,13 @@ failure."
 ;;; - First find and update component attribs.
 ;;; - Then find and update net attribs.
 ;;; - Finally find and update pin attribs.
-(define (update-design *toplevel *page)
+(define (update-design *page)
   ;; First deal with all components on the page.
-  (update-design-components *toplevel *page)
+  (update-design-components *page)
   ;; Next deal with all nets on the page.
-  (update-design-nets *toplevel *page)
+  (update-design-nets *page)
   ;; Finally deal with all pins on the page.
-  (update-design-pins *toplevel *page))
+  (update-design-pins *page))
 
 
 ;;; Extracts attributes from *GTK-SHEET into *TABLE obtaining row
@@ -1206,15 +1209,25 @@ failure."
 ;;; will mark the document as dirty, while it is, in fact, just
 ;;; has been saved.
 (define (update-current-cell-text)
-  (define *entry-text
-    (gtk_sheet_get_entry_text (attrib_get_sheet 0)))
+  (define *entry-text (gtk_sheet_get_entry_text (current-sheet)))
   (set-current-cell-text! *entry-text)
   (g_free *entry-text))
 
 
+;;; The program window.
+(define %window %null-pointer)
+
+(define (set-window! *window)
+  (set! %window *window))
+
+(define (window)
+  %window)
+
+
+
 ;;; Indicate if document is flagged as changed in the title.
 (define (set-title-changed changed?)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
   (define *title (gtk_window_get_title *window-widget))
   (define title
     (if (null-pointer? *title) "" (pointer->string *title)))
@@ -1246,11 +1259,6 @@ failure."
 ;;; first places all data from gtksheet into SHEET_DATA.  Then it
 ;;; loops through all pages and saves them.
 (define (save-sheet)
-  (define *toplevel (attrib_get_toplevel))
-
-  (when (null-pointer? *toplevel)
-    (error "NULL toplevel."))
-
   ;; Extract the attribs from the gtksheet widget cells, and place
   ;; them back into SHEET_DATA.
   (spreadsheet-data->tables)
@@ -1261,9 +1269,10 @@ failure."
      ;; Only traverse pages which are toplevel.
      (when (zero? (lepton_page_get_page_control *page))
        ;; Add all objects from page.
-       (update-design *toplevel *page)))
+       (update-design *page)))
    (glist->list
-    (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel))
+    (lepton_list_get_glist
+     (lepton_toplevel_get_pages (*current-toplevel)))
     identity))
 
   ;; Save all pages in design.
@@ -1348,9 +1357,19 @@ failure."
     'suffix)))
 
 
+;;; The program notebook.
+(define %notebook #f)
+
+(define (set-notebook! *notebook)
+  (set! %notebook *notebook))
+
+(define (notebook)
+  %notebook)
+
+
 ;;; Returns the current page index of the program notebook widget.
 (define (notebook-current-page-id)
-  (gtk_notebook_get_current_page (attrib_get_notebook)))
+  (gtk_notebook_get_current_page (notebook)))
 
 
 (define (export-csv)
@@ -1393,7 +1412,7 @@ failure."
 ;;; unsaved changes before calling quit-program() to quit the
 ;;; program.
 (define (attrib-quit)
-  (define *window (attrib_get_window))
+  (define *window (window))
   ;; Save main window's geometry to the cache config context.
   (save-gtk-window-geometry *window "attrib.window-geometry")
   ;; Deactivate the current cell to trigger "deactivate" signal.
@@ -1843,6 +1862,10 @@ failure."
         (set-sheet-data-changed #t))))
 
 
+(define (current-sheet)
+  (attrib_get_sheet (notebook-current-page-id)))
+
+
 (define (gtksheet-state->symbol state)
   "Transforms GtkSheetState value STATE to Scheme symbol."
   (string->symbol
@@ -1882,7 +1905,7 @@ failure."
 ;;; Runs the Delete attribute dialog.
 (define (delete-attrib)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (unless (null-pointer? *sheet)
     (let ((column (selected-sheet-column *sheet)))
       (when (and column
@@ -1956,7 +1979,7 @@ failure."
 
 (define (set-cells-attribs-visibility visible show color)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define state-bv (make-bytevector (sizeof int) 0))
   (define range-bv (make-bytevector (* 4 (sizeof int)) 0))
 
@@ -2075,7 +2098,7 @@ failure."
 
 ;;; Initialises the toplevel window widgets.
 (define (init-window-widgets)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
   ;; Create main vertical box.  This is a container which
   ;; organizes child widgets into a vertical column.
   (define *main-vbox (schematic_gtk_vbox_new FALSE 1))
@@ -2133,7 +2156,7 @@ failure."
                             (symbol->gtk-position-type 'bottom))
   (gtk_notebook_set_show_tabs *notebook TRUE)
   (gtk_box_pack_start *main-vbox *notebook TRUE TRUE 0)
-  (attrib_set_notebook *notebook)
+  (set-notebook! *notebook)
 
   ;; Status bar.
   (gtk_box_pack_start *main-vbox *statusbar FALSE TRUE 0)
@@ -2165,20 +2188,12 @@ failure."
 
 
 (define (init-window)
-  (define *window-widget (attrib_get_window))
+  (define *window-widget (window))
 
   (g_signal_connect *window-widget
                     (string->pointer "delete_event")
                     *callback-delete-window
                     %null-pointer)
-
-  ;; Init menu functions.
-  (init-callbacks)
-
-  (init-window-widgets)
-
-  ;; Create the array of sheets.
-  (attrib_window_sheets_new)
 
   ;; Restore main window's geometry.
   (restore-gtk-window-geometry *window-widget "attrib.window-geometry"))
@@ -2234,7 +2249,7 @@ failure."
 
 (define (callback-entry-changed *entry *user-data)
   (define current-page-id (notebook-current-page-id))
-  (define *sheet (attrib_get_sheet current-page-id))
+  (define *sheet (current-sheet))
   (define *sheet-entry (gtk_sheet_get_entry *sheet))
   (unless (null-pointer? *sheet-entry)
     (let ((*entry-text (gtk_entry_get_text *entry))
@@ -2250,7 +2265,7 @@ failure."
 ;;; spreadsheet widget used for displaying the data.
 (define (init-gtksheet)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *notebook (attrib_get_notebook))
+  (define *notebook (notebook))
 
   ;; Create three new sheets.
 
@@ -2413,7 +2428,7 @@ failure."
 ;;; Adds all items to the top level window.
 (define (add-items)
   (define *sheet-data (attrib_get_sheet_data))
-  (define *window (attrib_get_window))
+  (define *window (window))
 
   (define *component-table
     (attrib_sheet_data_get_component_table *sheet-data))
@@ -3070,12 +3085,7 @@ Please check your design.")))
   (define *pages
     (lepton_list_get_glist (lepton_toplevel_get_pages *toplevel)))
 
-  (attrib_set_window *window-widget)
-
-  (attrib_set_toplevel *toplevel)
-
-  ;; Initialize GTK window.
-  (init-window)
+  (set-window! *window-widget)
 
   ;; Initialize main sheet data structure.
   (attrib_set_sheet_data *sheet-data)
@@ -3145,6 +3155,17 @@ Please check your design.")))
 
    (glist->list *pages identity))
 
+  ;; Initialize GTK window.
+  (init-window)
+
+  ;; Init menu functions.
+  (init-callbacks)
+
+  (init-window-widgets)
+
+  ;; Create the array of sheets.
+  (attrib_window_sheets_new)
+
   ;; Update windows.
   ;; This updates the top level stuff, and then calls another
   ;; function to update the GtkSheet itself.
@@ -3209,7 +3230,7 @@ Please check your design.")))
                            readable-files)))
             (if (null? files)
                 (exit 0)
-                (with-toplevel (make-toplevel)
+                (with-toplevel %toplevel
                  (lambda ()
                    (for-each process-gafrc* files)
                    ;; Open all files.
@@ -3217,8 +3238,8 @@ Please check your design.")))
                    ;; Run attribute editor.
                    (exit (if %m4-use-gtk3
                              (attrib_run (procedure->pointer void activate '(* *))
-                                         (toplevel->pointer (current-toplevel)))
-                             (let ((*toplevel (toplevel->pointer (current-toplevel))))
+                                         (*current-toplevel))
+                             (let ((*toplevel (*current-toplevel)))
                                (activate %null-pointer *toplevel)
                                (attrib_run %null-pointer *toplevel)))))))))
 

@@ -56,46 +56,6 @@
 #include "../include/globals.h"
 
 GtkSheet **sheets;
-GtkWidget *label;
-
-
-
-
-/*! \var GtkWidget *notebook
- *
- * The main window notebook.
- */
-GtkWidget *notebook;
-
-
-/*! \brief Get the main window notebook.
- *
- *  \par Function Description
- *
- *  Returns the main window notebook.
- *
- *  \return The notebook.
- */
-GtkWidget*
-attrib_get_notebook ()
-{
-  return notebook;
-}
-
-
-/*! \brief Set the main window notebook.
- *
- *  \par Function Description
- *
- *  Sets the main window notebook widget to the given value.
- *
- *  \param [in] widget The new notebook widget.
- */
-void
-attrib_set_notebook (GtkWidget* widget)
-{
-  notebook = widget;
-}
 
 
 /*! \var SHEET_DATA *sheet_head
@@ -181,83 +141,6 @@ int
 attrib_get_sheets_number ()
 {
   return NUM_SHEETS;
-}
-
-
-/*! \var LeptonToplevel *toplevel
- *
- * The project and UI toplevel structure defining their data and
- * settings.
- */
-static LeptonToplevel *toplevel = NULL;
-
-
-/*! \brief Get the project toplevel.
- *
- *  \par Function Description
- *
- *  Returns the project toplevel instance embracing all data and
- *  settings of the project and program UI.
- *
- *  \return The \c LeptonToplevel instance.
- */
-LeptonToplevel*
-attrib_get_toplevel ()
-{
-  return toplevel;
-}
-
-/*! \brief Set the project toplevel.
- *
- *  \par Function Description
- *
- *  Sets the project toplevel instance to the given value.  The
- *  toplevel structure embraces all data and settings of the
- *  project and program UI.
- *
- *  \param [in] val The new \c LeptonToplevel instance value.
- */
-void
-attrib_set_toplevel (LeptonToplevel *val)
-{
-  toplevel = val;
-}
-
-
-/*! \var GtkWidget *window
- *
- * The main window widget.
- */
-GtkWidget *window;
-
-
-/*! \brief Get the main window widget.
- *
- *  \par Function Description
- *
- *  Returns the main window widget.
- *
- *  \return The main window widget.
- */
-GtkWidget*
-attrib_get_window ()
-{
-  return window;
-}
-
-/*! \brief Set the main window widget.
- *
- *  \par Function Description
- *
- *  Sets the main window widget global variable to the given
- *  value.
- *
- *  \param [in] window_widget The window widget.
- */
-void
-attrib_set_window (GtkWidget *window_widget)
-{
-  window = window_widget;
 }
 
 

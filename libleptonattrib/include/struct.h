@@ -57,8 +57,6 @@
  * ----------------------------------------------------------------- */
 typedef struct st_sheet_data SHEET_DATA;
 typedef struct st_table TABLE;
-typedef struct st_pin_list PIN_LIST;
-typedef struct st_main_window MAIN_WINDOW;
 
 
 /* -------------------------------------------------------------------- */
@@ -96,28 +94,6 @@ struct st_table {
   gint visibility;
   gint show_name_value;
 
-};
-
-/* -------------------------------------------------------------------- */
-/*! \brief A list of pins
- *
- * PIN_LIST is a special struct used for keeping track of pins.  Since
- * the master_pin_list must keep track of both refdes and pin, we need a
- * special struct for pins.  Later processing will for a STRING_LIST
- * of refdes:pinnumber pairs for insertion in the spreadsheet.
- *
- * \todo Is this still in use? Consider replacing with a GList-based
- *       implementation.
- */
-/* -------------------------------------------------------------------- */
-struct st_pin_list {
-  gchar *refdes;       /*!< holds refdes string */
-  gint pinnumber;
-  gchar *pinlabel;     /*!< holds pin label string */
-  int pos;             /*!< pos on spreadsheet */
-  int length;          /*!< number of items in list */
-  PIN_LIST *prev;
-  PIN_LIST *next;
 };
 
 #endif // #ifndef SHEET_DATA_STRUCT

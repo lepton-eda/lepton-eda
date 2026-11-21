@@ -6,12 +6,6 @@ G_BEGIN_DECLS
 
 /* attrib.c */
 
-GtkWidget*
-attrib_get_notebook ();
-
-void
-attrib_set_notebook (GtkWidget* widget);
-
 SHEET_DATA*
 attrib_get_sheet_data ();
 
@@ -26,18 +20,6 @@ attrib_set_sheet (int i,
                   GtkSheet* sheet);
 int
 attrib_get_sheets_number ();
-
-LeptonToplevel*
-attrib_get_toplevel ();
-
-void
-attrib_set_toplevel (LeptonToplevel *toplevel);
-
-GtkWidget*
-attrib_get_window ();
-
-void
-attrib_set_window (GtkWidget* window_widget);
 
 const char*
 attrib_gtksheet_state_to_string (int val);
