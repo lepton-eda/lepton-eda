@@ -1690,10 +1690,11 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
-  compselect->attrframe = gtk_frame_new (_("Attributes"));
+  GtkWidget *attrframe = gtk_frame_new (_("Attributes"));
+  schematic_component_chooser_set_attrframe (compselect, attrframe);
   attributes = create_attributes_treeview (compselect);
-  gtk_paned_pack2 (GTK_PANED (vpaned), compselect->attrframe, FALSE, FALSE);
-  gtk_container_add (GTK_CONTAINER (compselect->attrframe), attributes);
+  gtk_paned_pack2 (GTK_PANED (vpaned), attrframe, FALSE, FALSE);
+  gtk_container_add (GTK_CONTAINER (attrframe), attributes);
 
   gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
 
