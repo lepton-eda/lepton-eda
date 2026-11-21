@@ -1647,7 +1647,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 #endif
   /* set preview of compselect */
-  compselect->preview = SCHEMATIC_PREVIEW (preview);
+  schematic_component_chooser_set_preview (chooser, preview);
   g_object_set (GTK_WIDGET (preview),
                 "width-request",  160,
                 "height-request", 120,
