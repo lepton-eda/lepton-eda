@@ -101,6 +101,44 @@ schematic_component_chooser_set_attrframe (Compselect *chooser,
 }
 
 
+/*! \brief Get the Behaviour combo box of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Behaviour combo box of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The Behaviour combo box of the component chooser.
+ */
+GtkComboBox*
+schematic_component_chooser_get_combobox_behaviors (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->combobox_behaviors;
+}
+
+
+/*! \brief Set the Behaviour combo box of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Behaviour combo box of the component chooser to the
+ *  given value.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] combobox The Behaviour combo box instance.
+ */
+void
+schematic_component_chooser_set_combobox_behaviors (Compselect *chooser,
+                                                    GtkComboBox *combobox)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->combobox_behaviors = combobox;
+}
+
+
 /*! \brief Get the horizontal paned widget of a component chooser.
  *
  *  \par Function Description

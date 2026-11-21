@@ -109,6 +109,12 @@ schematic_component_chooser_get_attrframe (Compselect *chooser);
 void
 schematic_component_chooser_set_attrframe (Compselect *chooser,
                                            GtkWidget *widget);
+GtkComboBox*
+schematic_component_chooser_get_combobox_behaviors (Compselect *chooser);
+
+void
+schematic_component_chooser_set_combobox_behaviors (Compselect *chooser,
+                                                    GtkComboBox *combobox);
 GtkWidget*
 schematic_component_chooser_get_hpaned (Compselect *chooser);
 
