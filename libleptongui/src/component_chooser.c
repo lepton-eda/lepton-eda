@@ -1167,8 +1167,8 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 }
 
 /*! \brief Creates the treeview for the "In Use" view. */
-static GtkWidget*
-create_inuse_treeview (Compselect *compselect)
+GtkWidget*
+schematic_component_chooser_create_inuse_treeview (Compselect *compselect)
 {
   GtkWidget *scrolled_win, *treeview, *vbox, *hbox, *button;
   GtkTreeModel *model;
@@ -1693,7 +1693,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
   schematic_component_chooser_set_notebook (compselect,
                                             GTK_NOTEBOOK (notebook));
 
-  inuseview = create_inuse_treeview (compselect);
+  inuseview = schematic_component_chooser_create_inuse_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
                             gtk_label_new_with_mnemonic (_("In Us_e")));
 
