@@ -139,6 +139,9 @@ schematic_component_chooser_get_vpaned (Compselect *chooser);
 void
 schematic_component_chooser_set_vpaned (Compselect *chooser,
                                         GtkWidget *vpaned);
+void
+schematic_component_chooser_callback_behavior_changed (GtkComboBox *widget,
+                                                       gpointer user_data);
 GtkWidget*
 schematic_component_chooser_create_attributes_treeview (Compselect *compselect);
 

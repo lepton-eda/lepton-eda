@@ -927,9 +927,9 @@ compselect_callback_filter_button_clicked (GtkButton *button,
  *  \param [in] widget The \c GtkComboBox widget.
  *  \param [in] user_data  The component selection dialog.
  */
-static void
-compselect_callback_behavior_changed (GtkComboBox *widget,
-                                      gpointer user_data)
+void
+schematic_component_chooser_callback_behavior_changed (GtkComboBox *widget,
+                                                       gpointer user_data)
 {
   Compselect *compselect = (Compselect*)user_data;
 
@@ -1746,7 +1746,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
   combobox = schematic_component_chooser_create_behaviors_combo_box ();
   g_signal_connect (combobox,
                     "changed",
-                    G_CALLBACK (compselect_callback_behavior_changed),
+                    G_CALLBACK (schematic_component_chooser_callback_behavior_changed),
                     compselect);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (compselect))),
                       combobox, FALSE, FALSE, 10);
