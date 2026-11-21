@@ -143,6 +143,9 @@ GtkWidget*
 schematic_component_chooser_create_attributes_treeview (Compselect *compselect);
 
 GtkWidget*
+schematic_component_chooser_create_behaviors_combo_box (void);
+
+GtkWidget*
 schematic_component_chooser_create_inuse_treeview (Compselect *compselect);
 
 GtkWidget *

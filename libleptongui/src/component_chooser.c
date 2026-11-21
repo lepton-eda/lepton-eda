@@ -1548,8 +1548,8 @@ schematic_component_chooser_create_attributes_treeview (Compselect *compselect)
  *  This function creates and returns a <B>GtkComboBox</B> for
  *  selecting the behavior when a component is added to the sheet.
  */
-static GtkWidget*
-create_behaviors_combo_box (void)
+GtkWidget*
+schematic_component_chooser_create_behaviors_combo_box (void)
 {
   GtkWidget *combobox;
 
@@ -1743,7 +1743,7 @@ schematic_component_chooser_setup (GtkWidget *chooser,
 
 
   /* -- behavior combo box -- */
-  combobox = create_behaviors_combo_box ();
+  combobox = schematic_component_chooser_create_behaviors_combo_box ();
   g_signal_connect (combobox,
                     "changed",
                     G_CALLBACK (compselect_callback_behavior_changed),
