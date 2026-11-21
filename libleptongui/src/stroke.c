@@ -29,7 +29,7 @@
  *
  *  \param [in] w_current The SchematicWindow object.
  *  \param [in] x The X coord of the point.
- *  \param [in] Y The X coord of the point.
+ *  \param [in] y The Y coord of the point.
  */
 void
 schematic_stroke_draw_point (SchematicWindow *w_current,
