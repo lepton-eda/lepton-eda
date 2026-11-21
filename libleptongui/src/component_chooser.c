@@ -63,6 +63,44 @@ G_DEFINE_TYPE (Compselect,
                SCHEMATIC_TYPE_DIALOG);
 
 
+/*! \brief Get the Attributes frame widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Attributes frame widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The Attributes frame widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_attrframe (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->attrframe;
+}
+
+
+/*! \brief Set the Attributes frame widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Attributes frame widget of the component chooser to
+ *  \p widget.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] widget The Attributes frame widget.
+ */
+void
+schematic_component_chooser_set_attrframe (Compselect *chooser,
+                                           GtkWidget *widget)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->attrframe = widget;
+}
+
+
 /*! \brief Get the horizontal paned widget of a component chooser.
  *
  *  \par Function Description

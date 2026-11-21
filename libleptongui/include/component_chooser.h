@@ -104,6 +104,12 @@ GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current);
 
 GtkWidget*
+schematic_component_chooser_get_attrframe (Compselect *chooser);
+
+void
+schematic_component_chooser_set_attrframe (Compselect *chooser,
+                                           GtkWidget *widget);
+GtkWidget*
 schematic_component_chooser_get_hpaned (Compselect *chooser);
 
 void
