@@ -1760,14 +1760,6 @@ schematic_component_chooser_setup (GtkWidget *chooser,
                           _("_Close"), GTK_RESPONSE_CLOSE,
                           _("_OK"), COMPSELECT_RESPONSE_HIDE,
                           NULL);
-
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (compselect),
-                                          COMPSELECT_RESPONSE_HIDE,
-                                          GTK_RESPONSE_CLOSE,
-                                          -1);
-#endif
 }
 
 
