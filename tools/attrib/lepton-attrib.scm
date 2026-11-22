@@ -63,7 +63,6 @@
 (define SHOW_VALUE 1)
 (define SHOW_NAME 2)
 
-(define LEAVE_VISIBILITY_ALONE -1)
 (define INVISIBLE 0)
 (define VISIBLE 1)
 
@@ -346,8 +345,8 @@ failure."
    (else (error "Invalid text name/value visibility."))))
 
 
-(define (visibility->symbol visible?)
-  (if (= visible? VISIBLE) #t #f))
+(define (int->visibility visible?)
+  (= visible? VISIBLE))
 
 
 (define (str-attrib-name *name-value)
@@ -389,7 +388,7 @@ failure."
                         0
                         name-value-pair
                         DEFAULT_TEXT_SIZE
-                        (visibility->symbol visibility)
+                        (int->visibility visibility)
                         (show-name-value->symbol show-name-value))))
         (page-append! (object-page object) attrib)
         ;; Attach the attribute to the object.
@@ -399,95 +398,59 @@ failure."
       (error "Trying to add attrib to non-component or non-net.")))
 
 
-;;; Searches for the instance of *NEW_ATTRIB_NAME on *OBJECT, and
-;;; replaces its value with the *NEW_ATTRIB_VALUE.  The arguments
-;;; VISIBILITY and SHOW-NAME-VALUE set the corresponding
-;;; properties of the found attribute.
-(define (replace-attrib *object
-                        *new-attrib-name
-                        *new-attrib-value
-                        visibility
-                        show-name-value)
-  (let loop ((*attrib-ls
-              (glist->list (lepton_object_get_attribs *object)
-                           identity)))
-    (if (null? *attrib-ls)
-        (begin
-          ;; If we get here, it's because we have failed to find
-          ;; the attrib on the component.  This is an error
-          ;; condition.
-          (format (current-error-port) "replace-attrib: ")
-          (format (current-error-port)
-                  (G_ "Failed to find the attrib ~S on the component.\n")
-                  (pointer->string *new-attrib-name))
-          (exit -1))
-        (let ((*attrib (car *attrib-ls)))
-          (if (and (true? (lepton_object_is_text *attrib))
-                   (not (null-pointer? (lepton_object_get_text *attrib))))
-              ;; Found an attribute.
-              (let* ((*old-attrib-text
-                      (g_strdup (lepton_text_object_get_string *attrib)))
-                     (old-attrib-name (str-attrib-name *old-attrib-text)))
-                (if (and old-attrib-name
-                         (string= old-attrib-name
-                                  (pointer->string *new-attrib-name)))
-                    ;; Create attrib=value text string.
-                    (let ((*new-attrib-text
-                           (string->pointer
-                            (string-append (pointer->string *new-attrib-name)
-                                           "="
-                                           (pointer->string *new-attrib-value)))))
-                      (lepton_text_object_set_string *attrib *new-attrib-text)
-                      (unless (= visibility LEAVE_VISIBILITY_ALONE)
-                        (lepton_text_object_set_visibility *attrib visibility))
-                      (unless (= show-name-value LEAVE_NAME_VALUE_ALONE)
-                        (lepton_text_object_set_show *attrib show-name-value))
-                      ;; We are done -- leave.
-                      (g_free *old-attrib-text))
-                    (begin
-                      (g_free *old-attrib-text)
-                      (loop (cdr *attrib-ls)))))
-              (loop (cdr *attrib-ls)))))))
+(define (error-attrib-not-found name)
+  (error "Failed to find the attrib ~S on the component." name))
 
 
-;; Remove an attribute with *ATTRIB-NAME from *OBJECT.
-(define (remove-attrib *object *attrib-name)
-  (let loop ((*attrib-ls
-              (glist->list (lepton_object_get_attribs *object)
-                           identity)))
-    (if (null? *attrib-ls)
-        (begin
-          ;; If we get here, it's because we have failed to find
-          ;; the attrib on the component.  This is an error
-          ;; condition.
-          (format (current-error-port) "remove-attrib(): ")
-          (format (current-error-port)
-                  (G_ "Failed to find the attrib ~S on the component.\n")
-                  (pointer->string *attrib-name))
-          (exit -1))
-        (let ((*attrib (car *attrib-ls)))
-          (if (and (true? (lepton_object_is_text *attrib))
-                   (not (null-pointer? (lepton_object_get_text *attrib))))
-              ;; Found an attribute.
-              (let* ((*old-attrib-text
-                      (g_strdup (lepton_text_object_get_string *attrib)))
-                     (old-attrib-name (str-attrib-name *old-attrib-text)))
-                (if (and old-attrib-name
-                         (string= old-attrib-name
-                                  (pointer->string *attrib-name)))
-                    ;; We've found the attrib.  Delete it and then
-                    ;; return.
-                    (let ((*active-page
-                           (lepton_toplevel_get_page_current (*current-toplevel))))
-                      (lepton_object_delete *attrib)
-                      (lepton_page_set_changed *active-page 1)
-                      ;; We are done -- leave.
-                      (g_free *old-attrib-text))
-                    (begin
-                      (g_free *old-attrib-text)
-                      (loop (cdr *attrib-ls)))))
+;;; Searches for the instance of NAME on OBJECT, and replaces its
+;;; value with VALUE.  The optional arguments VISIBILITY and SHOW
+;;; set the corresponding properties of the found attribute.
+(define* (replace-attrib object
+                         name
+                         value
+                         #:key
+                         (visibility 'same)
+                         (show 'same))
+  (define (name-matches? attrib)
+    (string= (attrib-name attrib) name))
 
-              (loop (cdr *attrib-ls)))))))
+  (define (update-attrib! attrib)
+    (set-attrib-value! attrib value)
+    (unless (eq? visibility 'same)
+      (set-text-visibility! attrib visibility))
+    (unless (eq? show 'same)
+      (set-text-attribute-mode!
+       attrib
+       (show-name-value->symbol show))))
+
+  (define attrib (find name-matches? (object-attribs object)))
+
+  (if attrib
+      (update-attrib! attrib)
+      ;; Failed to find the attrib on the component.  This is an
+      ;; error condition.
+      (error-attrib-not-found name)))
+
+
+;; Remove an attribute with NAME from OBJECT.
+(define (remove-attrib object name)
+  (define (name-matches? attrib)
+    (string= (attrib-name attrib) name))
+
+  (define (remove-attrib! attrib)
+    (let ((page (object-page attrib))
+          (component (attrib-attachment attrib)))
+      (detach-attribs! component attrib)
+      (page-remove! page attrib)))
+
+  (define attrib (find name-matches? (object-attribs object)))
+
+  (if attrib
+      ;; Found the attrib.  Delete it and then return.
+      (remove-attrib! attrib)
+      ;; Failed to find the attrib on the component.  This is an
+      ;; error condition.
+      (error-attrib-not-found name)))
 
 
 ;;; Returns the index of the string *STR in the list *LS.
@@ -786,18 +749,18 @@ failure."
                      new-attrib-value
                      (not (string-null? new-attrib-value)))
                 ;; simply write new attrib into place of old one.
-                (replace-attrib *object
-                                *new-attrib-name
-                                (string->pointer new-attrib-value)
-                                visibility
-                                show-name-value)
+                (replace-attrib (pointer->object *object)
+                                new-attrib-name
+                                new-attrib-value
+                                #:visibility (int->visibility visibility)
+                                #:show show-name-value)
 
                 ;; Four cases to consider: Case 2.
                 (if (and (not (null-pointer? *old-attrib-value))
                          (not new-attrib-value))
                     ;; Remove attrib from component.
-                    (remove-attrib *object
-                                   (string->pointer old-attrib-name))
+                    (remove-attrib (pointer->object *object)
+                                   old-attrib-name)
                     ;; Four cases to consider: Case 3.
                     (if (and (null-pointer? *old-attrib-value)
                              new-attrib-value
@@ -1040,18 +1003,16 @@ failure."
                  new-attrib-value
                  (not (string-null? new-attrib-value)))
             ;; Simply write new attrib into place of old one.
-            (replace-attrib *pin
-                            (string->pointer new-attrib-name)
-                            (string->pointer new-attrib-value)
-                            LEAVE_VISIBILITY_ALONE
-                            LEAVE_NAME_VALUE_ALONE)
+            (replace-attrib (pointer->object *pin)
+                            new-attrib-name
+                            new-attrib-value)
             ;; Four cases to consider: Case 2: old attrib exists, new one
             ;; doesn't.
             (if (and (not (null-pointer? *old-attrib-value))
                      (not new-attrib-value))
                 ;; Remove attrib from pin.
-                (remove-attrib *pin
-                               (string->pointer new-attrib-name))
+                (remove-attrib (pointer->object *pin)
+                               new-attrib-name)
                 ;; Four cases to consider: Case 3: No old attrib, new one
                 ;; exists.
                 (if (and (null-pointer? *old-attrib-value)

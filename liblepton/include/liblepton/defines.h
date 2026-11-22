@@ -59,9 +59,6 @@
    structure. */
 #define INVISIBLE               0
 #define VISIBLE                 1
-/* This value is used in lepton-attrib to omit processing of the
-   field. */
-#define LEAVE_VISIBILITY_ALONE  -1
 
 /* various thicknesses (in mils) */
 #define LINE_WIDTH       10
