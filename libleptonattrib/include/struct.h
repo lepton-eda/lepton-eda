@@ -61,8 +61,6 @@ typedef struct st_table TABLE;
  */
 /* -------------------------------------------------------------------- */
 struct st_table {
-  int row;                       /*!< location on spreadsheet */
-  int col;                       /*!< location on spreadsheet */
   gchar *row_name;               /*!< comp, net, or refdes:pin name */
   gchar *col_name;               /*!< attrib name */
   gchar *attrib_value;           /*!< attrib value */

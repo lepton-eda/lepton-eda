@@ -218,6 +218,79 @@
   (set! %sheet-changed state))
 
 
+(define (make-row-list row-count)
+  (attrib_table_new row-count))
+
+(define (table-init-attrib-value *table i j)
+  (attrib_table_init_attrib_value *table i j))
+
+(define (table-init-row-name *table i j)
+  (attrib_table_init_row_name *table i j))
+
+(define (table-init-column-name *table i j)
+  (attrib_table_init_column_name *table i j))
+
+(define (make-table-row column-count)
+  (attrib_table_row_new column-count))
+
+(define (table-row-contents *table row)
+  (attrib_table_get_row_contents *table row))
+
+(define (set-table-row-contents! *table row *contents)
+  (attrib_table_set_row_contents *table row *contents))
+
+(define (increase-table-row *row column-count)
+  (attrib_table_realloc_row *row column-count))
+
+(define (cell-attrib-value *table row column)
+  (attrib_table_get_attrib_value *table row column))
+
+(define (set-cell-attrib-value! *table row column *value)
+  (attrib_table_set_attrib_value *table row column *value))
+
+(define (cell-column-name *table row column)
+  (attrib_table_get_column_name *table row column))
+
+(define (set-cell-column-name! *table row column *value)
+  (attrib_table_set_column_name *table row column *value))
+
+(define (cell-row-name *table row column)
+  (attrib_table_get_row_name *table row column))
+
+(define (set-cell-row-name! *table row column *value)
+  (attrib_table_set_row_name *table row column *value))
+
+(define (cell-visibility *table row column)
+  (attrib_table_get_visibility *table row column))
+
+(define (set-cell-visibility! *table row column visibility)
+  (attrib_table_set_visibility *table row column visibility))
+
+(define (cell-show *table row column)
+  (attrib_table_get_show_name_value *table row column))
+
+(define (set-cell-show! *table row column show)
+  (attrib_table_set_show_name_value *table row column show))
+
+
+(define* (set-table-cell-data! *table
+                               row
+                               column
+                               *attrib-value
+                               *row-title
+                               *column-title
+                               #:key
+                               (visibility 'same)
+                               (show 'same))
+  (set-cell-attrib-value! *table row column *attrib-value)
+  (set-cell-row-name! *table row column *row-title)
+  (set-cell-column-name! *table row column *column-title)
+  (unless (eq? visibility 'same)
+    (set-cell-visibility! *table row column visibility))
+  (unless (eq? show 'same)
+    (set-cell-show! *table row column show)))
+
+
 ;;; 2d array of component attribs.
 (define %component-table %null-pointer)
 
@@ -768,17 +841,11 @@ failure."
                  (visibility
                   (if (not new-attrib-value)
                       0
-                      (attrib_table_get_visibility
-                       (component-table)
-                       row
-                       column)))
+                      (cell-visibility (component-table) row column)))
                  (show-name-value
                   (if (not new-attrib-value)
                       0
-                      (attrib_table_get_show_name_value
-                       (component-table)
-                       row
-                       column))))
+                      (cell-show (component-table) row column))))
             (g_free *refdes)
 
             ;; Four cases to consider: Case 1.
@@ -846,14 +913,14 @@ failure."
         (if (>= column attribs-number)
             *out-ls
             (let ((*attrib-value
-                   (attrib_table_get_attrib_value *table row column)))
+                   (cell-attrib-value *table row column)))
               ;; Pull attrib from table.  If non-null add it to
               ;; the pair list.
               (loop (1+ column)
                     (if (null-pointer? *attrib-value)
                         *out-ls
                         (let* ((*attrib-name
-                                (attrib_table_get_column_name *table row column))
+                                (cell-column-name *table row column))
                                (*name-value-pair
                                 (string->pointer
                                  (string-append (pointer->string *attrib-name)
@@ -976,8 +1043,7 @@ failure."
                           (pointer->string
                            (glist-data *local-attrib-list)))
                          (*table-value
-                          (attrib_table_get_attrib_value
-                           (pin-table) row i))
+                          (cell-attrib-value (pin-table) row i))
                          (new-attrib-value
                           (if (not (null-pointer? *table-value))
                               (pointer->string *table-value)
@@ -1166,12 +1232,12 @@ failure."
                   ;; Get value of attrib in cell.
                   (*attrib-value
                    (gtk_sheet_cell_get_text *gtk-sheet row column)))
-              ;; First handle attrib value in cell.
-              (attrib_table_set_attrib_value *table row column *attrib-value)
-              ;; Next handle name of row (also held in table cell).
-              (attrib_table_set_row_name *table row column *row-title)
-              ;; Finally handle name of column.
-              (attrib_table_set_column_name *table row column *column-title)
+              (set-table-cell-data! *table
+                                    row
+                                    column
+                                    *attrib-value
+                                    *row-title
+                                    *column-title)
 
               ;; Get next column list item and then iterate.
               (loopc (1+ column) (glist-next *column-list-item)))))
@@ -1362,8 +1428,7 @@ failure."
      (id->string-list-data (sheet-component-list) id)))
 
   (define (ids->attrib-value i j)
-    (define *val
-      (attrib_table_get_attrib_value *component-table i j))
+    (define *val (cell-attrib-value *component-table i j))
     (if (null-pointer? *val)
         ""
         ;; Found a string.  Make a copy of the text, escaping any
@@ -1667,26 +1732,22 @@ failure."
 ;;; Returns a new table of the size ROW-COUNT x COLUMN-COUNT.
 (define (make-table row-count column-count)
   ;; Here I am trying to create a 2 dimensional array of structs.
-  (define *table (attrib_table_new row-count))
+  (define *table (make-row-list row-count))
 
   (do ((i 0 (1+ i)))
       ((>= i row-count))
-    (attrib_table_set_row_contents *table
-                                   i
-                                   (attrib_table_row_new column-count)))
+    (set-table-row-contents! *table i (make-table-row column-count)))
 
   ;; Now pre-load the table with NULLs
   (do ((i 0 (1+ i)))
       ((>= i row-count))
     (do ((j 0 (1+ j)))
         ((>= j column-count))
-      (attrib_table_init_attrib_value *table i j)
-      (attrib_table_init_row_name *table i j)
-      (attrib_table_init_column_name *table i j)
-      (attrib_table_set_row *table i j i)
-      (attrib_table_set_column *table i j j)
-      (attrib_table_set_visibility *table i j VISIBLE)
-      (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
+      (table-init-attrib-value *table i j)
+      (table-init-row-name *table i j)
+      (table-init-column-name *table i j)
+      (set-cell-visibility! *table i j VISIBLE)
+      (set-cell-show! *table i j SHOW_VALUE)))
 
   *table)
 
@@ -1709,35 +1770,14 @@ failure."
     (do ((k 0 (1+ k)))
         ((>= k (1- column-count)))
       (let ((K (if (>= k column) (1+ k) k)))
-
-        (attrib_table_set_row *destination j k j)
-        (attrib_table_set_column *destination j k k)
-        (attrib_table_set_visibility
-         *destination
-         j
-         k
-         (attrib_table_get_visibility *table j K))
-        (attrib_table_set_show_name_value
-         *destination
-         j
-         k
-         (attrib_table_get_show_name_value *table j K))
-
-        (attrib_table_set_row_name
-         *destination
-         j
-         k
-         (g_strdup (attrib_table_get_row_name *table j K)))
-        (attrib_table_set_column_name
-         *destination
-         j
-         k
-         (g_strdup (attrib_table_get_column_name *table j K)))
-        (attrib_table_set_attrib_value
-         *destination
-         j
-         k
-         (g_strdup (attrib_table_get_attrib_value *table j K))))))
+        (set-table-cell-data! *destination
+                              j
+                              k
+                              (cell-attrib-value *table j K)
+                              (cell-row-name *table j K)
+                              (cell-column-name *table j K)
+                              #:visibility (cell-visibility *table j K)
+                              #:show (cell-show *table j K)))))
 
   *destination)
 
@@ -1750,13 +1790,13 @@ failure."
         ((>= i row-count))
       (do ((j 0 (1+ j)))
           ((>= j column-count))
-        (g_free (attrib_table_get_attrib_value *table i j))
-        (g_free (attrib_table_get_row_name *table i j))
-        (g_free (attrib_table_get_column_name *table i j))))
+        (g_free (cell-attrib-value *table i j))
+        (g_free (cell-row-name *table i j))
+        (g_free (cell-column-name *table i j))))
 
     (do ((i 0 (1+ i)))
         ((>= i row-count))
-      (g_free (attrib_table_get_row_contents *table i)))
+      (g_free (table-row-contents *table i)))
 
     (g_free *table)))
 
@@ -1766,13 +1806,13 @@ failure."
 (define (resize-table *table row-count old-column-count new-column-count)
   (do ((i 0 (1+ i)))
       ((>= i row-count))
-    (attrib_table_set_row_contents
+    (set-table-row-contents!
      *table
      i
-     (attrib_table_realloc_row (attrib_table_get_row_contents *table i)
-                               new-column-count))
+     (increase-table-row (table-row-contents *table i)
+                         new-column-count))
     ;; Die if failed to realloc new memory.
-    (when (null-pointer? (attrib_table_get_row_contents *table i))
+    (when (null-pointer? (table-row-contents *table i))
       (exit -1)))
 
   ;; Init new columns.
@@ -1780,13 +1820,11 @@ failure."
       ((>= i row-count))
     (do ((j old-column-count (1+ j)))
         ((>= j new-column-count))
-      (attrib_table_init_attrib_value *table i j)
-      (attrib_table_init_row_name *table i j)
-      (attrib_table_init_column_name *table i j)
-      (attrib_table_set_row *table i j i)
-      (attrib_table_set_column *table i j j)
-      (attrib_table_set_visibility *table i j VISIBLE)
-      (attrib_table_set_show_name_value *table i j SHOW_VALUE)))
+      (table-init-attrib-value *table i j)
+      (table-init-row-name *table i j)
+      (table-init-column-name *table i j)
+      (set-cell-visibility! *table i j VISIBLE)
+      (set-cell-show! *table i j SHOW_VALUE)))
 
   *table)
 
@@ -1986,12 +2024,12 @@ failure."
              (not (= row -1))
              (not (= column -1)))
     ;; Question:  how to sanity check (row, column) selection?
-    (attrib_table_set_visibility *table row column visible)
+    (set-cell-visibility! *table row column visible)
     ;; Cell has been updated.
     (set-sheet-data-changed #t)
 
     (unless (= show LEAVE_NAME_VALUE_ALONE)
-      (attrib_table_set_show_name_value *table row column show)
+      (set-cell-show! *table row column show)
       ;; Cell has been updated.
       (set-sheet-data-changed #t))))
 
@@ -2541,12 +2579,9 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text
-               (attrib_table_get_attrib_value *component-table i j))
-              (visibility
-               (attrib_table_get_visibility *component-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *component-table i j)))
+        (let ((*text (cell-attrib-value *component-table i j))
+              (visibility (cell-visibility *component-table i j))
+              (show-name-value (cell-show *component-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (component-sheet)
@@ -2563,11 +2598,9 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text (attrib_table_get_attrib_value *net-table i j))
-              (visibility
-               (attrib_table_get_visibility *net-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *net-table i j)))
+        (let ((*text (cell-attrib-value *net-table i j))
+              (visibility (cell-visibility *net-table i j))
+              (show-name-value (cell-show *net-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (net-sheet)
@@ -2584,11 +2617,9 @@ Please check your design.")))
    (lambda (i)
      (for-each
       (lambda (j)
-        (let ((*text (attrib_table_get_attrib_value *pin-table i j))
-              (visibility
-               (attrib_table_get_visibility *pin-table i j))
-              (show-name-value
-               (attrib_table_get_show_name_value *pin-table i j)))
+        (let ((*text (cell-attrib-value *pin-table i j))
+              (visibility (cell-visibility *pin-table i j))
+              (show-name-value (cell-show *pin-table i j)))
           (unless (null-pointer? *text)
             ;; NULL = no entry.
             (add-cell-item (pin-sheet)
@@ -2863,39 +2894,16 @@ Please check your design.")))
                                     "objects->component-table(): ")
                             (format (current-error-port)
                                     (G_ "We didn't find either row or column in the lists!\n")))
-                          (begin
-                            ;; Is there a compelling reason for me
-                            ;; to put this into a separate function?
-                            (attrib_table_set_row *component-table
-                                                  row
-                                                  column
-                                                  row)
-                            (attrib_table_set_column *component-table
-                                                     row
-                                                     column
-                                                     column)
-                            (attrib_table_set_row_name *component-table
-                                                       row
-                                                       column
-                                                       *temp-refdes)
-                            (attrib_table_set_column_name *component-table
-                                                          row
-                                                          column
-                                                          (string->pointer name))
-                            (attrib_table_set_attrib_value *component-table
-                                                           row
-                                                           column
-                                                           (if attrib-value
-                                                               (string->pointer attrib-value)
-                                                               %null-pointer))
-                            (attrib_table_set_visibility *component-table
-                                                         row
-                                                         column
-                                                         old-visibility)
-                            (attrib_table_set_show_name_value *component-table
-                                                              row
-                                                              column
-                                                              old-show-name-value)))))
+                          (set-table-cell-data! *component-table
+                                                row
+                                                column
+                                                (if attrib-value
+                                                    (string->pointer attrib-value)
+                                                    %null-pointer)
+                                                *temp-refdes
+                                                (string->pointer name)
+                                                #:visibility old-visibility
+                                                #:show old-show-name-value))))
                   (g_free *attrib-text))))
             (glist->list (lepton_object_get_attribs *object) identity))
            (g_free *temp-refdes)))))
@@ -2933,35 +2941,21 @@ Please check your design.")))
                 ;; Don't include "netname".
                 (when (and name
                            (not (string= name "netname")))
+                  ;; Get row and column where to put this attrib.
                   (let ((row
                          (string-list-id (sheet-net-list)
                                          *temp-netname))
                         (column
                          (string-list-id (sheet-net-attrib-list)
                                          (string->pointer name))))
-                    ;; Get row and column where to put this attrib.
-                    (attrib_table_set_row *net-table
+                    (set-table-cell-data! *net-table
                                           row
                                           column
-                                          row)
-                    (attrib_table_set_column *net-table
-                                             row
-                                             column
-                                             column)
-                    (attrib_table_set_row_name *net-table
-                                               row
-                                               column
-                                               *temp-netname)
-                    (attrib_table_set_column_name *net-table
-                                                  row
-                                                  column
-                                                  (string->pointer name))
-                    (attrib_table_set_attrib_value *net-table
-                                                   row
-                                                   column
-                                                   (if attrib-value
-                                                       (string->pointer attrib-value)
-                                                       %null-pointer))))
+                                          (if attrib-value
+                                              (string->pointer attrib-value)
+                                              %null-pointer)
+                                          *temp-netname
+                                          (string->pointer name))))
                 (g_free *attrib-text))))
           (glist->list (lepton_object_get_attribs *object) identity))
          (g_free *temp-netname))))
@@ -3036,29 +3030,15 @@ Please check your design.")))
                                            "objects->pin-table(): ")
                                    (format (current-error-port)
                                            (G_ "We didn't find either row or column in the lists!\n")))
-                                 (begin
-                                   (attrib_table_set_row *pin-table
-                                                         row
-                                                         column
-                                                         row)
-                                   (attrib_table_set_column *pin-table
-                                                            row
-                                                            column
-                                                            column)
-                                   (attrib_table_set_row_name *pin-table
-                                                              row
-                                                              column
-                                                              *row-label)
-                                   (attrib_table_set_column_name *pin-table
-                                                                 row
-                                                                 column
-                                                                 (string->pointer name))
-                                   (attrib_table_set_attrib_value *pin-table
-                                                                  row
-                                                                  column
-                                                                  (if attrib-value
-                                                                      (string->pointer attrib-value)
-                                                                      %null-pointer))))))
+
+                                 (set-table-cell-data! *pin-table
+                                                       row
+                                                       column
+                                                       (if attrib-value
+                                                           (string->pointer attrib-value)
+                                                           %null-pointer)
+                                                       *row-label
+                                                       (string->pointer name)))))
                          (g_free *attrib-text))))
 
                    (glist->list (lepton_object_get_attribs
