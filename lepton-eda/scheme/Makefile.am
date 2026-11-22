@@ -161,6 +161,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/dialog/close-page.scm \
 	schematic/dialog/close-window.scm \
 	schematic/dialog/color-edit.scm \
+	schematic/dialog/component-chooser.scm \
 	schematic/dialog/edit-text.scm \
 	schematic/dialog/file-select.scm \
 	schematic/dialog/find-text.scm \

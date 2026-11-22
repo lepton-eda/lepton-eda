@@ -305,6 +305,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   set two messages, primary and secondary, and the title of the
   dialog.
 
+- A new module for **Component chooser** dialog code, `(schematic
+  dialog component-chooser)`, has been added.  It exports the
+  function `make-component-chooser-dialog()` creating and running
+  a new component selection dialog.  .
+
 - A new module for **File select** dialog code, `(schematic dialog
   file-select)`, has been created.  Currently, it contains an only
   function, `file-select-dialog()`, which runs the dialog and

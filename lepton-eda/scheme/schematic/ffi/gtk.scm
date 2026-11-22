@@ -107,6 +107,8 @@
             gtk_file_filter_new
             gtk_file_filter_set_name
 
+            gtk_frame_new
+
             gtk_grab_add
             gtk_grab_remove
 
@@ -161,6 +163,12 @@
             gtk_notebook_set_show_tabs
             gtk_notebook_set_tab_pos
             gtk_notebook_set_tab_reorderable
+
+            gtk_paned_new
+            gtk_hpaned_new
+            gtk_vpaned_new
+            gtk_paned_pack1
+            gtk_paned_pack2
 
             gtk_radio_button_get_group
             gtk_radio_button_new_with_label
@@ -220,6 +228,7 @@
             *gtk_widget_hide_on_delete
 
             gtk_window_set_default_icon_name
+            gtk_window_set_default_size
             gtk_window_set_modal
             gtk_window_get_position
             gtk_window_set_position
@@ -358,6 +367,8 @@
 (define-lff gtk_file_filter_new '* '())
 (define-lff gtk_file_filter_set_name void '(* *))
 
+(define-lff gtk_frame_new '* '(*))
+
 (define-lff gtk_grab_add void '(*))
 (define-lff gtk_grab_remove void '(*))
 
@@ -412,6 +423,12 @@
 (define-lff gtk_notebook_set_show_tabs void (list '* int))
 (define-lff gtk_notebook_set_tab_pos void (list '* int))
 (define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
+
+(define-lff-gtk3 gtk_paned_new '* (list int))
+(define-lff gtk_hpaned_new '* '())
+(define-lff gtk_vpaned_new '* '())
+(define-lff gtk_paned_pack1 void (list '* '* int int))
+(define-lff gtk_paned_pack2 void (list '* '* int int))
 
 (define-lff gtk_radio_button_get_group '* '(*))
 (define-lff gtk_radio_button_new_with_label '* '(* *))
@@ -478,6 +495,7 @@
 (define-lff gtk_window_present void '(*))
 (define-lff gtk_window_resize void (list '* int int))
 (define-lff gtk_window_set_default_icon_name void '(*))
+(define-lff gtk_window_set_default_size void (list '* int int))
 (define-lff gtk_window_set_modal void (list '* int))
 (define-lff gtk_window_get_position void '(* * *))
 (define-lff gtk_window_set_position void (list '* int))

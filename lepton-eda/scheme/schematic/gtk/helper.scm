@@ -29,6 +29,10 @@
             symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
+            gtk-orientation->symbol
+            symbol->gtk-orientation
+            GTK_ORIENTATION_HORIZONTAL
+            GTK_ORIENTATION_VERTICAL
             gtk-position-type->symbol
             symbol->gtk-position-type
             gtk-window-position->symbol
@@ -78,6 +82,23 @@
 (define (symbol->gtk-message-type sym)
   "Transforms symbol SYM to corresponding GtkMessageType value."
   (gtk_string_to_message_type (string->pointer (symbol->string sym))))
+
+
+(define (gtk-orientation->symbol orientation)
+  "Transforms GtkOrientation value ORIENTATION to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_orientation_to_string orientation))))
+
+(define (symbol->gtk-orientation sym)
+  "Transforms symbol SYM to corresponding GtkOrientation value."
+  (schematic_gtk_orientation_from_string
+   (string->pointer (symbol->string sym))))
+
+(define GTK_ORIENTATION_HORIZONTAL
+  (symbol->gtk-orientation 'horizontal))
+
+(define GTK_ORIENTATION_VERTICAL
+  (symbol->gtk-orientation 'vertical))
 
 
 (define (gtk-position-type->symbol type)

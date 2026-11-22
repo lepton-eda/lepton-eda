@@ -15,7 +15,7 @@ noinst_HEADERS = \
 	x_dialog.h \
 	x_tabs.h \
 	gettext.h \
-	x_compselect.h \
+	component_chooser.h \
 	schematic.h \
 	hotkey_store.h \
 	accel_label.h \

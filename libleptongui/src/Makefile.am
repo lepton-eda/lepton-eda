@@ -6,6 +6,7 @@ libleptongui_la_SOURCES = \
 	autonumber_dialog.c \
 	bitmap.c \
 	canvas.c \
+	component_chooser.c \
 	execute_script.c \
 	g_action.c \
 	g_hook.c \
@@ -84,7 +85,6 @@ libleptongui_la_SOURCES = \
 	x_clipboard.c \
 	x_color.c \
 	x_colorcb.c \
-	x_compselect.c \
 	x_dialog.c \
 	x_event.c \
 	x_fileselect.c \

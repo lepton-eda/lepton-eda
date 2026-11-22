@@ -52,6 +52,8 @@
             gtk_widget_pack_child
             schematic_gtk_justification_to_string
             schematic_gtk_justification_from_string
+            schematic_gtk_orientation_to_string
+            schematic_gtk_orientation_from_string
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
             schematic_gtk_window_position_to_string
@@ -311,7 +313,18 @@
             x_compselect_deselect
             x_compselect_open
             schematic_compselect_new
-            schematic_compselect_get_preview
+            schematic_component_chooser_set_attrframe
+            schematic_component_chooser_set_combobox_behaviors
+            schematic_component_chooser_set_hpaned
+            schematic_component_chooser_set_notebook
+            schematic_component_chooser_get_preview
+            schematic_component_chooser_set_preview
+            schematic_component_chooser_set_vpaned
+            schematic_component_chooser_create_attributes_treeview
+            schematic_component_chooser_create_behaviors_combo_box
+            schematic_component_chooser_create_inuse_treeview
+            schematic_component_chooser_create_lib_treeview
+            *schematic_component_chooser_callback_behavior_changed
 
             recent_manager_add
             x_window_untitled_page
@@ -735,6 +748,8 @@
 (define-lff gtk_widget_pack_child void '(* *))
 (define-lff schematic_gtk_justification_to_string '* (list int))
 (define-lff schematic_gtk_justification_from_string int '(*))
+(define-lff schematic_gtk_orientation_to_string '* (list int))
+(define-lff schematic_gtk_orientation_from_string int '(*))
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
 (define-lff schematic_gtk_window_position_to_string '* (list int))
@@ -776,12 +791,23 @@
 (define-lff x_colorcb_get_index int '(*))
 (define-lff x_colorcb_update_colors void '())
 
-;;; x_compselect.c
+;;; component_chooser.c
 (define-lfc *x_compselect_callback_response)
 (define-lff x_compselect_deselect void '(*))
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
-(define-lff schematic_compselect_get_preview '* '(*))
+(define-lff schematic_component_chooser_set_attrframe void '(* *))
+(define-lff schematic_component_chooser_set_combobox_behaviors void '(* *))
+(define-lff schematic_component_chooser_set_hpaned void '(* *))
+(define-lff schematic_component_chooser_set_notebook void '(* *))
+(define-lff schematic_component_chooser_get_preview '* '(*))
+(define-lff schematic_component_chooser_set_preview void '(* *))
+(define-lff schematic_component_chooser_set_vpaned void '(* *))
+(define-lff schematic_component_chooser_create_attributes_treeview '* '(*))
+(define-lff schematic_component_chooser_create_behaviors_combo_box '* '())
+(define-lff schematic_component_chooser_create_inuse_treeview '* '(*))
+(define-lff schematic_component_chooser_create_lib_treeview '* '(*))
+(define-lfc *schematic_component_chooser_callback_behavior_changed)
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2025 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,9 +18,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+/*!
+ * \file component_chooser.h
+ *
+ * \brief The component selection dialog
+ */
 
-#ifndef __X_COMPSELECT_H__
-#define __X_COMPSELECT_H__
+#ifndef __COMPONENT_CHOOSER_H__
+#define __COMPONENT_CHOOSER_H__
 
 
 /*
@@ -82,4 +87,73 @@ typedef enum {
   COMPSELECT_RESPONSE_REFRESH = 3
 } CompselectResponseType;
 
-#endif /* __X_COMPSEL_H__ */
+
+G_BEGIN_DECLS
+
+void
+x_compselect_open (GtkWidget *cswindow);
+
+void
+x_compselect_deselect (SchematicWindow *w_current);
+
+void
+x_compselect_callback_response (GtkDialog *dialog,
+                                gint arg1,
+                                gpointer user_data);
+GtkWidget*
+schematic_compselect_new (SchematicWindow *w_current);
+
+GtkWidget*
+schematic_component_chooser_get_attrframe (Compselect *chooser);
+
+void
+schematic_component_chooser_set_attrframe (Compselect *chooser,
+                                           GtkWidget *widget);
+GtkComboBox*
+schematic_component_chooser_get_combobox_behaviors (Compselect *chooser);
+
+void
+schematic_component_chooser_set_combobox_behaviors (Compselect *chooser,
+                                                    GtkComboBox *combobox);
+GtkWidget*
+schematic_component_chooser_get_hpaned (Compselect *chooser);
+
+void
+schematic_component_chooser_set_hpaned (Compselect *chooser,
+                                        GtkWidget *hpaned);
+GtkNotebook*
+schematic_component_chooser_get_notebook (Compselect *chooser);
+
+void
+schematic_component_chooser_set_notebook (Compselect *chooser,
+                                          GtkNotebook *notebook);
+GtkWidget*
+schematic_component_chooser_get_preview (GtkWidget *chooser);
+
+void
+schematic_component_chooser_set_preview (GtkWidget *chooser,
+                                         GtkWidget *preview);
+GtkWidget*
+schematic_component_chooser_get_vpaned (Compselect *chooser);
+
+void
+schematic_component_chooser_set_vpaned (Compselect *chooser,
+                                        GtkWidget *vpaned);
+void
+schematic_component_chooser_callback_behavior_changed (GtkComboBox *widget,
+                                                       gpointer user_data);
+GtkWidget*
+schematic_component_chooser_create_attributes_treeview (Compselect *compselect);
+
+GtkWidget*
+schematic_component_chooser_create_behaviors_combo_box (void);
+
+GtkWidget*
+schematic_component_chooser_create_inuse_treeview (Compselect *compselect);
+
+GtkWidget *
+schematic_component_chooser_create_lib_treeview (Compselect *compselect);
+
+G_END_DECLS
+
+#endif /* __COMPONENT_CHOOSER_H__ */

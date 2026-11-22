@@ -46,7 +46,7 @@ typedef struct st_schematic_window SchematicWindow;
 #include "hotkey_store.h"
 #include "i_vars.h"
 #include "preview_widget.h"
-#include "x_compselect.h"
+#include "component_chooser.h"
 #include "x_dialog.h"
 #include "x_tabs.h"
 #include "swatch_column_renderer.h"

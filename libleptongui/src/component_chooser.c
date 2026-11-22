@@ -37,7 +37,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "../include/dialog.h"
-#include "../include/x_compselect.h"
+#include "../include/component_chooser.h"
 
 /*! \def COMPSELECT_FILTER_INTERVAL
  *  \brief The time interval between request and actual filtering
@@ -61,6 +61,234 @@ enum compselect_view {
 G_DEFINE_TYPE (Compselect,
                compselect,
                SCHEMATIC_TYPE_DIALOG);
+
+
+/*! \brief Get the Attributes frame widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Attributes frame widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The Attributes frame widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_attrframe (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->attrframe;
+}
+
+
+/*! \brief Set the Attributes frame widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Attributes frame widget of the component chooser to
+ *  \p widget.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] widget The Attributes frame widget.
+ */
+void
+schematic_component_chooser_set_attrframe (Compselect *chooser,
+                                           GtkWidget *widget)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->attrframe = widget;
+}
+
+
+/*! \brief Get the Behaviour combo box of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Behaviour combo box of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The Behaviour combo box of the component chooser.
+ */
+GtkComboBox*
+schematic_component_chooser_get_combobox_behaviors (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->combobox_behaviors;
+}
+
+
+/*! \brief Set the Behaviour combo box of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Behaviour combo box of the component chooser to the
+ *  given value.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] combobox The Behaviour combo box instance.
+ */
+void
+schematic_component_chooser_set_combobox_behaviors (Compselect *chooser,
+                                                    GtkComboBox *combobox)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->combobox_behaviors = combobox;
+}
+
+
+/*! \brief Get the horizontal paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the horizontal paned widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The horizontal paned widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_hpaned (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->hpaned;
+}
+
+
+/*! \brief Set the horizontal paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the horizontal paned widget of the component chooser to
+ *  \p hpaned.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] hpaned The horizontal paned widget.
+ */
+void
+schematic_component_chooser_set_hpaned (Compselect *chooser,
+                                        GtkWidget *hpaned)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->hpaned = hpaned;
+}
+
+
+/*! \brief Get the notebook widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the notebook widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The notebook widget of the component chooser.
+ */
+GtkNotebook*
+schematic_component_chooser_get_notebook (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->viewtabs;
+}
+
+
+/*! \brief Set the notebook widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the notebook widget of the component chooser to
+ *  \p notebook.
+ *
+ *  \param [in] chooser  The component chooser instance.
+ *  \param [in] notebook The notebook widget.
+ */
+void
+schematic_component_chooser_set_notebook (Compselect *chooser,
+                                          GtkNotebook *notebook)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->viewtabs = notebook;
+}
+
+
+/*! \brief Get the preview widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the preview widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The preview widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_preview (GtkWidget *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return GTK_WIDGET (COMPSELECT (chooser)->preview);
+}
+
+
+/*! \brief Set the preview widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the preview widget of the component chooser to
+ *  \p preview.
+ *
+ *  \param [in] chooser The component chooser widget.
+ *  \param [in] preview The preview widget.
+ */
+void
+schematic_component_chooser_set_preview (GtkWidget *chooser,
+                                         GtkWidget *preview)
+{
+  g_return_if_fail (chooser != NULL);
+
+  COMPSELECT (chooser)->preview = SCHEMATIC_PREVIEW (preview);
+}
+
+
+/*! \brief Get the vertical paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Returns the vertical paned widget of the component chooser.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \returns The vertical paned widget of the component chooser.
+ */
+GtkWidget*
+schematic_component_chooser_get_vpaned (Compselect *chooser)
+{
+  g_return_val_if_fail (chooser != NULL, NULL);
+
+  return chooser->vpaned;
+}
+
+
+/*! \brief Set the vertical paned widget of a component chooser.
+ *
+ *  \par Function Description
+ *
+ *  Sets the vertical paned widget of the component chooser to
+ *  \p vpaned.
+ *
+ *  \param [in] chooser The component chooser instance.
+ *  \param [in] vpaned The vertical paned widget.
+ */
+void
+schematic_component_chooser_set_vpaned (Compselect *chooser,
+                                        GtkWidget *vpaned)
+{
+  g_return_if_fail (chooser != NULL);
+
+  chooser->vpaned = vpaned;
+}
 
 
 /*! \brief Return currently active component-selector view
@@ -204,30 +432,13 @@ x_compselect_callback_response (GtkDialog *dialog,
 
 
 GtkWidget*
-schematic_compselect_get_preview (GtkWidget *cs)
-{
-  g_return_val_if_fail (cs != NULL, NULL);
-
-  return GTK_WIDGET (COMPSELECT (cs)->preview);
-}
-
-
-GtkWidget*
 schematic_compselect_new (SchematicWindow *w_current)
 {
-  GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
-                                            /* SchematicDialog */
-                                            "settings-name", "compselect",
-                                            "schematic-window", w_current,
-                                            NULL));
-  GtkWidget *main_window =
-    schematic_window_get_main_window (w_current);
-  gtk_window_set_transient_for (GTK_WINDOW (cs),
-                                GTK_WINDOW (main_window));
-
-  gtk_widget_show (cs);
-
-  return cs;
+  return GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
+                                   /* SchematicDialog */
+                                   "settings-name", "compselect",
+                                   "schematic-window", w_current,
+                                   NULL));
 }
 
 
@@ -716,9 +927,9 @@ compselect_callback_filter_button_clicked (GtkButton *button,
  *  \param [in] widget The \c GtkComboBox widget.
  *  \param [in] user_data  The component selection dialog.
  */
-static void
-compselect_callback_behavior_changed (GtkComboBox *widget,
-                                      gpointer user_data)
+void
+schematic_component_chooser_callback_behavior_changed (GtkComboBox *widget,
+                                                       gpointer user_data)
 {
   Compselect *compselect = (Compselect*)user_data;
 
@@ -956,8 +1167,8 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 }
 
 /*! \brief Creates the treeview for the "In Use" view. */
-static GtkWidget*
-create_inuse_treeview (Compselect *compselect)
+GtkWidget*
+schematic_component_chooser_create_inuse_treeview (Compselect *compselect)
 {
   GtkWidget *scrolled_win, *treeview, *vbox, *hbox, *button;
   GtkTreeModel *model;
@@ -1078,8 +1289,8 @@ create_inuse_treeview (Compselect *compselect)
 }
 
 /*! \brief Creates the treeview for the "Library" view */
-static GtkWidget *
-create_lib_treeview (Compselect *compselect)
+GtkWidget *
+schematic_component_chooser_create_lib_treeview (Compselect *compselect)
 {
   GtkWidget *libtreeview, *vbox, *scrolled_win, *label,
     *hbox, *entry, *button;
@@ -1275,8 +1486,8 @@ create_lib_treeview (Compselect *compselect)
 
 /*! \brief Creates the treeview widget for the attributes
  */
-static GtkWidget*
-create_attributes_treeview (Compselect *compselect)
+GtkWidget*
+schematic_component_chooser_create_attributes_treeview (Compselect *compselect)
 {
   GtkWidget *attrtreeview, *scrolled_win;
   GtkListStore *model;
@@ -1337,8 +1548,8 @@ create_attributes_treeview (Compselect *compselect)
  *  This function creates and returns a <B>GtkComboBox</B> for
  *  selecting the behavior when a component is added to the sheet.
  */
-static GtkWidget*
-create_behaviors_combo_box (void)
+GtkWidget*
+schematic_component_chooser_create_behaviors_combo_box (void)
 {
   GtkWidget *combobox;
 
@@ -1459,146 +1670,17 @@ compselect_class_init (CompselectClass *klass)
                        G_PARAM_READWRITE));
 }
 
+
 static GObject*
 compselect_constructor (GType type,
                         guint n_construct_properties,
                         GObjectConstructParam *construct_params)
 {
   GObject *object;
-  Compselect *compselect;
-
-  GtkWidget *hpaned, *vpaned, *notebook, *attributes;
-  GtkWidget *libview, *inuseview;
-  GtkWidget *preview, *combobox;
-  GtkWidget *frame;
 
   /* chain up to constructor of parent class */
   object = G_OBJECT_CLASS (compselect_parent_class)->
     constructor (type, n_construct_properties, construct_params);
-  compselect = COMPSELECT (object);
-
-  /* dialog initialization */
-  g_object_set (object,
-                /* GtkWindow */
-                "title",           _("Add Component"),
-                "default-height",  300,
-                "default-width",   400,
-                NULL);
-
-  /* vpaned is vertical pane containing preview and attributes.
-   * hpaned is horizontal pane containing selection and
-   * preview. */
-
-#ifdef ENABLE_GTK3
-  vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
-  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-#else
-  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED, NULL));
-  hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
-                                    /* GtkContainer */
-                                    "border-width", 5,
-                                     NULL));
-#endif
-
-  gtk_container_set_border_width (GTK_CONTAINER (hpaned), 5);
-
-  compselect->vpaned = vpaned;
-  compselect->hpaned = hpaned;
-
-  /* notebook for library and inuse views */
-  notebook = GTK_WIDGET (g_object_new (GTK_TYPE_NOTEBOOK,
-                                       NULL));
-  compselect->viewtabs = GTK_NOTEBOOK (notebook);
-
-  inuseview = create_inuse_treeview (compselect);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
-                            gtk_label_new_with_mnemonic (_("In Us_e")));
-
-  libview = create_lib_treeview (compselect);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
-                            gtk_label_new_with_mnemonic (_("Lib_raries")));
-
-  /* include the vertical box in horizontal box */
-  gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
-
-
-  /* -- preview area -- */
-  frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                    /* GtkFrame */
-                                    "label", _("Preview"),
-                                    NULL));
-#ifndef ENABLE_GTK3
-  GtkWidget *alignment;
-  alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
-                                        /* GtkAlignment */
-                                        "border-width", 5,
-                                        "xscale",         1.0,
-                                        "yscale",         1.0,
-                                        "xalign",         0.5,
-                                        "yalign",         0.5,
-                                        NULL));
-#endif
-
-  preview = schematic_preview_new ();
-
-#ifdef ENABLE_GTK3
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-#else
-  gtk_container_add (GTK_CONTAINER (alignment), preview);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-#endif
-  /* set preview of compselect */
-  compselect->preview = SCHEMATIC_PREVIEW (preview);
-  g_object_set (GTK_WIDGET (preview),
-                "width-request",  160,
-                "height-request", 120,
-                NULL);
-
-  gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
-
-  compselect->attrframe = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                                    /* GtkFrame */
-                                                    "label", _("Attributes"),
-                                                    NULL));
-  attributes = create_attributes_treeview (compselect);
-  gtk_paned_pack2 (GTK_PANED (vpaned), compselect->attrframe, FALSE, FALSE);
-  gtk_container_add (GTK_CONTAINER (compselect->attrframe), attributes);
-
-  gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
-
-  /* add the hpaned to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (compselect))),
-                      hpaned, TRUE, TRUE, 0);
-  gtk_widget_show_all (hpaned);
-
-
-  /* -- behavior combo box -- */
-  combobox = create_behaviors_combo_box ();
-  g_signal_connect (combobox,
-                    "changed",
-                    G_CALLBACK (compselect_callback_behavior_changed),
-                    compselect);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (compselect))),
-                      combobox, FALSE, FALSE, 10);
-  gtk_widget_show_all (combobox);
-  /* set behavior combo box of compselect */
-  compselect->combobox_behaviors = GTK_COMBO_BOX (combobox);
-
-  /* now add buttons in the action area */
-  gtk_dialog_add_buttons (GTK_DIALOG (compselect),
-                          /*  - close button */
-                          _("_Close"), GTK_RESPONSE_CLOSE,
-                          _("_OK"), COMPSELECT_RESPONSE_HIDE,
-                          NULL);
-
-#ifndef ENABLE_GTK3
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (compselect),
-                                          COMPSELECT_RESPONSE_HIDE,
-                                          GTK_RESPONSE_CLOSE,
-                                          -1);
-#endif
 
   return object;
 }
