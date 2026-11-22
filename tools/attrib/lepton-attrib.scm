@@ -362,6 +362,11 @@ failure."
    (string-trim (substring str (1+ (string-index str #\=))))))
 
 
+(define (component-with-attribs? object)
+  (and (component? object)
+       (not (null? (object-attribs object)))))
+
+
 ;;; Attaches an attribute produced from NAME-VALUE-PAIR to
 ;;; OBJECT applying the properties VISIBILITY and SHOW-NAME-VALUE
 ;;; to the attribute.
@@ -1548,7 +1553,9 @@ failure."
 
 
 ;;; Sorts *LS which is a double linked list and returns a new
-;;; linked list.
+;;; linked list.  When the optional PRIORITY? argument is set to
+;;; non-#f value, a set of certain attributes having some
+;;; predefined 'weight' go first or last.
 (define* (sort-attrib-list *ls #:key (priority? #f))
   (define (list->glist ls)
     (let loop ((ls ls)
@@ -1572,11 +1579,6 @@ failure."
 
   (list->glist *sorted-ls))
 
-;;; Sorts the component list.
-(define (sort-component-list)
-  (set-sheet-component-list!
-   (sort-attrib-list (sheet-component-list))))
-
 
 ;;; This list overrides the alphanumeric sort.  Attribs not found
 ;;; in this list are sorted as if they had a value of
@@ -1591,35 +1593,6 @@ failure."
     ("symversion" . 200)))
 
 (define %default-attrib-pos 100)
-
-;;; Sort the component attribute list.  Apart from certain
-;;; attributes that have some predefined 'weight' and go first or
-;;; last, all other attributes are sorted in alphabetical order.
-(define (sort-component-attrib-list)
-  (define *ls (sheet-component-attrib-list))
-
-  (set-sheet-component-attrib-list!
-   (sort-attrib-list *ls #:priority? 'yes)))
-
-
-;;; Sorts the list of nets in alphabetical order.
-(define (sort-net-list)
-  #f)
-
-
-;;; Sorts the net attribute list in alphabetical order.
-(define (sort-net-attrib-list)
-  #f)
-
-
-;;; Sort the pin list in alphabetical order.
-(define (sort-pin-list)
-  (set-sheet-pin-list! (sort-attrib-list (sheet-pin-list))))
-
-
-;;; Sorts the pin attribute list in alphabetical order.
-(define (sort-pin-attrib-list)
-  #f)
 
 
 ;;; Adds column labels to GtkSheet *SHEET for COUNT objects from
@@ -1802,8 +1775,9 @@ failure."
           (*name (string->pointer name)))
 
       (set-sheet-component-attrib-list!
-       (add-glist-item (sheet-component-attrib-list) *name))
-      (sort-component-attrib-list)
+       (sort-attrib-list
+        (add-glist-item (sheet-component-attrib-list) *name)
+        #:priority? 'yes))
 
       ;; Now, determine what index the new attrib ended up at.
       ;; This is necessary to tell gtk_sheet_insert_columns
@@ -1882,10 +1856,10 @@ failure."
                        (sheet-component-attrib-count))
 
         (set-sheet-component-attrib-list!
-         (delete-glist-item (sheet-component-attrib-list)
-                            *attrib-name))
-        ;; This renumbers list also.
-        (sort-component-attrib-list)
+         (sort-attrib-list
+          (delete-glist-item (sheet-component-attrib-list)
+                             *attrib-name)
+          #:priority? 'yes))
 
         (g_free *attrib-name)
 
@@ -2603,140 +2577,117 @@ Please check your design.")))
   (gtk_widget_show_all *window))
 
 
-;;; Adds the list of component refdeses by running through
-;;; the list of *OBJECTS.
-(define (add-components *objects)
-  ;; Iterate through all objects found on page looking for
-  ;; components.
-  (for-each
-   (lambda (*object)
-     ;; Only process if this is a component with attributes.
-     (when (and (true? (lepton_object_is_component *object))
-                (not (null-pointer? (lepton_object_get_attribs *object))))
+;;; Returns the list of refdeses of COMPONENTS.
+(define (add-components components)
+  (define (*refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      (and=> temp-refdes string->pointer)))
 
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Now that we have refdes, store refdes and attach
-         ;; attrib list to component.
-         (unless (null-pointer? *temp-refdes)
-           (set-sheet-component-list!
-            (add-glist-item (sheet-component-list) *temp-refdes))
-           (g_free *temp-refdes)))))
-   (glist->list *objects identity)))
+  ;; Only process components with attributes.  Filter out
+  ;; components without refdeses.
+  (let loop ((ls (filter-map *refdes components))
+             (*gls %null-pointer))
+    (if (null? ls)
+        *gls
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
-;;; Processes *OBJECTS and adds the list of component attributes
+;;; Processes COMPONENTS and adds the list of component attributes
 ;;; by running through each component and recording all attribs it
 ;;; discovers.
-(define (add-component-attribs *objects)
-  ;; Iterate through all objects found on page looking for
-  ;; components.
-  (for-each
-   (lambda (*object)
-     ;; Only process if this is a component with attributes.
-     (when (and (true? (lepton_object_is_component *object))
-                (not (null-pointer?
-                      (lepton_object_get_attribs *object))))
+(define (add-component-attribs components)
+  ;; Don't include "refdes" or "slot" because they form the row
+  ;; name.  Also don't include "net" per bug found by Steve W. --
+  ;; 4.3.2007, SDB.
+  (define (ordinary-attrib-name attrib)
+    (let ((name (attrib-name attrib)))
+      (and (not (string= name "refdes"))
+           (not (string= name "net"))
+           (not (string= name "slot"))
+           name)))
 
-       ;; Iterate through all attribs found on component.
-       (for-each
-        (lambda (*attrib)
-          (when (and (true? (lepton_object_is_text *attrib))
-                     (not (null-pointer? (lepton_object_get_text *attrib))))
-            ;; Found an attribute.
-            (let* ((*attrib-text
-                    (g_strdup (lepton_text_object_get_string *attrib)))
-                   (name (str-attrib-name *attrib-text)))
-              ;; Don't include "refdes" or "slot" because they
-              ;; form the row name.  Also don't include "net" per
-              ;; bug found by Steve W. -- 4.3.2007, SDB.
-              (when (and name
-                         (not (string= name "refdes"))
-                         (not (string= name "net"))
-                         (not (string= name "slot")))
-                (set-sheet-component-attrib-list!
-                 (add-glist-item (sheet-component-attrib-list)
-                                 (string->pointer name))))
-              (g_free *attrib-text))))
-        ;; This has a side effect.  Why?
-        (glist->list (lepton_object_get_attribs *object) identity))))
-   (glist->list *objects identity)))
+  ;; Only process components with attributes.
+  (define name-ls
+    (delete-duplicates
+     (filter-map ordinary-attrib-name
+                 (append-map object-attribs components))
+     string=))
+
+  (let loop ((ls name-ls)
+             (*gls %null-pointer))
+    (if (null? ls)
+        *gls
+        (loop (cdr ls)
+              (add-glist-item *gls (string->pointer (car ls)))))))
 
 
 ;;; Adds the list of nets by running through the individual cells
 ;;; and recording the names it discovers.  Not implemented yet.
-(define (add-nets *objects)
-  #f)
+(define (add-nets objects)
+  %null-pointer)
 
 
 ;;; Adds net attribs.  Not implemented yet.
-(define (add-net-attribs *objects)
-  #f)
+(define (add-net-attribs objects)
+  %null-pointer)
 
 
-;;; Processes *OBJECTS and adds the list of pins.  It writes the
-;;; label refdes:pinnumber into the global pin list.
-;;;
-;;; Algorithm:
-;;; - Loop on objects looking for components.
-;;; - When we find a component, save the refdes.
-;;; - Dive down to primitives of the component.
-;;; - Loop on the primitives looking for pins.
-;;; - When we find a pin, find the pinnumber.
-;;; - Add the pin list label as "refdes:pinnumber", and stick it
-;;;   into the global pin list.
-;;;
-;;; Since this function operates on the global pin list, it
-;;; doesn't return a value.
-(define (add-pins *objects)
-  ;; Iterate through all objects found on page looking for
-  ;; components.
-  (for-each
-   (lambda (*object)
-     (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Make sure object component has a refdes.
-         (if (not (null-pointer? *temp-refdes))
-             ;; Now iterate through lower level objects looking
-             ;; for pins.
-             (for-each
-              (lambda (*child-object)
-                (when (true? (lepton_object_is_pin *child-object))
-                  (let ((*temp-pinnumber
-                         (lepton_attrib_search_object_attribs_by_name
-                          *child-object
-                          (string->pointer "pinnumber")
-                          0)))
-                    (if (not (null-pointer? *temp-pinnumber))
-                        (let ((*row-label
-                               (string->pointer
-                                (string-append (pointer->string *temp-refdes)
-                                               ":"
-                                               (pointer->string *temp-pinnumber)))))
-                          (set-sheet-pin-list!
-                           (add-glist-item (sheet-pin-list)
-                                           *row-label)))
-                        (begin
-                          ;; Didn't find pinnumber.  Report error
-                          ;; to log.
-                          (format (current-error-port) "add-pins():")
-                          (format (current-error-port)
-                                  (G_ "Found component pin with no pinnumber: refdes = ~S\n")
-                                  *temp-refdes)))
-                    (g_free *temp-pinnumber))))
-              (glist->list (lepton_component_object_get_contents *object)
-                           identity))
+;;; Processes OBJECTS and returns the GList of pin labels of the
+;;; form "refdes:pinnumber".
+(define (add-pins objects)
+  (define (refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      temp-refdes))
 
-             ;; Didn't find refdes.  Report error to log.
-             (log! 'debug
-                   "add-pins(): Found component with no refdes: component basename = ~S"
-                   (pointer->string
-                    (lepton_component_object_get_basename *object))))
-         (g_free *temp-refdes))))
+  (define (pin-pinnumber pin)
+    (let* ((*temp-pinnumber
+            (lepton_attrib_search_object_attribs_by_name
+             (object->pointer pin)
+             (string->pointer "pinnumber")
+             0))
+           (temp-pinnumber (and (not (null-pointer? *temp-pinnumber))
+                                (pointer->string *temp-pinnumber))))
+      (g_free *temp-pinnumber)
+      temp-pinnumber))
 
-   (glist->list *objects identity)))
+  (define (*pin-name pin)
+    (let ((pinnumber (pin-pinnumber pin))
+          (component (object-component pin)))
+      (if pinnumber
+          (string->pointer
+           (string-append (refdes component) ":" pinnumber))
+          (begin
+            ;; Didn't find pinnumber.  Report error
+            ;; to log.
+            (format (current-error-port) "add-pins():")
+            (format (current-error-port)
+                    (G_ "Found component pin with no pinnumber: refdes = ~S\n")
+                    (refdes component))
+            #f))))
+
+  ;; Make up a list of all pins.  Make sure every component object
+  ;; has a refdes.
+  (define *pin-name-ls
+    (filter-map *pin-name
+                (filter pin? (append-map component-contents
+                                         (filter refdes objects)))))
+
+  (let loop ((ls *pin-name-ls)
+             (*gls %null-pointer))
+    (if (null? ls)
+        *gls
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
-;;; Processes *OBJECTS and adds the list of pin attributes.  It
+;;; Processes OBJECTS and adds the list of pin attributes.  It
 ;;; writes each attrib name into the global pin attrib list.
 ;;;
 ;;; Algorithm:
@@ -2748,56 +2699,38 @@ Please check your design.")))
 ;;; - Loop on the attribs looking for non-NULL text.
 ;;; - When we find a non-NULL text attrib, extract the attrib
 ;;;   name, and stick it into the global pin attrib list.
-(define (add-pin-attribs *objects)
-  ;; Iterate through all objects found on page looking for
-  ;; components.
-  (for-each
-   (lambda (*object)
-     (when (true? (lepton_object_is_component *object))
-       (let ((*temp-refdes (component-refdes *object)))
-         ;; Make sure object component has a refdes.
-         (unless (null-pointer? *temp-refdes)
-           ;; Now iterate through lower level objects looking for
-           ;; pins.
-           (for-each
-            (lambda (*child-object)
-              (when (true? (lepton_object_is_pin *child-object))
-                ;; Found a pin.  Now get attrib head and loop on
-                ;; attribs.
-                (for-each
-                 (lambda (*pin-attrib)
-                   (when (and (true? (lepton_object_is_text *pin-attrib))
-                              (not (null-pointer?
-                                    (lepton_object_get_text *pin-attrib))))
-                     ;; Found an attribute.
-                     (let* ((*attrib-text
-                             (g_strdup
-                              (lepton_text_object_get_string *pin-attrib)))
-                            (attrib-name (str-attrib-name *attrib-text))
-                            (attrib-value (str-attrib-value *attrib-text)))
-                       ;; Don't include "pinnumber" because it is
-                       ;; already in other master list.  Also
-                       ;; guard against pathalogical symbols which
-                       ;; have non-attrib text inside pins.
-                       (when (and attrib-name
-                                  (not (string= attrib-name "pinnumber"))
-                                  attrib-value)
-                         (set-sheet-pin-attrib-list!
-                          (add-glist-item
-                           (sheet-pin-attrib-list)
-                           (string->pointer attrib-name))))
+(define (add-pin-attribs objects)
+  (define (refdes object)
+    (let* ((*temp-refdes (component-refdes (object->pointer object)))
+           (temp-refdes (and (not (null-pointer? *temp-refdes))
+                             (pointer->string *temp-refdes))))
+      (g_free *temp-refdes)
+      temp-refdes))
 
-                       (g_free *attrib-text))))
+  (define (*attrib-name attrib)
+    (let ((name (attrib-name attrib)))
+      ;; Don't include "pinnumber" because it is already in the
+      ;; list of pin names.
+      (and (not (string= name "pinnumber"))
+           (string->pointer name))))
 
-                 (glist->list (lepton_object_get_attribs *child-object)
-                              identity))))
 
-            (glist->list (lepton_component_object_get_contents *object)
-                         identity))
-
-           (g_free *temp-refdes)))))
-
-   (glist->list *objects identity)))
+  ;; Make sure every component object has a refdes.  Then iterate
+  ;; through lower level objects looking for pins and their
+  ;; attribs.
+  (define *attrib-name-ls
+    (filter-map
+     *attrib-name
+     (append-map object-attribs
+                 (filter pin?
+                         (append-map component-contents
+                                     (filter refdes objects))))))
+  (let loop ((ls *attrib-name-ls)
+             (*gls %null-pointer))
+    (if (null? ls)
+        *gls
+        (loop (cdr ls)
+              (add-glist-item *gls (car ls))))))
 
 
 
@@ -3082,37 +3015,25 @@ Please check your design.")))
 
   (set-window! *window-widget)
 
-  (for-each
-   (lambda (*page)
-     (let ((*objects (lepton_page_objects *page)))
-       (lepton_toplevel_set_page_current *toplevel *page)
+  (let* ((objects (append-map page-contents (active-pages)))
+         (components (filter component-with-attribs? objects)))
+    ;; Now add all items found to the master lists
+    (set-sheet-component-list!
+     (sort-attrib-list (add-components components)))
 
-       ;; Now add all items found to the master lists
-       (add-components *objects)
-       (add-component-attribs *objects)
-       ;; Note that this must be changed.  We need to input the
-       ;; entire project before doing anything with the nets because
-       ;; we need to first determine where they are all connected!
-       (add-nets *objects)
-       (add-net-attribs *objects)
+    (set-sheet-component-attrib-list!
+     (sort-attrib-list (add-component-attribs components)
+                       #:priority? 'yes))
+    ;; Note that this must be changed.  We need to input the
+    ;; entire project before doing anything with the nets because
+    ;; we need to first determine where they are all connected!
+    (set-sheet-net-list! (sort-attrib-list (add-nets objects)))
+    (set-sheet-net-attrib-list!
+     (sort-attrib-list (add-net-attribs objects)))
 
-       (add-pins *objects)
-       (add-pin-attribs *objects)))
-
-   (glist->list *pages identity))
-
-  ;; Sort the master lists.
-  (sort-component-list)
-  (sort-component-attrib-list)
-
-  ;; Note that this must be changed.  We need to input the
-  ;; entire project before doing anything with the nets because
-  ;; we need to first determine where they are all connected!
-  (sort-net-list)
-  (sort-net-attrib-list)
-
-  (sort-pin-list)
-  (sort-pin-attrib-list)
+    (set-sheet-pin-list! (sort-attrib-list (add-pins components)))
+    (set-sheet-pin-attrib-list!
+     (sort-attrib-list (add-pin-attribs components))))
 
   ;; Create and load the tables.
   (set-component-table! (make-table (sheet-component-count)
