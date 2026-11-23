@@ -44,16 +44,22 @@
             gtk_string_to_file_chooser_action
             gtk_message_type_to_string
             gtk_string_to_message_type
-            gtk_policy_to_string
-            gtk_string_to_policy
+            schematic_gtk_policy_type_to_string
+            schematic_gtk_policy_type_from_string
             gtk_response_to_string
             gtk_string_to_response
             gtk_widget_get_gtk_window
             gtk_widget_pack_child
             schematic_gtk_justification_to_string
             schematic_gtk_justification_from_string
+            schematic_gtk_orientation_to_string
+            schematic_gtk_orientation_from_string
             schematic_gtk_position_type_to_string
             schematic_gtk_position_type_from_string
+            schematic_gtk_selection_mode_to_string
+            schematic_gtk_selection_mode_from_string
+            schematic_gtk_shadow_type_to_string
+            schematic_gtk_shadow_type_from_string
             schematic_gtk_window_position_to_string
             schematic_gtk_window_position_from_string
 
@@ -70,6 +76,8 @@
             schematic_dialog_load_file_error
             schematic_dialog_new_empty
             x_dialog_validate_attribute
+
+            schematic_dialog_misc_create_section_widget
 
             schematic_execute_script
 
@@ -674,7 +682,41 @@
             x_image_setup
 
             schematic_multiattrib_widget_new
+            schematic_multiattrib_widget_cell_renderer_multi_line_text_new
+            schematic_multiattrib_widget_list_store_new
+            schematic_multiattrib_widget_set_add_frame
+            schematic_multiattrib_widget_set_button_visible
+            schematic_multiattrib_widget_get_combo_name
+            schematic_multiattrib_widget_set_combo_name
+            schematic_multiattrib_widget_set_list_frame
+            schematic_multiattrib_widget_set_object_list
+            schematic_multiattrib_widget_set_show_inherited
+            schematic_multiattrib_widget_set_show_name_value_combo_box_text
+            schematic_multiattrib_widget_set_tree_view
+            schematic_multiattrib_widget_set_value_textview
+            schematic_multiattrib_widget_init_attrib_names
+            schematic_multiattrib_widget_init_text_fg_colors
+            schematic_multiattrib_widget_init_visible_types
+            schematic_multiattrib_widget_refresh
             schematic_multiattrib_widget_update
+            *schematic_multiattrib_widget_callback_button_add
+            *schematic_multiattrib_widget_callback_button_pressed
+            *schematic_multiattrib_widget_callback_edited_name
+            *schematic_multiattrib_widget_callback_edited_value
+            *schematic_multiattrib_widget_callback_expander_activate
+            *schematic_multiattrib_widget_callback_key_pressed
+            *schematic_multiattrib_widget_callback_popup_menu
+            *schematic_multiattrib_widget_callback_toggled_show_inherited
+            *schematic_multiattrib_widget_callback_toggled_show_name
+            *schematic_multiattrib_widget_callback_toggled_show_value
+            *schematic_multiattrib_widget_callback_toggled_visible
+            *schematic_multiattrib_widget_callback_value_grab_focus
+            *schematic_multiattrib_widget_callback_value_key_pressed
+            *schematic_multiattrib_widget_column_set_data_name
+            *schematic_multiattrib_widget_column_set_data_show_name
+            *schematic_multiattrib_widget_column_set_data_show_value
+            *schematic_multiattrib_widget_column_set_data_value
+            *schematic_multiattrib_widget_column_set_data_visible
 
             x_print
 
@@ -727,16 +769,22 @@
 (define-lff gtk_string_to_file_chooser_action int '(*))
 (define-lff gtk_message_type_to_string '* (list int))
 (define-lff gtk_string_to_message_type int '(*))
-(define-lff gtk_policy_to_string '* (list int))
-(define-lff gtk_string_to_policy int '(*))
+(define-lff schematic_gtk_policy_type_to_string '* (list int))
+(define-lff schematic_gtk_policy_type_from_string int '(*))
 (define-lff gtk_response_to_string '* (list int))
 (define-lff gtk_string_to_response int '(*))
 (define-lff gtk_widget_get_gtk_window '* '(*))
 (define-lff gtk_widget_pack_child void '(* *))
 (define-lff schematic_gtk_justification_to_string '* (list int))
 (define-lff schematic_gtk_justification_from_string int '(*))
+(define-lff schematic_gtk_orientation_to_string '* (list int))
+(define-lff schematic_gtk_orientation_from_string int '(*))
 (define-lff schematic_gtk_position_type_to_string '* (list int))
 (define-lff schematic_gtk_position_type_from_string int '(*))
+(define-lff schematic_gtk_selection_mode_to_string '* (list int))
+(define-lff schematic_gtk_selection_mode_from_string int '(*))
+(define-lff schematic_gtk_shadow_type_to_string '* (list int))
+(define-lff schematic_gtk_shadow_type_from_string int '(*))
 (define-lff schematic_gtk_window_position_to_string '* (list int))
 (define-lff schematic_gtk_window_position_from_string int '(*))
 (define-lff schematic_gtk_vbox_new '* (list int int))
@@ -1172,6 +1220,9 @@
 (define-lff schematic_dialog_new_empty '* (list '* '* int '* '*))
 (define-lff x_dialog_validate_attribute int '(* *))
 
+;;; dialog_misc.c
+(define-lff schematic_dialog_misc_create_section_widget '* '(* *))
+
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))
 
@@ -1394,7 +1445,41 @@
 
 ;;; multiattrib_widget.c
 (define-lff schematic_multiattrib_widget_new '* '(* *))
+(define-lff schematic_multiattrib_widget_cell_renderer_multi_line_text_new '* '())
+(define-lff schematic_multiattrib_widget_list_store_new '* '())
+(define-lff schematic_multiattrib_widget_set_add_frame void '(* *))
+(define-lff schematic_multiattrib_widget_set_button_visible void '(* *))
+(define-lff schematic_multiattrib_widget_get_combo_name '* '(*))
+(define-lff schematic_multiattrib_widget_set_combo_name void '(* *))
+(define-lff schematic_multiattrib_widget_set_list_frame void '(* *))
+(define-lff schematic_multiattrib_widget_set_object_list void '(* *))
+(define-lff schematic_multiattrib_widget_set_show_inherited void '(* *))
+(define-lff schematic_multiattrib_widget_set_show_name_value_combo_box_text void '(* *))
+(define-lff schematic_multiattrib_widget_set_tree_view void '(* *))
+(define-lff schematic_multiattrib_widget_set_value_textview void '(* *))
+(define-lff schematic_multiattrib_widget_init_attrib_names void '(*))
+(define-lff schematic_multiattrib_widget_init_text_fg_colors void '(* *))
+(define-lff schematic_multiattrib_widget_init_visible_types void '(*))
+(define-lff schematic_multiattrib_widget_refresh void '(*))
 (define-lff schematic_multiattrib_widget_update void '(*))
+(define-lfc *schematic_multiattrib_widget_callback_button_add)
+(define-lfc *schematic_multiattrib_widget_callback_button_pressed)
+(define-lfc *schematic_multiattrib_widget_callback_edited_name)
+(define-lfc *schematic_multiattrib_widget_callback_edited_value)
+(define-lfc *schematic_multiattrib_widget_callback_expander_activate)
+(define-lfc *schematic_multiattrib_widget_callback_key_pressed)
+(define-lfc *schematic_multiattrib_widget_callback_popup_menu)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_show_inherited)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_show_name)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_show_value)
+(define-lfc *schematic_multiattrib_widget_callback_toggled_visible)
+(define-lfc *schematic_multiattrib_widget_callback_value_grab_focus)
+(define-lfc *schematic_multiattrib_widget_callback_value_key_pressed)
+(define-lfc *schematic_multiattrib_widget_column_set_data_name)
+(define-lfc *schematic_multiattrib_widget_column_set_data_show_name)
+(define-lfc *schematic_multiattrib_widget_column_set_data_show_value)
+(define-lfc *schematic_multiattrib_widget_column_set_data_value)
+(define-lfc *schematic_multiattrib_widget_column_set_data_visible)
 
 ;;; new_text_dialog.c
 (define-lff schematic_newtext_dialog_get_aligncb '* '(*))

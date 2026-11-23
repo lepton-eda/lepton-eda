@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
  */
 typedef GtkDialog* (*CreateNonModalDialog)(SchematicWindow *w_current);
 
+G_BEGIN_DECLS
 
 GtkWidget*
 schematic_dialog_misc_create_property_label (const char *label);
@@ -49,3 +50,4 @@ void
 schematic_dialog_misc_show_non_modal (SchematicWindow *w_current,
                                       GtkWidget **widget,
                                       CreateNonModalDialog create);
+G_END_DECLS

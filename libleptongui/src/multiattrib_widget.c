@@ -23,6 +23,311 @@
 #include <gdk/gdkkeysyms.h>
 
 
+/*! \brief Get the Add frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Add frame widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Add frame widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->add_frame;
+}
+
+
+/*! \brief Set the Add frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Add frame widget of a Multiattrib widget to the given
+ *  value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] add_frame The new Add frame widget instance.
+ */
+void
+schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
+                                            GtkWidget *add_frame)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->add_frame = add_frame;
+}
+
+
+/*! \brief Get the Visible button widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Visible button widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Visible button widget.
+ */
+GtkCheckButton*
+schematic_multiattrib_widget_get_button_visible (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->button_visible;
+}
+
+
+/*! \brief Set the Visible button widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Visible button widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] button The new Visible button widget instance.
+ */
+void
+schematic_multiattrib_widget_set_button_visible (SchematicMultiattribWidget *multiattrib,
+                                                 GtkCheckButton *button)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->button_visible = button;
+}
+
+
+/*! \brief Get the name combo text value of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the name combo text value of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The name combo text value.
+ */
+GtkComboBoxText*
+schematic_multiattrib_widget_get_combo_name (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->combo_name;
+}
+
+
+/*! \brief Set the name combo text value of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the name combo text value of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] val The new name combo text value.
+ */
+void
+schematic_multiattrib_widget_set_combo_name (SchematicMultiattribWidget *multiattrib,
+                                             GtkComboBoxText *val)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->combo_name = val;
+}
+
+
+/*! \brief Get the List frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the List frame widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The List frame widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_list_frame (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->list_frame;
+}
+
+
+/*! \brief Set the List frame widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the List frame widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] list_frame The new List frame widget instance.
+ */
+void
+schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiattrib,
+                                             GtkWidget *list_frame)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->list_frame = list_frame;
+}
+
+
+/*! \brief Get the Show inherited widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Show inherited widget of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Show inherited widget.
+ */
+GtkWidget*
+schematic_multiattrib_widget_get_show_inherited (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->show_inherited;
+}
+
+
+/*! \brief Set the Show inherited widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Show inherited widget of a Multiattrib widget to the
+ *  given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] widget The new Show inherited widget value.
+ */
+void
+schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *multiattrib,
+                                                 GtkWidget *widget)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->show_inherited = widget;
+}
+
+
+/*! \brief Get the Show name/value GtkComboBoxText instance of a
+ *  Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Show name/value GtkComboBoxText object of the
+ *  Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Show name/value GtkComboBoxText instance.
+ */
+GtkComboBoxText*
+schematic_multiattrib_widget_get_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->optionmenu_shownv;
+}
+
+
+/*! \brief Set the Show name/value widget of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Show name/value GtkComboBoxText object of the
+ *  Multiattrib widget to the given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] combo_box The new Show name/value widget instance.
+ */
+void
+schematic_multiattrib_widget_set_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib,
+                                                                 GtkComboBoxText *combo_box)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->optionmenu_shownv = combo_box;
+}
+
+
+/*! \brief Get the Value text view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the Value text view of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The Value text view.
+ */
+GtkTextView*
+schematic_multiattrib_widget_get_value_textview (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->textview_value;
+}
+
+
+/*! \brief Set the Value text view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the Value text view of a Multiattrib widget to the given
+ *  value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] textview The new Value text view instance.
+ */
+void
+schematic_multiattrib_widget_set_value_textview (SchematicMultiattribWidget *multiattrib,
+                                                 GtkTextView *textview)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->textview_value = textview;
+}
+
+
+/*! \brief Get the tree view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Returns the tree view of a Multiattrib widget.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \return The tree view.
+ */
+GtkTreeView*
+schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiattrib)
+{
+  g_return_val_if_fail (multiattrib != NULL, NULL);
+
+  return multiattrib->treeview;
+}
+
+
+/*! \brief Set the tree view of a Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Sets the tree view of a Multiattrib widget to the given value.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] treeview The new tree view instance.
+ */
+void
+schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiattrib,
+                                            GtkTreeView *treeview)
+{
+  g_return_if_fail (multiattrib != NULL);
+
+  multiattrib->treeview = treeview;
+}
+
+
 static gboolean
 snv_shows_name (int snv)
 {
@@ -34,6 +339,30 @@ snv_shows_value (int snv)
 {
   return snv == SHOW_NAME_VALUE || snv == SHOW_VALUE;
 }
+
+
+/*! \brief Set the current window selection as the object list of
+ *  a Multiattrib widget instance.
+ *
+ *  \par Function Description
+ *
+ *  Sets the current selection as the 'object_list' property of
+ *  the Multiattrib widget, which triggers update of the widget.
+ *
+ *  \param [in] multiattrib_widget The Multiattrib widget.
+ *  \param [in] selection The list of currently selected objects.
+ */
+void
+schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
+                                              LeptonSelection *selection)
+{
+  g_return_if_fail (multiattrib_widget != NULL);
+
+  g_object_set (G_OBJECT (multiattrib_widget),
+                "object_list", selection,
+                NULL);
+}
+
 
 
 /*! \brief Create a new multiple attribute editor dialog
@@ -51,11 +380,20 @@ schematic_multiattrib_widget_new (SchematicWindow *w_current,
 {
   GtkWidget *multiattrib_widget =
     GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
-                              "object_list", selection,
                               /* SchematicDialog */
                               "settings-name", "multiattrib",
                               "schematic-window", w_current,
                               NULL));
+
+#ifndef ENABLE_GTK3
+  /* GTK2 specific dialog initialization. */
+  g_object_set (G_OBJECT (multiattrib_widget),
+                "allow-grow",      TRUE,
+                "allow-shrink",    FALSE,
+                /* GtkDialog */
+                "has-separator",   TRUE,
+                NULL);
+#endif
 
   return multiattrib_widget;
 }
@@ -257,9 +595,6 @@ static void cellrenderermultilinetext_init (CellRendererMultiLineText *obj)
 }
 static void cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
                                                     gpointer         user_data);
-static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
-                                                           GdkEvent  *event,
-                                                           gpointer   user_data);
 
 
 #define CELL_RENDERER_MULTI_LINE_TEXT_PATH "cell-renderer-multi-line-text-path"
@@ -338,11 +673,6 @@ cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
                     "editing_done",
                     G_CALLBACK (cellrenderermultilinetext_editing_done),
                     cell_mlt);
-  cell_mlt->focus_out_id =
-  g_signal_connect (textview,
-                    "focus_out_event",
-                    G_CALLBACK (cellrenderermultilinetext_focus_out_event),
-                    cell_mlt);
 
   return GTK_CELL_EDITABLE (textview);
 }
@@ -362,12 +692,6 @@ cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
   gchar *new_text;
   const gchar *path;
 
-  if (cell->focus_out_id > 0) {
-    g_signal_handler_disconnect (cell_editable,
-                                 cell->focus_out_id);
-    cell->focus_out_id = 0;
-  }
-
   if (CELL_TEXT_VIEW (cell_editable)->editing_canceled) {
     g_signal_emit_by_name (cell, "editing-canceled");
     return;
@@ -385,21 +709,6 @@ cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
   g_free (new_text);
 }
 
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
-static gboolean
-cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
-                                           GdkEvent *event,
-                                           gpointer user_data)
-{
-//  cellrenderermultilinetext_editing_done (GTK_CELL_EDITABLE (widget),
-//                                          user_data);
-
-  return FALSE;
-}
 
 /*! \todo Finish function documentation
  *  \brief
@@ -682,17 +991,69 @@ multiattrib_action_copy_attribute_to_all (SchematicMultiattribWidget *multiattri
   o_undo_savestate_old (w_current);
 }
 
+
+/*! \brief Init the set of foreground cell text colors.
+ *
+ *  \par Function Description
+ *
+ *  Obtains a set of foreground text colors for rendering text
+ *  strings in the cells of the attrib list view.  The colors are
+ *  stored in the fields of the \p multiattrib object.  A couple
+ *  of them is retrieved from the \p textview object.
+ *
+ *  \param [in] multiattrib The Multiattrib widget instance.
+ *  \param [in] textview A text view widget to obtain colors from.
+ */
+void
+schematic_multiattrib_widget_init_text_fg_colors (SchematicMultiattribWidget *multiattrib,
+                                                  GtkWidget *textview)
+{
+#ifdef ENABLE_GTK3
+  /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
+   * GtkTextView's stubborn refusal to draw with
+   * GTK_STATE_FLAG_INSENSITIVE later on */
+  GtkStyleContext *stylectx = gtk_widget_get_style_context (textview);
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_NORMAL,
+                               &multiattrib->value_normal_text_color);
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_INSENSITIVE,
+                               &multiattrib->insensitive_text_color);
+
+  gdk_rgba_parse (&multiattrib->not_identical_value_text_color, "grey");
+  gdk_rgba_parse (&multiattrib->not_present_in_all_text_color, "red");
+
+#else /* GTK2 */
+  /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
+   * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
+  GtkStyle *style = gtk_widget_get_style (textview);
+  multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
+
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
+
+  gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
+  gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
+#endif
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
-                                  GtkCellRenderer *cell,
-                                  GtkTreeModel *tree_model,
-                                  GtkTreeIter *iter,
-                                  gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_name (GtkTreeViewColumn *tree_column,
+                                                   GtkCellRenderer *cell,
+                                                   GtkTreeModel *tree_model,
+                                                   GtkTreeIter *iter,
+                                                   gpointer data)
 {
   SchematicMultiattribWidget *dialog =
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
@@ -707,10 +1068,12 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                       -1);
 
   /*
-   * Set "editable" property to TRUE even for inherited attributes.
-   * This is done to allow the user to copy cell contents to clipboard.
-   * For inherited attributes no action will be taken on edit:
-   * multiattrib_callback_edited_name() will just return.
+   * Set "editable" property to TRUE even for inherited
+   * attributes.  This is done to allow the user to copy cell
+   * contents to clipboard.  For inherited attributes no action
+   * will be taken on edit:
+   * schematic_multiattrib_widget_callback_edited_name() will just
+   * return.
   */
 
   g_object_set (cell,
@@ -727,12 +1090,12 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
-                                   GtkCellRenderer *cell,
-                                   GtkTreeModel *tree_model,
-                                   GtkTreeIter *iter,
-                                   gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_value (GtkTreeViewColumn *tree_column,
+                                                    GtkCellRenderer *cell,
+                                                    GtkTreeModel *tree_model,
+                                                    GtkTreeIter *iter,
+                                                    gpointer data)
 {
   SchematicMultiattribWidget *dialog =
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
@@ -750,7 +1113,7 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
    * Set "editable" property to TRUE even for inherited attributes.
    * This is done to allow the user to copy cell contents to clipboard.
    * For inherited attributes no action will be taken on edit:
-   * multiattrib_callback_edited_value() will just return.
+   * schematic_multiattrib_widget_callback_edited_value() will just return.
   */
 
   g_object_set (cell,
@@ -767,12 +1130,12 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_visible (GtkTreeViewColumn *tree_column,
-                                     GtkCellRenderer *cell,
-                                     GtkTreeModel *tree_model,
-                                     GtkTreeIter *iter,
-                                     gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_visible (GtkTreeViewColumn *tree_column,
+                                                      GtkCellRenderer *cell,
+                                                      GtkTreeModel *tree_model,
+                                                      GtkTreeIter *iter,
+                                                      gpointer data)
 {
   gboolean visibility;
   gboolean identical_visibility;
@@ -797,12 +1160,12 @@ multiattrib_column_set_data_visible (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_show_name (GtkTreeViewColumn *tree_column,
-                                       GtkCellRenderer *cell,
-                                       GtkTreeModel *tree_model,
-                                       GtkTreeIter *iter,
-                                       gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_show_name (GtkTreeViewColumn *tree_column,
+                                                        GtkCellRenderer *cell,
+                                                        GtkTreeModel *tree_model,
+                                                        GtkTreeIter *iter,
+                                                        gpointer data)
 {
   int show_name_value;
   gboolean identical_show_name;
@@ -827,12 +1190,12 @@ multiattrib_column_set_data_show_name (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
-                                        GtkCellRenderer *cell,
-                                        GtkTreeModel *tree_model,
-                                        GtkTreeIter *iter,
-                                        gpointer data)
+void
+schematic_multiattrib_widget_column_set_data_show_value (GtkTreeViewColumn *tree_column,
+                                                         GtkCellRenderer *cell,
+                                                         GtkTreeModel *tree_model,
+                                                         GtkTreeIter *iter,
+                                                         gpointer data)
 {
   int show_name_value;
   gboolean identical_show_value;
@@ -857,11 +1220,11 @@ multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
-                                  gchar *arg1,
-                                  gchar *new_name,
-                                  gpointer user_data)
+void
+schematic_multiattrib_widget_callback_edited_name (GtkCellRendererText *cellrenderertext,
+                                                   gchar *arg1,
+                                                   gchar *new_name,
+                                                   gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -955,11 +1318,11 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
-                                   gchar *arg1,
-                                   gchar *new_value,
-                                   gpointer user_data)
+void
+schematic_multiattrib_widget_callback_edited_value (GtkCellRendererText *cell_renderer,
+                                                    gchar *arg1,
+                                                    gchar *new_value,
+                                                    gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1048,10 +1411,10 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
-                                      gchar *path,
-                                      gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
+                                                       gchar *path,
+                                                       gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1104,10 +1467,10 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
-                                        gchar *path,
-                                        gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
+                                                         gchar *path,
+                                                         gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1169,10 +1532,10 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
-                                         gchar *path,
-                                         gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
+                                                          gchar *path,
+                                                          gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1234,10 +1597,10 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_key_pressed (GtkWidget *widget,
-                                  GdkEventKey *event,
-                                  gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_key_pressed (GtkWidget *widget,
+                                                   GdkEventKey *event,
+                                                   gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1313,10 +1676,10 @@ multiattrib_edit_cell_at_pos (SchematicMultiattribWidget *multiattrib,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_button_pressed (GtkWidget *widget,
-                                     GdkEventButton *event,
-                                     gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_button_pressed (GtkWidget *widget,
+                                                      GdkEventButton *event,
+                                                      gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1347,9 +1710,9 @@ multiattrib_callback_button_pressed (GtkWidget *widget,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_popup_menu (GtkWidget *widget,
-                                 gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_popup_menu (GtkWidget *widget,
+                                                  gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1492,10 +1855,10 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
  *  \par Function Description
  *
  */
-static gboolean
-multiattrib_callback_value_key_pressed (GtkWidget *widget,
-                                        GdkEventKey *event,
-                                        gpointer user_data)
+gboolean
+schematic_multiattrib_widget_callback_value_key_pressed (GtkWidget *widget,
+                                                         GdkEventKey *event,
+                                                         gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (widget);
@@ -1531,8 +1894,8 @@ multiattrib_callback_value_key_pressed (GtkWidget *widget,
  *  \par Function Description
  *  Select the text in the GtkTextView so it may be over-typed quickly
  */
-static void
-multiattrib_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
+void
+schematic_multiattrib_widget_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
 {
   GtkTextView *textview = GTK_TEXT_VIEW (widget);
   GtkTextBuffer *textbuffer;
@@ -1550,8 +1913,9 @@ multiattrib_callback_value_grab_focus (GtkWidget *widget, gpointer user_data)
  *  \par Function Description
  *
  */
-static void
-multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
+void
+schematic_multiattrib_widget_callback_button_add (GtkButton *button,
+                                                  gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1596,8 +1960,8 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
  *  \par Function Description
  *
  */
-static void
-multiattrib_init_attrib_names (GtkComboBoxText *combo)
+void
+schematic_multiattrib_widget_init_attrib_names (GtkComboBoxText *combo)
 {
   const gchar *string;
   gint i;
@@ -1614,8 +1978,8 @@ multiattrib_init_attrib_names (GtkComboBoxText *combo)
  *  \par Function Description
  *
  */
-static void
-multiattrib_init_visible_types (GtkComboBoxText *optionmenu)
+void
+schematic_multiattrib_widget_init_visible_types (GtkComboBoxText *optionmenu)
 {
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
                                   _("Show Name & Value"));
@@ -1739,8 +2103,10 @@ multiattrib_geometry_save (SchematicDialog *dialog,
   eda_config_set_boolean (cfg, group_name, "show_inherited", show_inherited);
 
 
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (SCHEMATIC_MULTIATTRIB_WIDGET (dialog));
   gboolean expand_add_attr =
-      gtk_expander_get_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame));
+      gtk_expander_get_expanded (GTK_EXPANDER (add_frame));
 
   eda_config_set_boolean (cfg, group_name, "expand_add_attr", expand_add_attr);
 }
@@ -1785,8 +2151,10 @@ multiattrib_geometry_restore (SchematicDialog *dialog,
   }
 
   g_clear_error (&error);
-  gtk_expander_set_expanded (GTK_EXPANDER (SCHEMATIC_MULTIATTRIB_WIDGET (dialog)->add_frame),
-                             expand_add_attr);
+
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (SCHEMATIC_MULTIATTRIB_WIDGET (dialog));
+  gtk_expander_set_expanded (GTK_EXPANDER (add_frame), expand_add_attr);
 }
 
 
@@ -1928,9 +2296,9 @@ schematic_multiattrib_widget_class_init (SchematicMultiattribWidgetClass *klass)
 /*! \brief Regenerate the attribute list when the visibility
  *         setting for inherited attributes changes
  */
-static void
-multiattrib_show_inherited_toggled (GtkToggleButton *button,
-                                    gpointer user_data)
+void
+schematic_multiattrib_widget_callback_toggled_show_inherited (GtkToggleButton *button,
+                                                              gpointer user_data)
 {
   SchematicMultiattribWidget *multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (user_data);
@@ -1942,9 +2310,9 @@ multiattrib_show_inherited_toggled (GtkToggleButton *button,
 
 /*! \brief Remember "expanded" state of the "Add Attribute" section.
  */
-static void
-multiattrib_callback_expander_activate (GtkExpander* expander,
-                                        gpointer     data)
+void
+schematic_multiattrib_widget_callback_expander_activate (GtkExpander* expander,
+                                                         gpointer data)
 {
   SchematicMultiattribWidget* multiattrib =
     SCHEMATIC_MULTIATTRIB_WIDGET (data);
@@ -1954,12 +2322,11 @@ multiattrib_callback_expander_activate (GtkExpander* expander,
 }
 
 
-/*! \brief GType instance initialiser for #SchematicMultiattribWidget
+/*! \brief GType instance initialiser for #SchematicMultiattribWidget.
  *
  *  \par Function Description
  *
  *  GType instance initialiser for #SchematicMultiattribWidget.
- *  Create and setup the widgets which make up the dialog.
  *
  *  \param [in] multiattrib The #SchematicMultiattribWidget we are
  *                          initialising
@@ -1967,47 +2334,22 @@ multiattrib_callback_expander_activate (GtkExpander* expander,
 static void
 schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
 {
-  GtkWidget *label, *scrolled_win, *treeview;
-  GtkWidget *textview, *combo, *optionm, *button;
-  GtkWidget *attrib_vbox, *show_inherited;
-  GtkTreeModel *store;
-  GtkCellRenderer *renderer;
-  GtkTreeViewColumn *column;
-  GtkTreeSelection *selection;
-#ifdef ENABLE_GTK3
-  GtkStyleContext *stylectx;
-#else
-  GtkStyle *style;
-#endif
+}
 
-  /* dialog initialization */
-  g_object_set (G_OBJECT (multiattrib),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "title",           _("Edit Attributes"),
-                "default-width",   320,
-                "default-height",  350,
-                "window-position", GTK_WIN_POS_MOUSE,
-#ifndef ENABLE_GTK3
-                "allow-grow",      TRUE,
-                "allow-shrink",    FALSE,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-#endif
-                NULL);
 
-  gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))), 5);
-
-  /* create the attribute list frame */
-  multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-#ifndef ENABLE_GTK3
-                                                      /* GtkFrame */
-                                                      "shadow", GTK_SHADOW_NONE,
-#endif
-                                                      NULL));
-  /*   - create the model for the treeview */
-  store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
+/*! \brief Create a list store model for the Multiattrib widget.
+ *
+ *  \par Function Description
+ *
+ *  Creates and returns a list store tree model for the
+ *  Multiattrib dialog.
+ *
+ *  \returns The new tree model.
+ */
+GtkTreeModel*
+schematic_multiattrib_widget_list_store_new ()
+{
+  return (GtkTreeModel*) gtk_list_store_new (NUM_COLUMNS,
                                              G_TYPE_BOOLEAN,  /* COLUMN_INHERITED */
                                              G_TYPE_STRING,   /* COLUMN_NAME */
                                              G_TYPE_STRING,   /* COLUMN_VALUE */
@@ -2019,389 +2361,21 @@ schematic_multiattrib_widget_init (SchematicMultiattribWidget *multiattrib)
                                              G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_NAME */
                                              G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_VALUE */
                                              G_TYPE_OBJECT);  /* COLUMN_ATTRIBUTE_GEDALIST */
-
-  /*   - create a scrolled window for the treeview */
-  scrolled_win = GTK_WIDGET (
-                    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                                  /* GtkContainer */
-                                  "border-width",      3,
-                                  /* GtkScrolledWindow */
-                                  "hscrollbar-policy",
-                                  GTK_POLICY_AUTOMATIC,
-                                  "vscrollbar-policy",
-                                  GTK_POLICY_AUTOMATIC,
-                                  "shadow-type",
-                                  GTK_SHADOW_ETCHED_IN,
-                                  NULL));
-  /*   - create the treeview */
-  treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
-                                       /* GtkTreeView */
-                                       "model",      store,
-                                       "rules-hint", TRUE,
-                                       NULL));
-  g_signal_connect (treeview,
-                    "key-press-event",
-                    G_CALLBACK (multiattrib_callback_key_pressed),
-                    multiattrib);
-  g_signal_connect (treeview,
-                    "button-press-event",
-                    G_CALLBACK (multiattrib_callback_button_pressed),
-                    multiattrib);
-  g_signal_connect (treeview,
-                    "popup-menu",
-                    G_CALLBACK (multiattrib_callback_popup_menu),
-                    multiattrib);
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
-  gtk_tree_selection_set_mode (selection,
-                               GTK_SELECTION_SINGLE);
-
-  /*   - and now the columns of the treeview */
-  /*       - column 1: attribute name */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                                              /* GtkCellRendererText */
-                                              /* unknown in GTK 2.4 */
-                                              /* "ellipsize",
-                                               * PANGO_ELLIPSIZE_END, */
-                                              NULL));
-  g_signal_connect (renderer,
-                    "edited",
-                    G_CALLBACK (multiattrib_callback_edited_name),
-                    multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("Name"),
-                                               "min-width", 100,
-                                               "resizable", TRUE,
-                                               NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_name,
-                                           multiattrib, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-  /*       - column 2: attribute value */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT,
-                                              /* GtkCellRendererText */
-                                              /* unknown in GTK 2.4 */
-                                              /* "ellipsize",
-                                                 PANGO_ELLIPSIZE_END, */
-                                              NULL));
-  g_signal_connect (renderer,
-                    "edited",
-                    G_CALLBACK (multiattrib_callback_edited_value),
-                    multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("Value"),
-                                               "min-width", 140,
-                                               "resizable", TRUE,
-                                               NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_value,
-                                           multiattrib, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-  /*       - column 3: visibility */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-                                              NULL));
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (multiattrib_callback_toggled_visible),
-                    multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("Vis?"),
-                                               NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_visible,
-                                           multiattrib, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-  /*       - column 4: show name */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-                                              NULL));
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (multiattrib_callback_toggled_show_name),
-                    multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("N"),
-                                               NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_show_name,
-                                           NULL, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-  /*       - column 5: show value */
-  renderer = GTK_CELL_RENDERER (
-                                g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-                                              NULL));
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (multiattrib_callback_toggled_show_value),
-                    multiattrib);
-  column = GTK_TREE_VIEW_COLUMN (
-                                 g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                                               /* GtkTreeViewColumn */
-                                               "title", _("V"),
-                                               NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           multiattrib_column_set_data_show_value,
-                                           NULL, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-  /* add the treeview to the scrolled window */
-  gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
-  /* set treeview of multiattrib */
-  multiattrib->treeview = GTK_TREE_VIEW (treeview);
-
-#ifdef ENABLE_GTK3
-  attrib_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
-  attrib_vbox = gtk_vbox_new (FALSE, 0);
-#endif
-
-  /* Pack the vbox into the frame */
-  gtk_container_add (GTK_CONTAINER (multiattrib->list_frame), attrib_vbox);
-
-  /* add the scrolled window to box */
-  gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
-
-  /* create the show inherited button */
-  show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
-  multiattrib->show_inherited = show_inherited;
-  gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
-
-  g_signal_connect (show_inherited,
-                    "toggled",
-                    G_CALLBACK (multiattrib_show_inherited_toggled),
-                    multiattrib);
-
-  /* pack the frame */
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      multiattrib->list_frame,
-                      TRUE, TRUE, 1);
-  gtk_widget_show_all (multiattrib->list_frame);
-
-#ifdef ENABLE_GTK3
-  GtkWidget *grid = gtk_grid_new ();
-#else
-  GtkWidget *table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
-                                               /* GtkTable */
-                                               "n-rows",      4,
-                                               "n-columns",   2,
-                                               "homogeneous", FALSE,
-                                               NULL));
-#endif
-
-  /*   - the name entry: a GtkComboBoxEntry */
-  label = gtk_label_new_with_mnemonic (_("_Name:"));
-#ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-#else
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-#endif
-
-  combo = gtk_combo_box_text_new_with_entry ();
-
-  multiattrib_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
-  multiattrib->combo_name = GTK_COMBO_BOX_TEXT (combo);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                 GTK_WIDGET (multiattrib->combo_name));
-
-#ifdef ENABLE_GTK3
-  gtk_widget_set_hexpand (GTK_WIDGET (combo), TRUE);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), label,
-                    0, 1, 0, 1,
-                    (GtkAttachOptions) 0,
-                    (GtkAttachOptions) 0,
-                    0, 0);
-  gtk_table_attach (GTK_TABLE (table), combo,
-                    1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) 0,
-                    6, 3);
-#endif
-
-  /*   - the value entry: a GtkEntry */
-  label = gtk_label_new_with_mnemonic (_("_Value:"));
-#ifdef ENABLE_GTK3
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-#else
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-#endif
-
-  scrolled_win = GTK_WIDGET (
-                             g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                                           /* GtkScrolledWindow */
-                                           "hscrollbar-policy",
-                                           GTK_POLICY_AUTOMATIC,
-                                           "vscrollbar-policy",
-                                           GTK_POLICY_AUTOMATIC,
-                                           "shadow-type",
-                                           GTK_SHADOW_IN,
-                                           NULL));
-  /*! \todo Forcing the size request is a horrible band-aid and
-   *  should be replaced by a better heuristic. */
-  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
-                                       "height-request", 50,
-                                       NULL));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (textview),
-                  _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
-  g_signal_connect (textview,
-                    "key_press_event",
-                    G_CALLBACK (multiattrib_callback_value_key_pressed),
-                    multiattrib);
-  g_signal_connect (textview,
-                    "grab-focus",
-                    G_CALLBACK (multiattrib_callback_value_grab_focus),
-                    multiattrib);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textview);
-
-#ifdef ENABLE_GTK3
-  /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
-   * GtkTextView's stubborn refusal to draw with
-   * GTK_STATE_FLAG_INSENSITIVE later on */
-  stylectx = gtk_widget_get_style_context (textview);
-  gtk_style_context_get_color (stylectx,
-                               GTK_STATE_FLAG_NORMAL,
-                               &multiattrib->value_normal_text_color);
-  /* Save this one so we can pick it as a sensible colour to show the
-   * inherited attributes dimmed.
-   */
-  stylectx = gtk_widget_get_style_context (treeview);
-  gtk_style_context_get_color (stylectx,
-                               GTK_STATE_FLAG_INSENSITIVE,
-                               &multiattrib->insensitive_text_color);
-
-  gdk_rgba_parse (&multiattrib->not_identical_value_text_color, "grey");
-  gdk_rgba_parse (&multiattrib->not_present_in_all_text_color, "red");
-
-#else /* GTK2 */
-
-  /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
-   * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
-  style = gtk_widget_get_style (textview);
-  multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
-
-  /* Save this one so we can pick it as a sensible colour to show the
-   * inherited attributes dimmed.
-   */
-  style = gtk_widget_get_style (treeview);
-  multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
-
-  gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
-  gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
-#endif
-
-  gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
-  multiattrib->textview_value = GTK_TEXT_VIEW (textview);
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_grid_attach (GTK_GRID (grid), scrolled_win, 1, 1, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), label,
-                    0, 1, 1, 2,
-                    (GtkAttachOptions) 0,
-                    (GtkAttachOptions) 0,
-                    0, 0);
-  gtk_table_attach (GTK_TABLE (table), scrolled_win,
-                    1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) 0,
-                    6, 3);
-#endif
-
-  /*   - the visible status */
-  button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-  multiattrib->button_visible = GTK_CHECK_BUTTON (button);
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), button, 0, 2, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), button,
-                    0, 1, 2, 3,
-                    GTK_FILL,
-                    (GtkAttachOptions) 0,
-                    3, 0);
-#endif
-
-  /*   - the visibility type */
-  optionm = gtk_combo_box_text_new ();
-  multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
-  multiattrib->optionmenu_shownv = GTK_COMBO_BOX_TEXT (optionm);
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), optionm, 1, 2, 1, 1);
-  gtk_widget_show_all (grid);
-#else
-  gtk_table_attach (GTK_TABLE (table), optionm,
-                    1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) 0,
-                    6, 3);
-  gtk_widget_show_all (table);
-#endif
-
-  /* create the add button */
-  button = gtk_button_new_with_mnemonic (_("_Add"));
-  g_signal_connect (button,
-                    "clicked",
-                    G_CALLBACK (multiattrib_callback_button_add),
-                    multiattrib);
-#ifdef ENABLE_GTK3
-  gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);
-
-  multiattrib->add_frame =
-    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
-                                                 grid);
-#else
-  gtk_table_attach (GTK_TABLE (table), button,
-                    2, 3, 0, 3,
-                    (GtkAttachOptions) 0,
-                    (GtkAttachOptions) 0,
-                    6, 3);
+}
 
 
-  multiattrib->add_frame =
-    schematic_dialog_misc_create_section_widget (_("<b>Add Attribute</b>"),
-                                                 table);
-#endif
-
-  g_signal_connect (multiattrib->add_frame,
-                    "activate",
-                    G_CALLBACK (multiattrib_callback_expander_activate),
-                    multiattrib);
-
-
-  /* pack the frame in the dialog */
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
-                      multiattrib->add_frame,
-                      FALSE, TRUE, 1);
-  gtk_widget_show_all (multiattrib->add_frame);
-
-
-  /* now add the close button to the action area */
-  gtk_dialog_add_button (GTK_DIALOG (multiattrib),
-                         _("_Close"), GTK_RESPONSE_CLOSE);
-
-  schematic_multiattrib_widget_refresh (multiattrib);
+/*! \brief Create a custom multi-line text cell renderer.
+ *
+ *  \par Function Description
+ *
+ *  Creates and returns a custom multi-line text cell renderer.
+ *
+ *  \returns The new renderer.
+ */
+GtkCellRenderer*
+schematic_multiattrib_widget_cell_renderer_multi_line_text_new ()
+{
+  return GTK_CELL_RENDERER (g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT, NULL));
 }
 
 
@@ -2881,8 +2855,11 @@ schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib)
   update_dialog_title (multiattrib, component_title_name);
 
   /* Update sensitivities */
-  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->list_frame), list_sensitive);
-  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->add_frame),  add_sensitive);
+  GtkWidget *add_frame =
+    schematic_multiattrib_widget_get_add_frame (multiattrib);
+  gtk_widget_set_sensitive (schematic_multiattrib_widget_get_list_frame (multiattrib),
+                            list_sensitive);
+  gtk_widget_set_sensitive (add_frame, add_sensitive);
 
   /* Work around GtkTextView's stubborn indifference
    * to GTK_STATE_INSENSITIVE when rendering its text. */

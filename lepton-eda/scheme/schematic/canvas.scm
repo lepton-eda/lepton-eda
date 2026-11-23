@@ -28,6 +28,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic canvas foreign)
   #:use-module (schematic event)
+  #:use-module (schematic gtk helper)
   #:use-module (schematic mouse-pointer)
   #:use-module (schematic undo)
   #:use-module (schematic viewport foreign)
@@ -71,12 +72,6 @@
 (define *redraw-canvas
   (procedure->pointer int redraw-canvas '(* * *)))
 
-
-(define GTK_POLICY_ALWAYS
-  (gtk_string_to_policy (string->pointer "always")))
-
-(define GTK_POLICY_NEVER
-  (gtk_string_to_policy (string->pointer "never")))
 
 (define (setup-canvas-scrolling *scrolled-widget show-scrollbars?)
   "Adjusts the viewport and scrollbars of *SCROLLED-WIDGET and enables or

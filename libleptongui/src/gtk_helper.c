@@ -181,18 +181,18 @@ gdk_event_scroll_direction_to_string (GdkScrollDirection mode)
 }
 
 
-/*! \brief Transform a GTK policy id value to string.
+/*! \brief Transform a GTK policy type id value to string.
  *
  * \par Function Description
  * Given a \c GtkPolicyType id \p policy, returns the string
  * corresponding to it.  This is mainly intended to be used for
  * value conversion in Scheme FFI functions.
  *
- * \param [in] policy The policy id.
+ * \param [in] policy The policy type id.
  * \return The string corresponding to the id.
  */
 const char*
-gtk_policy_to_string (int policy)
+schematic_gtk_policy_type_to_string (int policy)
 {
   const char *result = "unknown";
 
@@ -211,7 +211,7 @@ gtk_policy_to_string (int policy)
 }
 
 
-/*! \brief Transform a string into GTK policy id value.
+/*! \brief Transform a string into GTK policy type id value.
  *
  * \par Function Description
  * Given a string naming a \c GtkPolicyType id, return the enum
@@ -219,10 +219,10 @@ gtk_policy_to_string (int policy)
  * for value conversion in Scheme FFI functions.
  *
  * \param [in] s The string.
- * \return The GTK policy id value.
+ * \return The GTK policy type id value.
  */
 int
-gtk_string_to_policy (char *s)
+schematic_gtk_policy_type_from_string (char *s)
 {
   int result = GTK_POLICY_ALWAYS;
 
@@ -541,6 +541,56 @@ schematic_gtk_justification_from_string (char *s)
 }
 
 
+/*! \brief Transform a \c GtkOrientation enum value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkOrientation enum value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The enum value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_orientation_to_string (int val)
+{
+  const char *result = "horizontal";
+
+  switch (val)
+  {
+  case GTK_ORIENTATION_HORIZONTAL: result = "horizontal"; break;
+  case GTK_ORIENTATION_VERTICAL: result = "vertical"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkOrientation enum value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkOrientation value, returns the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \returns The \c GtkOrientation enum value.
+ */
+int
+schematic_gtk_orientation_from_string (char *s)
+{
+  int result = GTK_ORIENTATION_HORIZONTAL;
+
+  if (strcmp (s, "horizontal") == 0) {result = GTK_ORIENTATION_HORIZONTAL; }
+  else if (strcmp (s, "vertical") == 0) {result = GTK_ORIENTATION_VERTICAL; }
+
+  return result;
+}
+
+
 /*! \brief Transform a \c GtkPositionType value to string.
  *
  * \par Function Description
@@ -646,6 +696,116 @@ schematic_gtk_window_position_from_string (char *s)
   else if (strcmp (s, "mouse") == 0) {result = GTK_WIN_POS_MOUSE; }
   else if (strcmp (s, "center-always") == 0) {result = GTK_WIN_POS_CENTER_ALWAYS; }
   else if (strcmp (s, "center-on-parent") == 0) {result = GTK_WIN_POS_CENTER_ON_PARENT; }
+
+  return result;
+}
+
+
+/*! \brief Transform a \c GtkShadowType value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkShadowType value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The shadow type value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_shadow_type_to_string (int val)
+{
+  const char *result = "none";
+
+  switch (val)
+  {
+  case GTK_SHADOW_NONE: result = "none"; break;
+  case GTK_SHADOW_IN: result = "in"; break;
+  case GTK_SHADOW_OUT: result = "out"; break;
+  case GTK_SHADOW_ETCHED_IN: result = "etched-in"; break;
+  case GTK_SHADOW_ETCHED_OUT: result = "etched-out"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkShadowType value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkShadowType value, return the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \return The \c GtkShadowType value.
+ */
+int
+schematic_gtk_shadow_type_from_string (char *s)
+{
+  int result = GTK_SHADOW_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_SHADOW_NONE; }
+  else if (strcmp (s, "in") == 0) {result = GTK_SHADOW_IN; }
+  else if (strcmp (s, "out") == 0) {result = GTK_SHADOW_OUT; }
+  else if (strcmp (s, "etched-in") == 0) {result = GTK_SHADOW_ETCHED_IN; }
+  else if (strcmp (s, "etched-out") == 0) {result = GTK_SHADOW_ETCHED_OUT; }
+
+  return result;
+}
+
+
+/*! \brief Transform a \c GtkSelectionMode value to string.
+ *
+ * \par Function Description
+ *
+ * Given a \c GtkSelectionMode value, returns the string
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] val The selection mode value.
+ * \return The string corresponding to the value.
+ */
+const char*
+schematic_gtk_selection_mode_to_string (int val)
+{
+  const char *result = "none";
+
+  switch (val)
+  {
+  case GTK_SELECTION_NONE: result = "none"; break;
+  case GTK_SELECTION_SINGLE: result = "single"; break;
+  case GTK_SELECTION_BROWSE: result = "browse"; break;
+  case GTK_SELECTION_MULTIPLE: result = "multiple"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+/*! \brief Transform a string into \c GtkSelectionMode value.
+ *
+ * \par Function Description
+ *
+ * Given a string naming a \c GtkSelectionMode value, returns the
+ * enum value corresponding to it.  This is mainly intended to be
+ * used for value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ * \returns The \c GtkSelectionMode value.
+ */
+int
+schematic_gtk_selection_mode_from_string (char *s)
+{
+  int result = GTK_SELECTION_NONE;
+
+  if (strcmp (s, "none") == 0) {result = GTK_SELECTION_NONE; }
+  else if (strcmp (s, "single") == 0) {result = GTK_SELECTION_SINGLE; }
+  else if (strcmp (s, "browse") == 0) {result = GTK_SELECTION_BROWSE; }
+  else if (strcmp (s, "multiple") == 0) {result = GTK_SELECTION_MULTIPLE; }
 
   return result;
 }

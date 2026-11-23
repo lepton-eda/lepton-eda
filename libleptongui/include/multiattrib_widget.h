@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2026 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -133,10 +133,6 @@ struct _CellRendererMultiLineTextClass {
 
 struct _CellRendererMultiLineText {
   GtkCellRendererText parent_instance;
-
-  /*< private >*/
-  guint focus_out_id;
-
 };
 
 
@@ -144,15 +140,166 @@ GType cellrenderermultilinetext_get_type (void);
 
 G_BEGIN_DECLS
 
+/* Constructor, destructor */
 GtkWidget*
 schematic_multiattrib_widget_new (SchematicWindow *w_current,
                                   LeptonSelection *selection);
+GtkCellRenderer*
+schematic_multiattrib_widget_cell_renderer_multi_line_text_new ();
+
+GtkTreeModel*
+schematic_multiattrib_widget_list_store_new ();
+
+/* Accessors */
+GtkWidget*
+schematic_multiattrib_widget_get_add_frame (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_add_frame (SchematicMultiattribWidget *multiattrib,
+                                            GtkWidget *add_frame);
+GtkCheckButton*
+schematic_multiattrib_widget_get_button_visible (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_button_visible (SchematicMultiattribWidget *multiattrib,
+                                                 GtkCheckButton *button);
+GtkComboBoxText*
+schematic_multiattrib_widget_get_combo_name (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_combo_name (SchematicMultiattribWidget *multiattrib,
+                                             GtkComboBoxText *val);
+GtkWidget*
+schematic_multiattrib_widget_get_list_frame (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_list_frame (SchematicMultiattribWidget *multiattrib,
+                                             GtkWidget *list_frame);
+void
+schematic_multiattrib_widget_set_object_list (GtkWidget *multiattrib_widget,
+                                              LeptonSelection *selection);
+GtkWidget*
+schematic_multiattrib_widget_get_show_inherited (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_show_inherited (SchematicMultiattribWidget *multiattrib,
+                                                 GtkWidget *widget);
+GtkComboBoxText*
+schematic_multiattrib_widget_get_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_show_name_value_combo_box_text (SchematicMultiattribWidget *multiattrib,
+                                                                 GtkComboBoxText *combo_box_text);
+GtkTreeView*
+schematic_multiattrib_widget_get_tree_view (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_tree_view (SchematicMultiattribWidget *multiattrib,
+                                            GtkTreeView *treeview);
+GtkTextView*
+schematic_multiattrib_widget_get_value_textview (SchematicMultiattribWidget *multiattrib);
+
+void
+schematic_multiattrib_widget_set_value_textview (SchematicMultiattribWidget *multiattrib,
+                                                 GtkTextView *textview);
+
+/* Methods */
+void
+schematic_multiattrib_widget_init_attrib_names (GtkComboBoxText *combo);
+
+void
+schematic_multiattrib_widget_init_text_fg_colors (SchematicMultiattribWidget *multiattrib,
+                                                  GtkWidget *textview);
+void
+schematic_multiattrib_widget_init_visible_types (GtkComboBoxText *optionmenu);
+
 void
 schematic_multiattrib_widget_refresh (SchematicMultiattribWidget *multiattrib);
 
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current);
 
+
+/* Callbacks */
+void
+schematic_multiattrib_widget_callback_button_add (GtkButton *button,
+                                                  gpointer user_data);
+gboolean
+schematic_multiattrib_widget_callback_button_pressed (GtkWidget *widget,
+                                                      GdkEventButton *event,
+                                                      gpointer user_data);
+void
+schematic_multiattrib_widget_callback_edited_name (GtkCellRendererText *cellrenderertext,
+                                                   gchar *arg1,
+                                                   gchar *new_name,
+                                                   gpointer user_data);
+void
+schematic_multiattrib_widget_callback_edited_value (GtkCellRendererText *cell_renderer,
+                                                    gchar *arg1,
+                                                    gchar *new_value,
+                                                    gpointer user_data);
+void
+schematic_multiattrib_widget_callback_expander_activate (GtkExpander* expander,
+                                                         gpointer data);
+gboolean
+schematic_multiattrib_widget_callback_key_pressed (GtkWidget *widget,
+                                                   GdkEventKey *event,
+                                                   gpointer user_data);
+gboolean
+schematic_multiattrib_widget_callback_popup_menu (GtkWidget *widget,
+                                                  gpointer user_data);
+void
+schematic_multiattrib_widget_callback_toggled_show_inherited (GtkToggleButton *button,
+                                                              gpointer user_data);
+void
+schematic_multiattrib_widget_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
+                                                         gchar *path,
+                                                         gpointer user_data);
+void
+schematic_multiattrib_widget_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
+                                                          gchar *path,
+                                                          gpointer user_data);
+void
+schematic_multiattrib_widget_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
+                                                       gchar *path,
+                                                       gpointer user_data);
+void
+schematic_multiattrib_widget_callback_value_grab_focus (GtkWidget *widget, gpointer user_data);
+
+gboolean
+schematic_multiattrib_widget_callback_value_key_pressed (GtkWidget *widget,
+                                                         GdkEventKey *event,
+                                                         gpointer user_data);
+void
+schematic_multiattrib_widget_column_set_data_name (GtkTreeViewColumn *tree_column,
+                                                   GtkCellRenderer *cell,
+                                                   GtkTreeModel *tree_model,
+                                                   GtkTreeIter *iter,
+                                                   gpointer data);
+void
+schematic_multiattrib_widget_column_set_data_show_name (GtkTreeViewColumn *tree_column,
+                                                        GtkCellRenderer *cell,
+                                                        GtkTreeModel *tree_model,
+                                                        GtkTreeIter *iter,
+                                                        gpointer data);
+void
+schematic_multiattrib_widget_column_set_data_show_value (GtkTreeViewColumn *tree_column,
+                                                         GtkCellRenderer *cell,
+                                                         GtkTreeModel *tree_model,
+                                                         GtkTreeIter *iter,
+                                                         gpointer data);
+void
+schematic_multiattrib_widget_column_set_data_value (GtkTreeViewColumn *tree_column,
+                                                    GtkCellRenderer *cell,
+                                                    GtkTreeModel *tree_model,
+                                                    GtkTreeIter *iter,
+                                                    gpointer data);
+void
+schematic_multiattrib_widget_column_set_data_visible (GtkTreeViewColumn *tree_column,
+                                                      GtkCellRenderer *cell,
+                                                      GtkTreeModel *tree_model,
+                                                      GtkTreeIter *iter,
+                                                      gpointer data);
 G_END_DECLS
 
 

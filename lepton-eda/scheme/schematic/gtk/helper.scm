@@ -19,6 +19,8 @@
 (define-module (schematic gtk helper)
   #:use-module (system foreign)
 
+  #:use-module (lepton m4)
+
   #:use-module (schematic ffi)
 
   #:export (gtk-buttons-type->symbol
@@ -29,8 +31,31 @@
             symbol->gtk-justification
             gtk-message-type->symbol
             symbol->gtk-message-type
+            gtk-orientation->symbol
+            symbol->gtk-orientation
+            GTK_ORIENTATION_HORIZONTAL
+            GTK_ORIENTATION_VERTICAL
+            gtk-policy-type->symbol
+            symbol->gtk-policy-type
+            GTK_POLICY_ALWAYS
+            GTK_POLICY_AUTOMATIC
+            GTK_POLICY_NEVER
+            GTK_POLICY_EXTERNAL
             gtk-position-type->symbol
             symbol->gtk-position-type
+            gtk-selection-mode->symbol
+            symbol->gtk-selection-mode
+            GTK_SELECTION_NONE
+            GTK_SELECTION_SINGLE
+            GTK_SELECTION_BROWSE
+            GTK_SELECTION_MULTIPLE
+            gtk-shadow-type->symbol
+            symbol->gtk-shadow-type
+            GTK_SHADOW_NONE
+            GTK_SHADOW_IN
+            GTK_SHADOW_OUT
+            GTK_SHADOW_ETCHED_IN
+            GTK_SHADOW_ETCHED_OUT
             gtk-window-position->symbol
             symbol->gtk-window-position
             gtk-response->symbol
@@ -80,6 +105,40 @@
   (gtk_string_to_message_type (string->pointer (symbol->string sym))))
 
 
+(define (gtk-orientation->symbol orientation)
+  "Transforms GtkOrientation value ORIENTATION to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_orientation_to_string orientation))))
+
+(define (symbol->gtk-orientation sym)
+  "Transforms symbol SYM to corresponding GtkOrientation value."
+  (schematic_gtk_orientation_from_string
+   (string->pointer (symbol->string sym))))
+
+(define GTK_ORIENTATION_HORIZONTAL
+  (symbol->gtk-orientation 'horizontal))
+
+(define GTK_ORIENTATION_VERTICAL
+  (symbol->gtk-orientation 'vertical))
+
+
+(define (gtk-policy-type->symbol type)
+  "Transforms GtkPolicyType value TYPE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_policy_type_to_string type))))
+
+(define (symbol->gtk-policy-type sym)
+  "Transforms symbol SYM to corresponding GtkPolicyType value."
+  (schematic_gtk_policy_type_from_string
+   (string->pointer (symbol->string sym))))
+
+(define GTK_POLICY_ALWAYS (symbol->gtk-policy-type 'always))
+(define GTK_POLICY_AUTOMATIC (symbol->gtk-policy-type 'automatic))
+(define GTK_POLICY_NEVER (symbol->gtk-policy-type 'never))
+;;; This one is defined in GTK3 only.
+(define GTK_POLICY_EXTERNAL
+  (and %m4-use-gtk3 (symbol->gtk-policy-type 'external)))
+
 (define (gtk-position-type->symbol type)
   "Transforms GtkPositionType value TYPE to Scheme symbol."
   (string->symbol
@@ -89,6 +148,39 @@
   "Transforms symbol SYM to corresponding GtkPositionType value."
   (schematic_gtk_position_type_from_string
    (string->pointer (symbol->string sym))))
+
+
+(define (gtk-selection-mode->symbol mode)
+  "Transforms GtkSelectionMode value MODE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_selection_mode_to_string mode))))
+
+(define (symbol->gtk-selection-mode sym)
+  "Transforms symbol SYM to corresponding GtkSelectionMode value."
+  (schematic_gtk_selection_mode_from_string
+   (string->pointer (symbol->string sym))))
+
+(define GTK_SELECTION_NONE (symbol->gtk-selection-mode 'none))
+(define GTK_SELECTION_SINGLE (symbol->gtk-selection-mode 'single))
+(define GTK_SELECTION_BROWSE (symbol->gtk-selection-mode 'browse))
+(define GTK_SELECTION_MULTIPLE (symbol->gtk-selection-mode 'multiple))
+
+
+(define (gtk-shadow-type->symbol type)
+  "Transforms GtkShadowType value TYPE to Scheme symbol."
+  (string->symbol
+   (pointer->string (schematic_gtk_shadow_type_to_string type))))
+
+(define (symbol->gtk-shadow-type sym)
+  "Transforms symbol SYM to corresponding GtkShadowType value."
+  (schematic_gtk_shadow_type_from_string
+   (string->pointer (symbol->string sym))))
+
+(define GTK_SHADOW_NONE (symbol->gtk-shadow-type 'none))
+(define GTK_SHADOW_IN (symbol->gtk-shadow-type 'in))
+(define GTK_SHADOW_OUT (symbol->gtk-shadow-type 'out))
+(define GTK_SHADOW_ETCHED_IN (symbol->gtk-shadow-type 'etched-in))
+(define GTK_SHADOW_ETCHED_OUT (symbol->gtk-shadow-type 'etched-out))
 
 
 (define (gtk-window-position->symbol pos)
